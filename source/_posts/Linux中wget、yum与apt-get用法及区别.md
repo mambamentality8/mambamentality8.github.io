@@ -1,8 +1,10 @@
 ---
 title: Linux中wget、yum与apt-get用法及区别
 date: 
-categories: linux
-tags: [linux]
+categories: 
+    -linux
+tags: 
+    -linux
 description: Linux中wget、yum与apt-get用法及区别
 ---
 

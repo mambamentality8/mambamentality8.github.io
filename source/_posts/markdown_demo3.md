@@ -1,8 +1,10 @@
 ---
 title: markdown语法练习
 date: 
-categories: 其它
-tags: [其它,]
+categories: 
+    -工具
+tags: 
+    -工具
 description: markdown语法
 ---
 
@@ -35,3 +37,5 @@ tasklist
 - [] item1
 - [x] item2
 - [x] item3
+
+emoji表情符号
