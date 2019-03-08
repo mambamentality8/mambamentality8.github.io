@@ -103,9 +103,6 @@ menu:
   #sitemap: /sitemap.xml || sitemap
   #commonweal: /404/ || heartbeat
 
-##################################设置my分类页面##############################################
-  categories: /categories
-
 # Enable/Disable menu icons.
 menu_icons:
   enable: true
@@ -427,7 +424,7 @@ valine:
   appkey: LhKUVs6Qgkn5RymTTcUaKH4y
   notify: false # mail notifier , https://github.com/xCss/Valine/wiki
   verify: true # Verification code
-  placeholder: 博主写的真不错,鼓励一下👍👍👍
+  placeholder: test.md
   avatar: mm # gravatar style
   guest_info: nick,mail,link # custom comment header
   pageSize: 10 # pagination size
@@ -876,5 +873,3 @@ images: images
 
 # Theme version
 version: 5.1.4
-
-
