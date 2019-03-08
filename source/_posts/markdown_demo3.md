@@ -34,7 +34,7 @@ github flvored markdown,GFM
 
 tasklist
 
-- [] item1
+- [ ] item1
 - [x] item2
 - [x] item3
 

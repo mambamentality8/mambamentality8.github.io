@@ -22,7 +22,7 @@ date: 2019-03-07 10:41:36
       time=result.time;
       title=result.title;
       url=result.url;
-      var content="<a href='"+"https://mambamentality8.github.io"+url+"'>"+title+"</a>"+"<br />"+"<font color='#555'>"+"阅读次数："+time+"</font>"+"<br /><br />";
+      var content="<a href='"+"https://www.51efei.com"+url+"'>"+title+"</a>"+"<br />"+"<font color='#555'>"+"阅读次数："+time+"</font>"+"<br /><br />";
       document.getElementById("top").innerHTML+=content
     }
   }, function (error) {
