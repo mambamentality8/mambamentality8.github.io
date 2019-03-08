@@ -103,6 +103,9 @@ menu:
   #sitemap: /sitemap.xml || sitemap
   #commonweal: /404/ || heartbeat
 
+##################################设置my分类页面##############################################
+  categories: /categories
+
 # Enable/Disable menu icons.
 menu_icons:
   enable: true
@@ -875,8 +878,3 @@ images: images
 version: 5.1.4
 
 
-################################################新增配置######################################################
-menu:
-    home: /
-    archives: /archives
-    categories: /categories
