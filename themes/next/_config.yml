@@ -424,7 +424,7 @@ valine:
   appkey: LhKUVs6Qgkn5RymTTcUaKH4y
   notify: false # mail notifier , https://github.com/xCss/Valine/wiki
   verify: true # Verification code
-  placeholder: test
+  placeholder: test.md
   avatar: mm # gravatar style
   guest_info: nick,mail,link # custom comment header
   pageSize: 10 # pagination size
