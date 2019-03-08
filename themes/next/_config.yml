@@ -873,3 +873,10 @@ images: images
 
 # Theme version
 version: 5.1.4
+
+
+################################################新增配置######################################################
+menu:
+    home: /
+    archives: /archives
+    categories: /categories
