@@ -16,11 +16,13 @@ image:
 <!-- more -->
 
 #springboot官方文档:
+
 ```
 https://docs.spring.io/spring-boot/docs/2.1.3.RELEASE/reference/htmlsingle/
 ```
 
 #What is springboot?  
+
 ```
 Spring Boot makes it easy to create stand-alone, 
 production-grade Spring based Applications that you can "just run".
@@ -36,6 +38,7 @@ Spring Boot可以轻松创建独立的，
 ```
 
 #Why use it?
+
 ```
 Create stand-alone Spring applications
 
@@ -63,7 +66,9 @@ Absolutely no code generation and no requirement for XML configuration
 ```
 
 #How to use it?
+
 ##第一章  节快速入门
+
 - 进入https://start.spring.io/
 ![](./springboot_img/1.png)
 - 将下载的包解压并导入IDEA
@@ -71,8 +76,11 @@ Absolutely no code generation and no requirement for XML configuration
 - 启动我们的项目,访问8080端口
 ![](./springboot_img/3.png)
 看到找不到页面选项就代表成功,因为我们还没有配置静态资源  
+
 ##第二章  节接口开发
+
 ###1.路由配置
+
 - 首先要明白几个注解
 ![](./springboot_img/4.png)
 - 创建一个controller
@@ -95,6 +103,7 @@ public Map<String,String> testMap(){
 ![](./springboot_img/7.png)
 
 ###2.postman接口测试  
+
 ```
 postman下载地址https://www.getpostman.com/downloads/
 ```
