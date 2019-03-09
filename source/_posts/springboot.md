@@ -63,7 +63,7 @@ Absolutely no code generation and no requirement for XML configuration
 
 # How to use it?
 
-## 第一章  节快速入门
+## 第一章   快速入门
 
 - 进入https://start.spring.io/
 ![](springboot/1.png)
@@ -73,7 +73,7 @@ Absolutely no code generation and no requirement for XML configuration
 ![](springboot/3.png)
 看到找不到页面选项就代表成功,因为我们还没有配置静态资源  
 
-## 第二章  节接口开发
+## 第二章   接口开发
 
 ### 1.路由配置
 
