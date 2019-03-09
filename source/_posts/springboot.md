@@ -67,11 +67,11 @@ Absolutely no code generation and no requirement for XML configuration
 ## 第一章  节快速入门
 
 - 进入https://start.spring.io/
-![](./springboot_img/1.png)
+![](springboot/1.png)
 - 将下载的包解压并导入IDEA
-![](./springboot_img/2.png)
+![](springboot/2.png)
 - 启动我们的项目,访问8080端口
-![](./springboot_img/3.png)
+![](springboot/3.png)
 看到找不到页面选项就代表成功,因为我们还没有配置静态资源  
 
 ## 第二章  节接口开发
@@ -79,9 +79,9 @@ Absolutely no code generation and no requirement for XML configuration
 ### 1.路由配置
 
 - 首先要明白几个注解
-![](./springboot_img/4.png)
+![](springboot/4.png)
 - 创建一个controller
-![](./springboot_img/5.png)
+![](springboot/5.png)
 ```java
 @RequestMapping("/")
     public String home(){
@@ -96,8 +96,8 @@ public Map<String,String> testMap(){
 }
 ```
 - 然后进行测试
-![](./springboot_img/6.png)
-![](./springboot_img/7.png)
+![](springboot/6.png)
+![](springboot/7.png)
 
 ### 2.postman接口测试  
 
@@ -105,7 +105,7 @@ public Map<String,String> testMap(){
 postman下载地址https://www.getpostman.com/downloads/
 ```
 - 在GetController中添加代码进行测试  
-![](./springboot_img/8.png)
+![](springboot/8.png)
 
 ```java
 private Map<String,Object> params = new HashMap<>();
@@ -129,10 +129,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](./springboot_img/9.png)
+![](springboot/9.png)
 
 - GetMapping
-![](./springboot_img/10.png)
+![](springboot/10.png)
 ```java
  /**
      * 功能描述：测试GetMapping
@@ -151,10 +151,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](./springboot_img/11.png)
+![](springboot/11.png)
 
 - GetMapping默认值
-![](./springboot_img/12.png)
+![](springboot/12.png)
 ```java
 /**
      * 功能描述：默认值，是否必须的参数
@@ -174,11 +174,11 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](./springboot_img/13.png)
+![](springboot/13.png)
 如果没有传入参数那么将会启用默认值
 
 - bean对象传参
-![](./springboot_img/14.png)
+![](springboot/14.png)
 ```java
  /**
      * 功能描述：bean对象传参
@@ -195,10 +195,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](./springboot_img/15.png)
+![](springboot/15.png)
 
 - 获取请求头信息
-![](./springboot_img/16.png)
+![](springboot/16.png)
 ```java
 /**
      * 功能描述：测试获取http头信息
@@ -215,4 +215,4 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](./springboot_img/17.png)
+![](springboot/17.png)
