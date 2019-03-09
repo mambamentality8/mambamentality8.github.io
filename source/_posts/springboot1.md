@@ -1,16 +1,14 @@
 ---
 title: springboot
-tags: []
-date: 2019-03-09 23:11:21
 permalink:
-categories: springboot
-description: springboot
-image:
+categories:
+    springboot
+tags: 
+    springboot
+image: 
 ---
-<p class="description"></p>
-
+<div class="note success"><p>springboot快速入门</p></div>
 <img src="https://" alt="" style="width:100%" />
-
 <!-- more -->
 
 # springboot官方文档:
@@ -217,5 +215,3 @@ private Map<String,Object> params = new HashMap<>();
 ```
 然后我们用postman进行测试
 ![](springboot/17.png)
-
-<hr />
