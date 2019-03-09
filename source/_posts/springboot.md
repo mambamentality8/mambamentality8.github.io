@@ -1,10 +1,10 @@
 ---
-title: springboot快速入门
+title: springboot
 permalink:
 categories:
     springboot
 tags: 
-    java
+    springboot
 image: 
 ---
 <div class="note success"><p>springboot快速入门</p></div>
