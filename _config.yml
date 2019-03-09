@@ -86,3 +86,11 @@ deploy:
   type: git
   repo: https://github.com/mambamentality8/mambamentality8.github.io.git
   branch: master
+
+##########################################################################
+githubEmojis:
+  enable: true
+  idName: github-emoji
+  unicode: false
+  styles:
+  localEmojis:

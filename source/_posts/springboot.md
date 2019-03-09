@@ -1,17 +1,25 @@
 ---
 title: springboot快速入门
 date: 
-categories: 
-    springboot
+permalink:
+categories:
+    java
 tags: 
-    springboot
+    java
 description: springboot快速入门
+image: 
 ---
+<p class="description">springboot快速入门</p>
+<div class="note success"><p>springboot快速入门</p></div>
+<img src="https://" alt="" style="width:100%" />
+
+<!-- more -->
+
 #springboot官方文档:
 ```
 https://docs.spring.io/spring-boot/docs/2.1.3.RELEASE/reference/htmlsingle/
 ```
-<!-- more -->
+
 #What is springboot?  
 ```
 Spring Boot makes it easy to create stand-alone, 
