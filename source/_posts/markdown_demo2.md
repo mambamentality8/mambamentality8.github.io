@@ -21,10 +21,10 @@ description: markdown语法
 
 #图片格式一
 ![alt](url tips)  
-- 外部图片
+- 外部图片`
 ![baidu](https://www.baidu.com/img/bd_logo1.png "悬停提示")
 - 仓库内的图片demo
-![](./imges/bd_logo1.png)
+![](markdown_demo2_img/bd_logo1.png)
 
 #图片格式二
 ![alt](url tips)  
@@ -56,4 +56,4 @@ System.out.println(a);
 [demo1]:markdown_demo1.md
 [代码块demo]:markdown_demo2.md#代码块
 [baidu_logo]: https://www.baidu.com/img/bd_logo1.png
-[inpng]:./imges/bd_logo1.png
+[inpng]:markdown_demo2_img/bd_logo1.png
