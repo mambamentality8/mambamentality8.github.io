@@ -3,7 +3,7 @@ title: springboot快速入门
 date: 
 permalink:
 categories:
-    java
+    springboot
 tags: 
     java
 image: 
