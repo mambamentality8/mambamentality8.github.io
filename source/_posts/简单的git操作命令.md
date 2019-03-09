@@ -2,9 +2,9 @@
 title: 常用的git操作命令
 date: 
 categories: 
-    -git
+    git
 tags: 
-    -git
+    git
 description: 常用的git操作命令
 ---
 

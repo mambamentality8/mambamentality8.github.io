@@ -13,9 +13,9 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://www.51efei.com/
 root: /
-permalink: :year/:month/:day/:title/
+permalink: :category/:year/:month/:day/:title.html
 permalink_defaults:
 
 # Directory
@@ -57,6 +57,8 @@ index_generator:
   
 # Category & Tag
 default_category: uncategorized
+# URL 中的分类和标签「翻译」成英文
+# 见：https://github.com/hexojs/hexo/issues/1162
 category_map:
 tag_map:
 
@@ -75,6 +77,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
+# 主题配置
 theme: next
 
 # Deployment

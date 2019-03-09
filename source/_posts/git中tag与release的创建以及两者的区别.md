@@ -2,9 +2,9 @@
 title: git中tag与release的创建以及两者的区别
 date: 
 categories: 
-    -github
+    github
 tags: 
-    -github
+    github
 description: git中tag与release的创建以及两者的区别
 ---
 ###简介

@@ -2,8 +2,8 @@
 title: 如何打造blog
 date: 
 categories: 
-    -blog
+    blog
 tags: 
-    -blog
+    blog
 description: 如何打造blog
 ---

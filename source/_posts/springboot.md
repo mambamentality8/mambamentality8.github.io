@@ -2,15 +2,16 @@
 title: springboot快速入门
 date: 
 categories: 
-    -springboot
+    springboot
 tags: 
-    -springboot
+    springboot
 description: springboot快速入门
 ---
 #springboot官方文档:
 ```
 https://docs.spring.io/spring-boot/docs/2.1.3.RELEASE/reference/htmlsingle/
 ```
+<!-- more -->
 #What is springboot?  
 ```
 Spring Boot makes it easy to create stand-alone, 

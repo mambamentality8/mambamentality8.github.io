@@ -26,6 +26,11 @@ override: false
 
 # For example, you put your favicons into `hexo-site/source/images` directory.
 # Then need to rename & redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.
+# 站点图标啦，直接去 https://realfavicongenerator.net
+# 选项弄好后，下载压缩包，解压复制粘贴
+# 建议放在 hexo-site/source/images/ 里（没有自己建）
+# 这样可以避免更新 NexT 主题的时候遇到麻烦
+# 最后记得要稍微改下文件名，与下面的保持一致
 favicon:
   small: /uploads/basketball.ico
   medium: /uploads/basketball.ico
@@ -35,6 +40,7 @@ favicon:
   #ms_browserconfig: /images/browserconfig.xml
 
 # Set default keywords (Use a comma to separate)
+# 站点关键字，利于 SEO 大概，记得用英文逗号分隔
 keywords: 微服务,java,python
 
 # Set rss to false to disable feed link.
@@ -45,15 +51,21 @@ rss:
 footer:
   # Specify the date when the site was setup.
   # If not defined, current year will be used.
-  since: 2015
+  # 建站年份
+  since: 2017
 
   # Icon between year and copyright info.
+  # 年份后面的图标，为 Font Awesome 图标
+  # 自己去纠结 https://fontawesome.com/v4.7.0/
+  # 然后更改名字就行，下面的有关图标的设置都一样
   icon: heart
 
   # If not defined, will be used `author` from Hexo main config.
+  # 如果不定义，默认用站点配置文件的 author 名
   copyright:
   # -------------------------------------------------------------
   # Hexo link (Powered by Hexo).
+  # Hexo 的链接
   powered: false
 
   theme:
@@ -104,6 +116,7 @@ menu:
   #commonweal: /404/ || heartbeat
 
 # Enable/Disable menu icons.
+# 是否开启菜单图标
 menu_icons:
   enable: true
 
@@ -113,6 +126,7 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
+# 设计板式，都长啥样，去 README 里面的链接里看看
 scheme: Muse
 #scheme: Mist
 #scheme: Pisces
@@ -131,7 +145,7 @@ scheme: Muse
 social:
   GitHub: https://github.com/mambamentality8 || github
   E-Mail: mambamentality8g@gmail.com || envelope
-  Google: https://plus.google.com/yourname || google
+  #Google: https://plus.google.com/yourname || google
   Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
   #VK Group: https://vk.com/yourname || vk
@@ -165,11 +179,13 @@ links:
 # in site  directory(source/uploads): /uploads/avatar.gif
 avatar: /uploads/avatar.gif
 
+# 侧栏文章目录设置（前提是 Markdown 书写正确）
 # Table Of Contents in the Sidebar
 toc:
   enable: true
 
   # Automatically add list number to toc.
+  # 自动加数字序号
   number: true
 
   # If true, all words will placed on next lines if header width longer then sidebar width.
@@ -271,6 +287,7 @@ post_wordcount:
   #description: ex. subscribe to my blog by scanning my public wechat account
 
 # Reward
+#打赏功能
 reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
 wechatpay: /images/wechatpay.jpg
 alipay: /images/alipay.jpg
@@ -676,6 +693,8 @@ local_search:
 # External URL with BASE64 encrypt & decrypt.
 # Usage: {% exturl text url "title" %}
 # Alias: {% extlink text url "title" %}
+# 用法见：
+# https://github.com/iissnan/hexo-theme-next/pull/1438
 exturl: false
 
 # Note tag (bs-callout).
@@ -685,6 +704,7 @@ note:
   #  - modern    bs-callout new (v2-v3) alert style.
   #  - flat      flat callout style with background, like on Mozilla or StackOverflow.
   #  - disabled  disable all CSS styles import of note tag.
+  # 主题的标签样式，有 note、label、tabs 三种
   style: flat
   icons: true
   border_radius: 3
