@@ -2,9 +2,9 @@
 title: markdown语法练习
 date: 
 categories: 
-    -工具
+    -markdown
 tags: 
-    -工具
+    -markdown
     
 description: markdown语法
 ---

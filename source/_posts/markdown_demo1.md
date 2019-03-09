@@ -1,8 +1,10 @@
 ---
 title: markdown语法练习
 date: 
-categories: 工具
-tags: [工具]
+categories: 
+    -markdown
+tags: 
+    -markdown
 description: markdown语法
 ---
 #标题
