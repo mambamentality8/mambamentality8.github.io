@@ -6,13 +6,10 @@ categories:
     java
 tags: 
     java
-description: springboot快速入门
 image: 
 ---
-<p class="description">springboot快速入门</p>
 <div class="note success"><p>springboot快速入门</p></div>
 <img src="https://" alt="" style="width:100%" />
-
 <!-- more -->
 
 # springboot官方文档:
@@ -21,7 +18,7 @@ image:
 https://docs.spring.io/spring-boot/docs/2.1.3.RELEASE/reference/htmlsingle/
 ```
 
-#What is springboot?  
+# What is springboot?  
 
 ```
 Spring Boot makes it easy to create stand-alone, 
@@ -37,7 +34,7 @@ Spring Boot可以轻松创建独立的，
 大多数Spring Boot应用程序只需要很少的Spring配置。
 ```
 
-#Why use it?
+# Why use it?
 
 ```
 Create stand-alone Spring applications
@@ -65,9 +62,9 @@ Absolutely no code generation and no requirement for XML configuration
 绝对没有代码生成，也不需要XML配置
 ```
 
-#How to use it?
+# How to use it?
 
-##第一章  节快速入门
+## 第一章  节快速入门
 
 - 进入https://start.spring.io/
 ![](./springboot_img/1.png)
@@ -77,9 +74,9 @@ Absolutely no code generation and no requirement for XML configuration
 ![](./springboot_img/3.png)
 看到找不到页面选项就代表成功,因为我们还没有配置静态资源  
 
-##第二章  节接口开发
+## 第二章  节接口开发
 
-###1.路由配置
+### 1.路由配置
 
 - 首先要明白几个注解
 ![](./springboot_img/4.png)
@@ -102,7 +99,7 @@ public Map<String,String> testMap(){
 ![](./springboot_img/6.png)
 ![](./springboot_img/7.png)
 
-###2.postman接口测试  
+### 2.postman接口测试  
 
 ```
 postman下载地址https://www.getpostman.com/downloads/
