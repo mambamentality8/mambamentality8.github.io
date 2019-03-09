@@ -7,7 +7,7 @@ tags:
     -github
 description: git中tag与release的创建以及两者的区别
 ---
-#简介
+###简介
 本文辨析在参与开源项目时会遇到的tag与release的概念区别与联系，并比较两者的创建方法。
 定义
 标签（tag）是特定提交（commit)一个指针，也就是每个tag对应一个特定的commit。
