@@ -371,12 +371,13 @@ Spring Boot 默认会挨个从
 resources > static外 > public 里面找是否存在相应的资源，如果有则直接返回。
 src/main/resources目录下资源加载的顺序
 
-templates下的文件一般是静态模板,直接访问会报错需要引入依赖
 ```
 我们先把restful风格的接口注释掉防止影响
 ![](./springboot/29.png)
 然后按照图中示例进行测试
 ![](./springboot/30.png)
+
+<font color=red>templates下的文件一般是静态模板没有加入classpath中,直接访问会找不到资源路径需要引入依赖</font>  
 
 在pom文件中引入依赖
 ```
@@ -411,10 +412,139 @@ templates下的文件一般是静态模板,直接访问会报错需要引入依�
 再次访问url
 ![](./springboot/32.png)
 
+官方默认spring加载静态资源配置路径
+```
+spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/ 
+```
+如果想自定义spring加载静态资源配置路径在后面追加即可(加载的有限顺序调整顺序即可),示例如下:
+```
+spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/ ,classpath:/test/
+```
+### 5.springboot文件上传实战
+在static加入上传文件的页面
+![](./springboot/33.png)
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>uploadimg.html</title>
 
+    <meta name="keywords" content="keyword1,keyword2,keyword3"></meta>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+    <script src="/js/test.js" type="text/javascript"></script>
 
+  </head>
 
+  <body>
+	  <form enctype="multipart/form-data" method="post" action="/upload">
+	    文件:<input type="file" name="head_img"/>
+	    姓名:<input type="text" name="name"/>
+	    <input type="submit" value="上传"/>
+	   </form>
+   
+  </body>
+</html>
+```
+然后在FileController中添加后台代码
+<font color=red>注意替换自己存放文件的路径</font>  
+![](./springboot/34.png)
+```java
+//注意替换路径
+ private static final String filePath = "D:\\springboot_workspace\\demo\\src\\main\\resources\\static\\image\\";
+
+@RequestMapping(value = "upload")
+    @ResponseBody
+    public JsonData upload(@RequestParam("head_img") MultipartFile file, HttpServletRequest request) {
+
+        //file.isEmpty(); 判断图片是否为空
+        //file.getSize(); 图片大小进行判断
+
+        String name = request.getParameter("name");
+        System.out.println("用户名："+name);
+
+        // 获取文件名
+        String fileName = file.getOriginalFilename();
+        System.out.println("上传的文件名为：" + fileName);
+
+        // 获取文件的后缀名,比如图片的jpeg,png
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+        System.out.println("上传的后缀名为：" + suffixName);
+
+        // 文件上传后的路径
+        fileName = UUID.randomUUID() + suffixName;
+        System.out.println("转换后的名称:"+fileName);
+
+        File dest = new File(filePath + fileName);
+
+        try {
+            //MultipartFile 对象的transferTo方法，用于文件保存（效率和操作比原先用FileOutStream方便和高效）
+            file.transferTo(dest);
+
+            return new JsonData(0, fileName);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  new JsonData(-1, "fail to save ", null);
+    }
+```
+响应的时候应该返回给前台一个包装的json类
+![](./springboot/35.png)
+```java
+	private static final long serialVersionUID = 1L;
+
+	//状态码,0表示成功，-1表示失败
+	private int code;
+	
+	//结果
+	private Object data;
+
+	//错误描述
+	private String msg;
+	
+	public int getCode() {
+		return code;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public Object getData() {
+		return data;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
+	}
+
+	public JsonData(int code, Object data) {
+		super();
+		this.code = code;
+		this.data = data;
+	}
+
+	public JsonData(int code, String msg,Object data) {
+		super();
+		this.code = code;
+		this.msg = msg;
+		this.data = data;
+	}
+```
+向后台发送文件之后
+![](./springboot/36.png)
+这里会有一个问题当上传文件过大时,会抛出异常
+### 6.jar包方式启动项目并访问资源
 
 
 
