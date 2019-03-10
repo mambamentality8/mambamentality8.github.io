@@ -68,11 +68,11 @@ Absolutely no code generation and no requirement for XML configuration
 ## 第一章   快速入门
 
 - 进入https://start.spring.io/
-![](springboot/1.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/1.png?Expires=1552191339&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=gVF8VqFVZKNjoQJklRITLQDsca8%3D)
 - 将下载的包解压并导入IDEA
-![](springboot/2.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/2.png?Expires=1552191339&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=HCf5zOt0jmFk2r5xX7n8Uci7eqg%3D)
 - 启动我们的项目,访问8080端口
-![](springboot/3.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/3.png?Expires=1552191339&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=7jOYs8PuwvrUIslW7YNDCCQNn74%3D)
 看到找不到页面选项就代表成功,因为我们还没有配置静态资源  
 
 ## 第二章   接口开发
@@ -80,9 +80,9 @@ Absolutely no code generation and no requirement for XML configuration
 ### 1.路由配置
 
 - 首先要明白几个注解
-![](springboot/4.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/4.png?Expires=1552191692&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=BYdl5dzM39mRpLCnQLIsbmZIeco%3D)
 - 创建一个controller
-![](springboot/5.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/5.png?Expires=1552191706&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=72gMfwnmeq%2BjM3t6PJpaDlUxt2Y%3D)
 ```java
 @RequestMapping("/")
     public String home(){
@@ -97,8 +97,8 @@ public Map<String,String> testMap(){
 }
 ```
 - 然后进行测试
-![](springboot/6.png)
-![](springboot/7.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/6.png?Expires=1552191720&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=JZtUd1rLSrlXaR2jBEA1ZwltGrI%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/7.png?Expires=1552191733&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=%2BhgA2UKkQOFEN3QMj9c%2BmpWJq%2Bo%3D)
 
 ### 2.postman接口测试  
 
@@ -130,10 +130,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](springboot/9.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/9.png?Expires=1552191889&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=8WgW7Kx3nztU%2BeUn%2BvW6RkIK4Ho%3D)
 
 - GetMapping
-![](springboot/10.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/10.png?Expires=1552191910&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=l%2FuLzie0Sk4V3FVA7c%2FM56LQwag%3D)
 ```java
  /**
      * 功能描述：测试GetMapping
@@ -152,10 +152,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](springboot/11.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/11.png?Expires=1552191934&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=PsiKQlTTm6R9lFhGnW3m4W7%2B%2BGI%3D)
 
 - GetMapping默认值
-![](springboot/12.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/12.png?Expires=1552191948&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=jo5FpkRaILxoV291DTui3swBZP0%3D)
 ```java
 /**
      * 功能描述：默认值，是否必须的参数
@@ -175,11 +175,11 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](springboot/13.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/13.png?Expires=1552191963&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=5hfyyBjvTLcwzszf05LvyFuHW6c%3D)
 如果没有传入参数那么将会启用默认值
 
 - bean对象传参
-![](springboot/14.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/14.png?Expires=1552191975&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=YFxLPVeYltF%2BVgQMoMl7ZdlGlm4%3D)
 ```java
  /**
      * 功能描述：bean对象传参
@@ -196,10 +196,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](springboot/15.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/15.png?Expires=1552191992&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=M5hPnQqNj0aym2YEXtA0nYP8J48%3D)
 
 - 获取请求头信息
-![](springboot/16.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/16.png?Expires=1552192004&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=Rx3MUDGr%2FyB%2Fpj6lY1%2FJdFI%2FRhM%3D)
 ```java
 /**
      * 功能描述：测试获取http头信息
@@ -216,6 +216,6 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](springboot/17.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/17.png?Expires=1552192018&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=ld8c5nk5GAmKjd4BAyH46jkqZ7U%3D)
 
 <hr />
