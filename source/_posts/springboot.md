@@ -8,7 +8,7 @@ description: springboot
 image:
 ---
 <p class="description"></p>
-
+<meta name="referrer" content="no-referrer" />
 <img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/title.png?Expires=1552194987&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=miwbtIlUZcouRKPcFNvsOSergAg%3D" alt="" style="width:100%" />
 
 <!-- more -->
@@ -75,7 +75,7 @@ Absolutely no code generation and no requirement for XML configuration
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/3.png?Expires=1552191339&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=7jOYs8PuwvrUIslW7YNDCCQNn74%3D)
 看到找不到页面选项就代表成功,因为我们还没有配置静态资源  
 
-## 第二章   接口开发
+## 第二章   http协议开发
 
 ### 1.路由配置
 
@@ -179,6 +179,60 @@ private Map<String,Object> params = new HashMap<>();
 如果没有传入参数那么将会启用默认值
 
 - bean对象传参
+在domain包下创建一个实体类
+![](springboot/24.png)
+
+```java
+public class User {
+    private int age;
+    private String pwd;
+    private int phone;
+
+    public User() {
+
+    }
+
+    public User(int age, String pwd, int phone) {
+        this.age = age;
+        this.pwd = pwd;
+        this.phone = phone;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "age=" + age +
+                ", pwd='" + pwd + '\'' +
+                ", phone=" + phone +
+                '}';
+    }
+}
+```
+
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/14.png?Expires=1552191975&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=YFxLPVeYltF%2BVgQMoMl7ZdlGlm4%3D)
 ```java
  /**
@@ -217,5 +271,184 @@ private Map<String,Object> params = new HashMap<>();
 ```
 然后我们用postman进行测试
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/17.png?Expires=1552192018&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=ld8c5nk5GAmKjd4BAyH46jkqZ7U%3D)
+
+- post提交方式
+![](./springboot/18.png)
+
+```java
+private Map<String,Object> params = new HashMap<>();
+    /**
+     * 功能描述：测试PostMapping
+     * @param id
+     * @param pwd
+     * @return
+     */
+    @PostMapping("/v1/login")
+    public Object login(String id, String pwd){
+        params.clear();
+        params.put("id", id);
+        params.put("pwd", pwd);
+        return params;
+    }
+```
+
+然后我们用postman进行测试
+![](./springboot/19.png)
+
+- put提交方式
+![](./springboot/20.png)
+
+```java
+  @PutMapping("/v1/put")
+    public Object put(String id){
+        params.clear();
+        params.put("id", id);
+        return params;
+    }
+```
+然后我们用postman进行测试
+![](./springboot/21.png)
+
+- delete提交方式
+![](./springboot/22.png)
+
+```java
+   @DeleteMapping("/v1/del")
+    public Object del(String id){
+        params.clear();
+        params.put("id", id);
+        return params;
+    }
+```
+
+然后我们用postman进行测试
+![](./springboot/23.png)
+
+### 3.常用json框架介绍和jackson返回结果处理
+```
+常用框架 阿里 fastjson,谷歌gson等  
+JavaBean序列化为Json，性能：Jackson > FastJson > Gson > Json-lib 同个结构
+Jackson、FastJson、Gson类库各有优点，各有自己的专长
+空间换时间，时间换空间
+```
+为我们的User类添加一个新字段重新生成get/set方法
+![](./springboot/25.png)
+
+在SampleController中添加一个新接口
+```java
+ @GetMapping("/testjson")
+    public Object testjson(){
+
+        return new User(111, "abc123", "10001000", new Date());
+    }
+```
+测试结果
+![](./springboot/26.png)
+但是密码不应该暴露给前端,我们在User类中添加一个注解
+![](./springboot/27.png)
+添加完之后启动应用再次测试
+![](./springboot/28.png)
+这样就保证了我们的数据安全
+
+```
+类似的注解还有:
+指定字段不返回：@JsonIgnore
+指定日期格式：@JsonFormat(pattern="yyyy-MM-dd hh:mm:ss",locale="zh",timezone="GMT+8")
+空字段不返回：@JsonInclude(Include.NON_NUll)
+指定别名：@JsonProperty
+```
+
+### 4.springboot目录结构讲解
+```
+src/main/java：存放代码
+src/main/resources
+    static: 存放静态文件，比如 css、js、image, （访问方式 http://localhost:8080/js/main.js）
+    templates:存放静态页面jsp,html,tpl
+    config:存放配置文件,application.properties
+    resources:脚本文件
+
+Spring Boot 默认会挨个从
+resources > static外 > public 里面找是否存在相应的资源，如果有则直接返回。
+src/main/resources目录下资源加载的顺序
+
+templates下的文件一般是静态模板,直接访问会报错需要引入依赖
+```
+我们先把restful风格的接口注释掉防止影响
+![](./springboot/29.png)
+然后按照图中示例进行测试
+![](./springboot/30.png)
+
+在pom文件中引入依赖
+```
+<dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+```
+新建一个FileController
+![](./springboot/31.png)
+加入代码
+```java
+ @RequestMapping(value = "/api/v1/gopage")
+    public Object index() {
+
+        return "index";
+    }
+```
+在templates文件夹下加入html文件
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    hello  thymeleaf!!!
+</body>
+</html>
+```
+再次访问url
+![](./springboot/32.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <hr />
