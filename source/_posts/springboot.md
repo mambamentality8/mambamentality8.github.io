@@ -543,35 +543,366 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
 ```
 向后台发送文件之后
 ![](./springboot/36.png)
-这里会有一个问题当上传文件过大时,会抛出异常
+这里会有一个问题当上传文件过大时,会抛出异常,那么我们应该如何去配置呢?
+![](./springboot/37.png)
+在含有Config注解的类下配置一个bean注解,解决文件上传问题
+```java
+@Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        //单个文件最大
+        factory.setMaxFileSize("10240KB"); //KB,MB
+        /// 设置总上传数据总大小
+        factory.setMaxRequestSize("1024000KB");
+        return factory.createMultipartConfig();
+    }
+```
 ### 6.jar包方式启动项目并访问资源
+检查自己的pom.xml是否有打包插件,如果没加相关依赖，执行maven打包，运行后会报错:no main manifest attribute, in XXX.jar
+```
+<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+```
+使用 mvn install 将项目打包
+![](./springboot/38.png)
+将jar包后缀换成zip并解压查看目录
+![](./springboot/39.png)
+![](./springboot/40.png)
+如果你上传的图片路径是自定义的,请自行在配置文件中添加
+web.images-path=自定义路径
+spring.resources.static-locations=classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/test/,file:${web.upload-path} 
+为了解决高并发你应该去使用:fastdfs，阿里云oss，nginx搭建一个简单的文件服务器
+
+### 7.SpringBoot2.x使用Dev-tool热部署
+1. 添加依赖
+    <dependency>  
+         <groupId>org.springframework.boot</groupId>  
+         <artifactId>spring-boot-devtools</artifactId>  
+         <optional>true</optional>  
+   	</dependency>
+2. 在IDEA设置中打开自动编译
+ ![](./springboot/41.png)
+3. 打开运行时编译,按快捷键 Shift+Ctrl+Alt+/ ，打开maintenance面板, 选择 Registry  
+   勾选如图所示:
+![](./springboot/42.png)
+不被热部署的文件  
+ 		1、/META-INF/maven, /META-INF/resources, /resources, /static, /public, or /templates  
+ 		2、指定文件不进行热部署 spring.devtools.restart.exclude=static/**,public/**  
+ 		3、手工触发重启 spring.devtools.restart.trigger-file=trigger.txt(trigger.txt放在最外层的resource下)
+ 			改代码不重启，通过一个文本去控制
+
+官方地址：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#using-boot-devtools
+
+### 8.SpringBoot2.x配置文件
+简介：SpringBoot2.x常见的配置文件 xml、yml、properties的区别和使用
+```
+xml、properties、json、yaml
+1、常见的配置文件 xx.yml, xx.properties，
+    1)YAML（Yet Another Markup Language）
+        写 YAML 要比写 XML 快得多(无需关注标签或引号)
+        使用空格 Space 缩进表示分层，不同层次之间的缩进可以使用不同的空格数目
+        注意：key后面的冒号，后面一定要跟一个空格,树状结构
+    application.properties示例
+        server.port=8090  
+        server.session-timeout=30  
+        server.tomcat.max-threads=0  
+        server.tomcat.uri-encoding=UTF-8 
+
+    application.yml示例
+        server:  
+            port: 8090  
+            session-timeout: 30  
+            tomcat.max-threads: 0  
+            tomcat.uri-encoding: UTF-8 
 
 
+2、默认示例文件仅作为指导。 不要将整个内容复制并粘贴到您的应用程序中，只挑选您需要的属性。
+
+3、参考：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#common-application-properties
+
+如果需要修改，直接复制对应的配置文件，加到application.properties里面
+```
+### 9.SpringBoot注解配置文件自动映射到属性和实体类实战
+1、配置文件加载  
+	方式一:    
+        1、Controller上面配置  
+            @PropertySource({"classpath:resource.properties"})  
+            resource.properties里面的内容为k,v  
+            2、增加属性  
+                @Value("${test.name}")  
+                private String name;  
+        方式二：  
+            实体类配置文件  
+            步骤：  
+                1、添加 @Component 注解；  
+                2、使用 @PropertySource 注解指定配置文件位置；  
+                3、使用 @ConfigurationProperties 注解，设置相关属性；  
+                4、必须 通过注入IOC对象Resource 进来 ， 才能在类中使用获取的配置文件值。  
+                    @Autowired  
+                    private ServerSettings serverSettings;  
+                    例子：  
+                        新建一个domain  
+```java
+@Component
+@PropertySource({"classpath:application.properties"})
+@ConfigurationProperties
+public class ServerSettings {
+//名称
+@Value("${test.name}")
+private String name;
+@Value("${test.domain}")
+private String domain;
+public String getName() {
+    return name;
+}
+public void setName(String name) {
+    this.name = name;
+}
+public String getDomain() {
+    return domain;
+}
+public void setDomain(String domain) {
+    this.domain = domain;
+}
+@Override
+public String toString() {
+    return "ServerSettings{" +
+            "name='" + name + '\'' +
+            ", domain='" + domain + '\'' +
+            '}';
+}
+}
+```
+使用前缀
+@ConfigurationProperties（prefix = "xxx"）
+如果使用前缀的话则不需要@Value注解
+![](./springboot/43.png)  
+常见问题：  
+    1、配置文件注入失败，Could not resolve placeholder  
+        解决：根据springboot启动流程，会有自动扫描包没有扫描到相关注解,   
+        默认Spring框架实现会从声明@ComponentScan所在的类的package进行扫描，来自动注入，  
+        因此启动类最好放在根路径下面，或者指定扫描包范围  
+        spring-boot扫描启动类对应的目录和子目录  
+    2、注入bean的方式，属性名称和配置文件里面的key一一对应，就用加@Value 这个注解  
+        如果不一样，就要加@value("${XXX}")  
+
+### 10.SpringBoot单元测试  
+1. 引入相关依赖
+```
+  <!--springboot程序测试依赖，如果是自动创建项目默认添加-->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+```
+2. 使用@RunWith(SpringRunner.class)  //底层用junit  SpringJUnit4ClassRunner 
+       @SpringBootTest(classes={DemoApplication.class})//启动整个springboot工程  
+![](./springboot/44.png)  
+
+SpringBoot测试进阶高级篇之MockMvc讲解   
+简介:讲解MockMvc类的使用和模拟Http请求实战   
+1、增加类注解 @AutoConfigureMockMvc   
+        @SpringBootTest(classes={XdclassApplication.class})    
+2、相关API   
+perform：执行一个RequestBuilder请求  
+andExpect：添加ResultMatcher->MockMvcResultMatchers验证规则  
+andReturn：最后返回相应的MvcResult->Response  
 
 
+### 11.SpringBoot2.x个性化启动banner设置和debug日志  
+简介：自定义应用启动的趣味性日志图标和查看调试日志  
+1、启动获取更多信息 java -jar xxx.jar --debug  
+2、修改启动的banner信息  
+1）在类路径下增加一个banner.txt，里面是启动要输出的信息  
+2）在applicatoin.properties增加banner文件的路径地址   
+    spring.banner.location=banner.txt  
+3）官网地址 https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-banners  
+![](./springboot/45.png)
+
+### 12.SpringBoot2.x配置全局异常实战  
+讲解：服务端异常讲解和SpringBoot配置全局异常实战  
+1、默认异常测试  int i = 1/0，不友好,如果是前后端分离前端你抛一个404的页面前端不知道该如何去处理  
+先定义一个异常
+![](./springboot/46.png)
+```java
+@RestController  
+public class ExcptionController {  
+    @RequestMapping(value = "/api/v1/test_ext")  
+    public Object index() {  
+        int i= 1/0;  
+        return new User(11, "sfsfds", "1000000", new Date());  
+    }  
+}  
+```
+
+2、异常注解介绍  
+@ControllerAdvice 如果是返回json数据 则用 RestControllerAdvice,就可以不加 @ResponseBody  
+//捕获全局异常,处理所有不可知的异常  
+@ExceptionHandler(value=Exception.class)  
+![](./springboot/47.png)
+```java
+@RestControllerAdvice
+public class CustomExtHandler {
+    private static final Logger LOG = LoggerFactory.getLogger(CustomExtHandler.class);
+
+	//捕获全局异常,处理所有不可知的异常
+	@ExceptionHandler(value=Exception.class)
+	//@ResponseBody
+    Object handleException(Exception e,HttpServletRequest request){
+		LOG.error("url {}, msg {}",request.getRequestURL(), e.getMessage()); 
+		Map<String, Object> map = new HashMap<>();
+	        map.put("code", 100);
+	        map.put("msg", e.getMessage());
+	        map.put("url", request.getRequestURL());
+	        return map;
+    }
+}
+```
+这样就能返回一个json数据给前端了
+
+### 13.SpringBoot2.x配置自定义异常实战  
+简介：使用SpringBoot自定义异常和错误页面跳转实战  
+1、返回自定义异常界面，需要引入thymeleaf依赖  
+```
+<dependency>  
+   <groupId>org.springframework.boot</groupId>  
+   <artifactId>spring-boot-starter-thymeleaf</artifactId>  
+</dependency>
+
+```
+2、创建自定义异常类
+![](./springboot/48.png)
+```java
+public class MyException extends RuntimeException {
+
+    public MyException(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    private String code;
+    private String msg;
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+}
+```
+3、写一个异常路由
+```java
+/**
+	 * 功能描述：模拟自定义异常
+	 * @return
+	 */
+	@RequestMapping("/api/v1/myext")
+	public Object myexc(){
+
+		throw new MyException("499", "my ext异常");
+
+	}
+```
+
+4、处理自定义异常
+```java
+	/**
+	 * 功能描述：处理自定义异常
+	 * @return
+	 */
+	@ExceptionHandler(value=MyException.class)
+	Object handleMyException(MyException e,HttpServletRequest request){
+		//进行页面跳转
+//		ModelAndView modelAndView = new ModelAndView();
+//	    modelAndView.setViewName("error.html");
+//	    modelAndView.addObject("msg", e.getMessage());
+//	    return modelAndView;
+
+		//返回json数据，由前端去判断加载什么页面
+		Map<String, Object> map = new HashMap<>();
+		map.put("code", e.getCode());
+		map.put("msg", e.getMsg());
+		map.put("url", request.getRequestURL());
+		return map;
+
+	}
+```
+https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-error-handling
 
 
+### 14.SpringBoot启动方式讲解和部署war项目到tomcat
+1、ide启动
+	2、jar包方式启动
+				maven插件:
+				<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+				</build>
+				如果没有加，则执行jar包 ，报错如下
+					java -jar spring-boot-demo-0.0.1-SNAPSHOT.jar
+					no main manifest attribute, in spring-boot-demo-0.0.1-SNAPSHOT.jar
+				如果有安装maven 用 mvn spring-boot:run
+		项目结构
+			example.jar
+					 |
+					 +-META-INF
+					 |  +-MANIFEST.MF
+					 +-org
+					 |  +-springframework
+					 |     +-boot
+					 |        +-loader
+					 |           +-<spring boot loader classes>
+					 +-BOOT-INF
+					    +-classes
+					    |  +-mycompany
+					    |     +-project
+					    |        +-YourClasses.class
+					    +-lib
+					       +-dependency1.jar
+					       +-dependency2.jar
+	目录结构讲解
+	https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#executable-jar-jar-file-structure
 
+3、war包方式启动
+1)在pom.xml中<parent>上方将打包形式 jar 修改为war  <packaging>war</packaging>
 
+构建项目名称 <finalName>xdclass_springboot</finalName>
 
+2)tocmat下载 https://tomcat.apache.org/download-90.cgi
 
+3)修改启动类
+    public class DemoApplication extends SpringBootServletInitializer {
 
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(DemoApplication.class);
+    }
 
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+4)打包项目，启动tomcat
 
 
 
