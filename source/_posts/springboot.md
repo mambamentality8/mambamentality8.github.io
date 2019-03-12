@@ -68,11 +68,11 @@ Absolutely no code generation and no requirement for XML configuration
 ## 第一章   快速入门
 
 - 进入https://start.spring.io/
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/1.png?Expires=1552191339&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=gVF8VqFVZKNjoQJklRITLQDsca8%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/1.png)
 - 将下载的包解压并导入IDEA
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/2.png?Expires=1552191339&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=HCf5zOt0jmFk2r5xX7n8Uci7eqg%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/2.png)
 - 启动我们的项目,访问8080端口
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/3.png?Expires=1552191339&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=7jOYs8PuwvrUIslW7YNDCCQNn74%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/3.png?)
 看到找不到页面选项就代表成功,因为我们还没有配置静态资源  
 
 ## 第二章   http协议开发
@@ -80,9 +80,9 @@ Absolutely no code generation and no requirement for XML configuration
 ### 1.路由配置
 
 - 首先要明白几个注解
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/4.png?Expires=1552191692&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=BYdl5dzM39mRpLCnQLIsbmZIeco%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/4.png)
 - 创建一个controller
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/5.png?Expires=1552191706&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=72gMfwnmeq%2BjM3t6PJpaDlUxt2Y%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/5.png)
 ```java
 @RequestMapping("/")
     public String home(){
@@ -97,8 +97,8 @@ public Map<String,String> testMap(){
 }
 ```
 - 然后进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/6.png?Expires=1552191720&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=JZtUd1rLSrlXaR2jBEA1ZwltGrI%3D)
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/7.png?Expires=1552191733&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=%2BhgA2UKkQOFEN3QMj9c%2BmpWJq%2Bo%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/6.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/7.png)
 
 ### 2.postman接口测试  
 
@@ -106,7 +106,7 @@ public Map<String,String> testMap(){
 postman下载地址https://www.getpostman.com/downloads/
 ```
 - 在GetController中添加代码进行测试  
-![](springboot/8.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/8.png)
 
 ```java
 private Map<String,Object> params = new HashMap<>();
@@ -180,7 +180,7 @@ private Map<String,Object> params = new HashMap<>();
 
 - bean对象传参
 在domain包下创建一个实体类
-![](springboot/24.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/24.png)
 
 ```java
 public class User {
@@ -273,7 +273,7 @@ public class User {
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/17.png?Expires=1552192018&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=ld8c5nk5GAmKjd4BAyH46jkqZ7U%3D)
 
 - post提交方式
-![](./springboot/18.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/18.png)
 
 ```java
 private Map<String,Object> params = new HashMap<>();
@@ -293,10 +293,10 @@ private Map<String,Object> params = new HashMap<>();
 ```
 
 然后我们用postman进行测试
-![](./springboot/19.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/19.png)
 
 - put提交方式
-![](./springboot/20.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/20.png)
 
 ```java
   @PutMapping("/v1/put")
@@ -307,10 +307,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](./springboot/21.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/21.png)
 
 - delete提交方式
-![](./springboot/22.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/22.png)
 
 ```java
    @DeleteMapping("/v1/del")
@@ -322,7 +322,7 @@ private Map<String,Object> params = new HashMap<>();
 ```
 
 然后我们用postman进行测试
-![](./springboot/23.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/23.png)
 
 ### 3.常用json框架介绍和jackson返回结果处理
 ```
@@ -332,7 +332,7 @@ Jackson、FastJson、Gson类库各有优点，各有自己的专长
 空间换时间，时间换空间
 ```
 为我们的User类添加一个新字段重新生成get/set方法
-![](./springboot/25.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/25.png)
 
 在SampleController中添加一个新接口
 ```java
@@ -343,11 +343,11 @@ Jackson、FastJson、Gson类库各有优点，各有自己的专长
     }
 ```
 测试结果
-![](./springboot/26.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/26.png)
 但是密码不应该暴露给前端,我们在User类中添加一个注解
-![](./springboot/27.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/27.png)
 添加完之后启动应用再次测试
-![](./springboot/28.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/28.png)
 这样就保证了我们的数据安全
 
 ```
@@ -373,9 +373,9 @@ src/main/resources目录下资源加载的顺序
 
 ```
 我们先把restful风格的接口注释掉防止影响
-![](./springboot/29.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/29.png)
 然后按照图中示例进行测试
-![](./springboot/30.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/30.png)
 
 <font color=red>templates下的文件一般是静态模板没有加入classpath中,直接访问会找不到资源路径需要引入依赖</font>  
 
@@ -387,7 +387,7 @@ src/main/resources目录下资源加载的顺序
 </dependency>
 ```
 新建一个FileController
-![](./springboot/31.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/31.png)
 加入代码
 ```java
  @RequestMapping(value = "/api/v1/gopage")
@@ -410,7 +410,7 @@ src/main/resources目录下资源加载的顺序
 </html>
 ```
 再次访问url
-![](./springboot/32.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/32.png)
 
 官方默认spring加载静态资源配置路径
 ```
@@ -422,7 +422,7 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
 ```
 ### 5.springboot文件上传实战
 在static加入上传文件的页面
-![](./springboot/33.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/33.png)
 ```html
 <!DOCTYPE html>
 <html>
@@ -448,7 +448,7 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
 ```
 然后在FileController中添加后台代码
 <font color=red>注意替换自己存放文件的路径</font>  
-![](./springboot/34.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/34.png)
 ```java
 //注意替换路径
  private static final String filePath = "D:\\springboot_workspace\\demo\\src\\main\\resources\\static\\image\\";
@@ -491,7 +491,7 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
     }
 ```
 响应的时候应该返回给前台一个包装的json类
-![](./springboot/35.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/35.png)
 ```java
 	private static final long serialVersionUID = 1L;
 
@@ -542,9 +542,9 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
 	}
 ```
 向后台发送文件之后
-![](./springboot/36.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/36.png)
 这里会有一个问题当上传文件过大时,会抛出异常,那么我们应该如何去配置呢?
-![](./springboot/37.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/37.png)
 在含有Config注解的类下配置一个bean注解,解决文件上传问题
 ```java
 @Bean
@@ -570,10 +570,10 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
 	</build>
 ```
 使用 mvn install 将项目打包
-![](./springboot/38.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/38.png)
 将jar包后缀换成zip并解压查看目录
-![](./springboot/39.png)
-![](./springboot/40.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/39.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/40.png)
 如果你上传的图片路径是自定义的,请自行在配置文件中添加
 web.images-path=自定义路径
 spring.resources.static-locations=classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/test/,file:${web.upload-path} 
@@ -587,10 +587,10 @@ spring.resources.static-locations=classpath:/META-INF/resources/,classpath:/reso
          <optional>true</optional>  
    	</dependency>
 2. 在IDEA设置中打开自动编译
- ![](./springboot/41.png)
+ ![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/41.png)
 3. 打开运行时编译,按快捷键 Shift+Ctrl+Alt+/ ，打开maintenance面板, 选择 Registry  
    勾选如图所示:
-![](./springboot/42.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/42.png)
 不被热部署的文件  
  		1、/META-INF/maven, /META-INF/resources, /resources, /static, /public, or /templates  
  		2、指定文件不进行热部署 spring.devtools.restart.exclude=static/**,public/**  
@@ -682,7 +682,7 @@ public String toString() {
 使用前缀
 @ConfigurationProperties（prefix = "xxx"）
 如果使用前缀的话则不需要@Value注解
-![](./springboot/43.png)  
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/43.png)  
 常见问题：  
     1、配置文件注入失败，Could not resolve placeholder  
         解决：根据springboot启动流程，会有自动扫描包没有扫描到相关注解,   
@@ -704,7 +704,7 @@ public String toString() {
 ```
 2. 使用@RunWith(SpringRunner.class)  //底层用junit  SpringJUnit4ClassRunner 
        @SpringBootTest(classes={DemoApplication.class})//启动整个springboot工程  
-![](./springboot/44.png)  
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/44.png)  
 
 SpringBoot测试进阶高级篇之MockMvc讲解   
 简介:讲解MockMvc类的使用和模拟Http请求实战   
@@ -724,13 +724,13 @@ andReturn：最后返回相应的MvcResult->Response
 2）在applicatoin.properties增加banner文件的路径地址   
     spring.banner.location=banner.txt  
 3）官网地址 https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-banners  
-![](./springboot/45.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/45.png)
 
 ### 12.SpringBoot2.x配置全局异常实战  
 讲解：服务端异常讲解和SpringBoot配置全局异常实战  
 1、默认异常测试  int i = 1/0，不友好,如果是前后端分离前端你抛一个404的页面前端不知道该如何去处理  
 先定义一个异常
-![](./springboot/46.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/46.png)
 ```java
 @RestController  
 public class ExcptionController {  
@@ -746,7 +746,7 @@ public class ExcptionController {
 @ControllerAdvice 如果是返回json数据 则用 RestControllerAdvice,就可以不加 @ResponseBody  
 //捕获全局异常,处理所有不可知的异常  
 @ExceptionHandler(value=Exception.class)  
-![](./springboot/47.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/47.png)
 ```java
 @RestControllerAdvice
 public class CustomExtHandler {
@@ -778,7 +778,7 @@ public class CustomExtHandler {
 
 ```
 2、创建自定义异常类
-![](./springboot/48.png)
+![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/48.png)
 ```java
 public class MyException extends RuntimeException {
 
@@ -882,16 +882,76 @@ https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingl
 	https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#executable-jar-jar-file-structure
 
 3、war包方式启动
-1)在pom.xml中<parent>上方将打包形式 jar 修改为war  <packaging>war</packaging>
+1)在pom.xml中<version>下方将打包形式jar修改为war        
+  ```
+  <packaging>war</packaging>
+  ```
+构建项目名称
+```
+<finalName>demo_springboot</finalName>
+```
+如下
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.3.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.example</groupId>
+	<artifactId>demo</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>demo</name>
+	<description>Demo project for Spring Boot</description>
 
-构建项目名称 <finalName>xdclass_springboot</finalName>
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<!--web启动器-->
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<!--打包插件-->
+	<build>
+		<finalName>demo_springboot</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+```
+
+
 
 2)tocmat下载 https://tomcat.apache.org/download-90.cgi
 
 3)修改启动类
-    public class DemoApplication extends SpringBootServletInitializer {
+```java
+@SpringBootApplication
+public class DemoApplication extends SpringBootServletInitializer {
 
-    @Override
+ @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(DemoApplication.class);
     }
@@ -899,10 +959,10 @@ https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingl
     public static void main(String[] args) throws Exception {
         SpringApplication.run(DemoApplication.class, args);
     }
-
-    }
-
-4)打包项目，启动tomcat
+}
+```
+4)执行meaven命令mvn install打包项目  
+5)将打好的包放在tomcat容器webapp目录下中,tomcat会自动解压这个war包
 
 
 
