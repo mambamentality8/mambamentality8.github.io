@@ -9,7 +9,7 @@ image:
 ---
 <p class="description"></p>
 <meta name="referrer" content="no-referrer" />
-<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/title.png?Expires=1552194987&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=miwbtIlUZcouRKPcFNvsOSergAg%3D" alt="" style="width:100%" />
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/title.png>
 
 <!-- more -->
 
@@ -130,10 +130,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/9.png?Expires=1552191889&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=8WgW7Kx3nztU%2BeUn%2BvW6RkIK4Ho%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/9.png)
 
 - GetMapping
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/10.png?Expires=1552191910&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=l%2FuLzie0Sk4V3FVA7c%2FM56LQwag%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/10.png)
 ```java
  /**
      * 功能描述：测试GetMapping
@@ -152,10 +152,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/11.png?Expires=1552191934&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=PsiKQlTTm6R9lFhGnW3m4W7%2B%2BGI%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/11.png)
 
 - GetMapping默认值
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/12.png?Expires=1552191948&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=jo5FpkRaILxoV291DTui3swBZP0%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/12.png)
 ```java
 /**
      * 功能描述：默认值，是否必须的参数
@@ -175,7 +175,7 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/13.png?Expires=1552191963&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=5hfyyBjvTLcwzszf05LvyFuHW6c%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/13.png)
 如果没有传入参数那么将会启用默认值
 
 - bean对象传参
@@ -233,7 +233,7 @@ public class User {
 }
 ```
 
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/14.png?Expires=1552191975&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=YFxLPVeYltF%2BVgQMoMl7ZdlGlm4%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/14.png)
 ```java
  /**
      * 功能描述：bean对象传参
@@ -250,10 +250,10 @@ public class User {
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/15.png?Expires=1552191992&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=M5hPnQqNj0aym2YEXtA0nYP8J48%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/15.png)
 
 - 获取请求头信息
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/16.png?Expires=1552192004&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=Rx3MUDGr%2FyB%2Fpj6lY1%2FJdFI%2FRhM%3D)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/16.png)
 ```java
 /**
      * 功能描述：测试获取http头信息
@@ -270,8 +270,7 @@ public class User {
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/17.png?Expires=1552192018&OSSAccessKeyId=TMP.AQEgtsLEyObEK7RPOH5L9U0CS_EV2PzgEwkmxLnbFWPDuMjD2UYg5jhs4VkoMC4CFQDmrpV3tbPVf3EfSlK6eCVNYlr1ogIVAI-_cBMnqmozlouLhxj82DlrazUO&Signature=ld8c5nk5GAmKjd4BAyH46jkqZ7U%3D)
-
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/17.png)
 - post提交方式
 ![](./http://blog-mamba.oss-cn-beijing.aliyuncs.com/18.png)
 
