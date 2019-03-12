@@ -804,6 +804,7 @@ public class MyException extends RuntimeException {
 }
 ```
 3、写一个异常路由
+![](springboot/49.png)
 ```java
 /**
 	 * 功能描述：模拟自定义异常
@@ -818,6 +819,7 @@ public class MyException extends RuntimeException {
 ```
 
 4、处理自定义异常
+![](springboot/50.png)
 ```java
 	/**
 	 * 功能描述：处理自定义异常
@@ -964,9 +966,7 @@ public class DemoApplication extends SpringBootServletInitializer {
 5)将打好的包放在tomcat容器webapp目录下中,tomcat会自动解压这个war包
 
 
-深入SpringBoot2.x过滤器Filter和使用Servlet3.0配置自定义Filter实战(核心知识)
-	简介:讲解SpringBoot里面Filter讲解和使用Servlet3.0配置自定义Filter实战
-		
+### 15.SpringBoot2.x过滤器Filter
 filter简单理解：人--->检票员（filter）---> 景点
 
 1、SpringBoot启动默认加载的Filter 
@@ -1023,6 +1023,7 @@ public class LoginFilter  implements Filter{
           String username = req.getParameter("username");
           
           if ("demo".equals(username)) {
+              //放行之后继续回到我们的controller层
         	  filterChain.doFilter(servletRequest,servletResponse);
           } else {
         	  resp.sendRedirect("/index.html");
@@ -1039,13 +1040,259 @@ public class LoginFilter  implements Filter{
       }
 }
 ```
+放行
+![](springboot/51.png)
+不放行
+![](springboot/52.png)
 
 1、官网地址：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-embedded-container-servlets-filters-listeners
 
 
 
+### 16.Servlet3.0的注解自定义原生Servlet实战
+在启动类添加注解@ServletComponentScan
+自定义原生Servlet
+```java
+@WebServlet(name = "userServlet",urlPatterns = "/test/customs")
+			public class UserServlet extends HttpServlet{
+
+				 @Override
+			     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			         resp.getWriter().print("custom sevlet");
+			         resp.getWriter().flush();
+			         resp.getWriter().close();
+			     }
+
+			     @Override
+			     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			         this.doGet(req, resp);
+			     }
+			}
+```
+			
+### 17.Servlet3.0的注解原生Linstener监听器实战
+在启动类添加注解@ServletComponentScan
+自定义Listener(常用的监听器 servletContextListener、httpSessionListener、servletRequestListener)
+```java
+@WebListener
+public class RequestListener implements ServletRequestListener {
+
+@Override
+public void requestDestroyed(ServletRequestEvent sre) {
+    // TODO Auto-generated method stub
+    //请求之后执行的代码
+    System.out.println("======requestDestroyed========");
+}
+
+@Override
+public void requestInitialized(ServletRequestEvent sre) {
+    //请求之前执行的代码
+    System.out.println("======requestInitialized========");
+}
+```
+
+```java
+@WebListener
+public class CustomContextListener implements ServletContextListener{
+
+	@Override
+	public void contextInitialized(ServletContextEvent sce) {
+	    //容器启动时执行的代码,一般做资源的加载,缓存预热,一般会单独开一个线程去处理
+		System.out.println("======contextInitialized========");
+		
+	}
+
+	@Override
+	public void contextDestroyed(ServletContextEvent sce) {
+		System.out.println("======contextDestroyed========");
+		
+	}
+}
+```
+
+### 18.SpringBoot2.X自定义拦截器实战及新旧配置对比
+简介: 讲解拦截器使用，Spingboot2.x新版本配置拦截拦截器和旧版本SpringBoot配置拦截器区别讲解
+
+1、启动类配置@ServletComponentScan
+
+2、
+自定义类继承SpringBoot2.X新版本配置拦截器 implements WebMvcConfigurer.记得加注解@Configuration
+![](springboot/53.png)
+
+自定义类继承WebMvcConfigurationAdapter(SpringBoot2.X之前旧版本).记得加注解@Configuration
+![](springboot/54.png)
+
+2、自定义拦截器 HandlerInterceptor
+![](springboot/55.png)
+preHandle：调用Controller某个方法之前
+postHandle：Controller之后调用，视图渲染之前，如果控制器Controller出现了异常，则不会执行此方法
+afterCompletion：不管有没有异常，这个afterCompletion都会被调用，用于资源清理
+
+3、按照注册顺序进行拦截，先注册，先被拦截
+
+拦截器不生效常见问题：
+1）是否有加@Configuration
+2）拦截路径是否有问题 **  和 * 
+3）拦截器最后路径一定要 “/**”， 如果是目录的话则是 /*/
 
 
+过滤器和拦截器的区别:
+    Filter
+    是基于函数回调 doFilter()，而Interceptor则是基于AOP思想
+    Filter在只在Servlet前后起作用，而Interceptor够深入到方法前后、异常抛出前后等
+    依赖于Servlet容器即web应用中，而Interceptor不依赖于Servlet容器所以可以运行在多种环境。
+    在接口调用的生命周期里，Interceptor可以被多次调用，而Filter只能在容器初始化时调用一次。
+    Filter和Interceptor的执行顺序
+    过滤前->拦截前->action执行->拦截后->过滤后
 
 
+### 19.SpringBoot常用Starter介绍
+简介：介绍什么是SpringBoot Starter和主要作用
+
+1、官网地址：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#using-boot-starter
+
+2、starter主要简化依赖用的
+    spring-boot-starter-web	->里面包含多种依赖
+
+3、几个常用的starter
+    spring-boot-starter-activemq
+    spring-boot-starter-aop
+    spring-boot-starter-data-redis
+    spring-boot-starter-freemarker
+    spring-boot-starter-thymeleaf
+    spring-boot-starter-webflux
+
+### 21.SpringBoot2.x常见模板引擎讲解和官方推荐使用
+简介：介绍常用的SpringBoot2.x模板引擎和官方推荐案例
+
+1、JSP（后端渲染，消耗性能）
+    Java Server Pages 动态网页技术,由应用服务器中的JSP引擎来编译和执行，再将生成的整个页面返回给客户端
+    可以写java代码
+    持表达式语言（el、jstl）
+    内建函数
+    JSP->Servlet(占用JVM内存)permSize
+    javaweb官方推荐
+    springboot不推荐 https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-jsp-limitations
+
+2、Freemarker 
+    FreeMarker Template Language（FTL）  文件一般保存为 xxx.ftl
+    严格依赖MVC模式，不依赖Servlet容器（不占用JVM内存）
+    内建函数
+
+3、Thymeleaf (主推)
+    轻量级的模板引擎（负责逻辑业务的不推荐，解析DOM或者XML会占用多的内存）
+    可以直接在浏览器中打开且正确显示模板页面
+
+直接是html结尾，直接编辑
+demo.net/user/userinfo.html
+社会工程学
+伪装 防黑客
+
+### 22.SpringBoot2.x整合模板引擎freemarker实战
+1、Freemarker相关maven依赖
+```
+<!-- 引入freemarker模板引擎的依赖 -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-freemarker</artifactId>
+</dependency>
+```
+2、在application.properties中进行Freemarker的基础配置
+```
+#是否开启freemarker缓存,本地为false，生产建议为true
+spring.freemarker.cache=false
+
+spring.freemarker.charset=UTF-8
+spring.freemarker.allow-request-override=false
+spring.freemarker.check-template-location=true
+
+#类型
+spring.freemarker.content-type=text/html
+
+spring.freemarker.expose-request-attributes=true
+spring.freemarker.expose-session-attributes=true
+
+#文件后缀
+spring.freemarker.suffix=.ftl
+#路径
+spring.freemarker.template-loader-path=classpath:/templates/
+```
+3、建立文件夹
+    1)src/main/resources/templates/fm/user/
+    2)建立一个index.ftl
+    3)user文件夹下面建立一个user.html
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>这freemaker整合，index.html页面</h1>
+
+<h1> ${setting.name} </h1>
+<h1> ${setting.domain} </h1>
+
+</body>
+</html>
+```
+4、新建一个freemarkerController
+![](springboot/56.png)
+```java
+@Controller
+@RequestMapping("/freemaker")
+public class FreemakerController {
+	@Autowired
+	private ServerSettings setting;
+
+	
+	@GetMapping("hello")
+	public String index(ModelMap modelMap){
+		
+		modelMap.addAttribute("setting", setting);
+		
+		return "fm/index";  //不用加后缀，在配置文件里面已经指定了后缀
+	}
+}
+```
+5、将ServerSettings这个模型类添加进来以供测试
+![](springboot/57.png)
+```java
+@Component
+@PropertySource({"classpath:application.properties"})
+@ConfigurationProperties(prefix="test")
+public class ServerSettings {
+
+	//名称
+	
+	//@Value("${appname}")
+	private String name;
+	
+	//@Value("${domain}")
+	private String domain;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+}
+```
+5、application.properties文件中添加
+```
+test.domain=www.demo.net
+test.name=springboot
+```
+	
 <hr />
