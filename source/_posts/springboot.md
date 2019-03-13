@@ -1294,5 +1294,356 @@ public class ServerSettings {
 test.domain=www.demo.net
 test.name=springboot
 ```
-	
+
+### 23.SpringBoot2.x整合模板引擎thymeleaf实战
+
+官网地址：https://www.thymeleaf.org/doc/articles/thymeleaf3migration.html
+1、配置thymeleaf相关maven依赖
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+```
+
+2、thymeleaf基础配置
+```
+#整合thymeleaf相关配置
+#开发时关闭缓存,不然没法看到实时页面
+spring.thymeleaf.cache=false
+spring.thymeleaf.mode=HTML5
+#前缀
+spring.thymeleaf.prefix=classpath:/templates/tl/
+#编码
+spring.thymeleaf.encoding=UTF-8
+#类型
+spring.thymeleaf.content-type=text/html
+#名称的后缀
+spring.thymeleaf.suffix=.html
+```
+3、建立Controller
+![](springboot/59.png)
+```java
+@Controller
+@RequestMapping("/tyhmeleaf")
+public class ThymeleafController {
+	@Autowired
+	private ServerSettings setting;
+
+	@GetMapping("hello")
+	public String index(){
+		return "index";  //不用加后缀，在配置文件里面已经指定了后缀
+	}
+
+	@GetMapping("info")
+	public String admin(ModelMap modelMap){
+		
+		modelMap.addAttribute("setting", setting);
+		
+		return "admin/info";  //不用加后缀，在配置文件里面已经指定了后缀
+	}
+}
+```
+
+4、建立文件夹
+1)src/main/resources/templates/tl/
+2)在template下admin模块下建一个info.html
+![](springboot/58.png)
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+模板引擎整合thymeleaf  admin/info.html
+
+<h1 >测试内容，未加th表达式</h1>
+<h1 th:text="${setting.name}">测试内容</h1>
+<h1>demo.net</h1>
+</body>
+</html>
+```
+
+4、简单测试代码编写和访问
+    注意：$表达式只能写在th标签内部
+    快速入门：https://www.thymeleaf.org/doc/articles/standarddialect5minutes.html
 <hr />
+
+
+### 23.SpringBoot2.x数据库操作之整合Mybaties
+介绍近几年常用的访问数据库的方式和优缺点
+
+1、原始java访问数据库
+开发流程麻烦
+```
+1、注册驱动/加载驱动
+    Class.forName("com.mysql.jdbc.Driver")
+2、建立连接
+    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbname","root","root");
+3、创建Statement
+
+4、执行SQL语句
+
+5、处理结果集
+
+6、关闭连接，释放资源
+
+```
+
+2、apache dbutils框架
+```
+比上一步简单点
+    官网:https://commons.apache.org/proper/commons-dbutils/
+```
+    
+3、jpa框架
+```
+spring-data-jpa
+jpa在复杂查询的时候性能不是很好
+```
+
+4、Hiberante   
+```
+解释：ORM：对象关系映射Object Relational Mapping
+企业大都喜欢使用hibernate
+```
+
+5、Mybatis框架  
+```
+互联网行业通常使用mybatis
+不提供对象和关系模型的直接映射,半ORM
+``` 
+    
+### 24.SpringBoot2.x整合Mybatis3.x注解配置实战
+
+1、使用starter, maven仓库地址：http://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
+
+2、加入依赖(可以用 http://start.spring.io/ 下载)
+```
+<!-- MySQL的JDBC驱动包	-->	
+<!-- 引入starter-->
+<dependency>
+    <groupId>org.mybatis.spring.boot</groupId>
+    <artifactId>mybatis-spring-boot-starter</artifactId>
+    <version>1.3.2</version>
+</dependency>
+
+<!-- MySQL的JDBC驱动包	-->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <scope>runtime</scope>
+</dependency>
+<!-- 引入第三方数据源 -->
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>druid</artifactId>
+    <version>1.1.6</version>
+</dependency>
+```
+
+3、加入配置文件
+```
+#mybatis.type-aliases-package=net.xdclass.base_project.domain
+#可以自动识别
+#spring.datasource.driver-class-name =com.mysql.jdbc.Driver
+
+spring.datasource.url=jdbc:mysql://localhost:3306/mybaties_demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+spring.datasource.username =root
+spring.datasource.password =root
+#如果不使用默认的数据源 （com.zaxxer.hikari.HikariDataSource,性能最快但不如Druid的监控）
+spring.datasource.type =com.alibaba.druid.pool.DruidDataSource
+```
+加载配置，注入到sqlSessionFactory等都是springBoot帮我们完成
+
+4、启动类增加mapper扫描
+```
+@MapperScan("com.example.demo.mapper")
+```
+
+
+ 技巧：保存对象，获取数据库自增id 
+ ```
+  @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
+ ```
+
+4、开发controller services mapper  
+开发controller:  
+```java
+@RestController
+@RequestMapping("/api/v1/user")
+public class UserController {
+	
+	
+	@Autowired
+	private UserService userService;
+	
+	
+	/**
+	 * 功能描述: user 保存接口
+	 * @return
+	 */
+	@GetMapping("add")
+	public Object add(){
+		
+		User user = new User();
+		user.setAge(11);
+		user.setCreateTime(new Date());
+		user.setName("demo");
+		user.setPhone("1000000000");
+		int id = userService.add(user);
+		
+       return JsonData.buildSuccess(id);
+	}
+```
+services:  
+```java
+public interface UserService {
+
+	public int add(User user);
+	//public int addAccount();
+}
+```
+mapper:
+```java
+public interface UserMapper {
+	
+	//推荐使用#{}取值，不要用${},因为存在注入的风险
+	 @Insert("INSERT INTO user(name,phone,create_time,age) VALUES(#{name}, #{phone}, #{createTime},#{age})")
+	 @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")   //keyProperty java对象的属性；keyColumn表示数据库的字段
+	 int insert(User user);
+	
+//
+//    @Select("SELECT * FROM user")
+//    @Results({
+//        @Result(column = "create_time",property = "createTime")  //javaType = java.util.Date.class        
+//    })
+//    List<User> getAll();
+//  
+//    
+//
+//    @Select("SELECT * FROM user WHERE id = #{id}")
+//    @Results({
+//    	 @Result(column = "create_time",property = "createTime")
+//    })
+//    User findById(Long id);
+//
+//   
+//
+//    @Update("UPDATE user SET name=#{name} WHERE id =#{id}")
+//    void update(User user);
+//
+//    @Delete("DELETE FROM user WHERE id =#{userId}")
+//    void delete(Long userId);
+//
+}
+```
+
+参考语法 http://www.mybatis.org/mybatis-3/zh/java-api.html
+
+
+5、sql脚本
+```sql
+CREATE TABLE `user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) DEFAULT NULL COMMENT '名称',
+  `phone` varchar(16) DEFAULT NULL COMMENT '用户手机号',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `age` int(4) DEFAULT NULL COMMENT '年龄',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+```
+
+
+相关资料：
+http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/#Configuration
+
+https://github.com/mybatis/spring-boot-starter/tree/master/mybatis-spring-boot-samples
+
+整合问题集合：
+https://my.oschina.net/hxflar1314520/blog/1800035
+https://blog.csdn.net/tingxuetage/article/details/80179772
+
+
+### 25.SpringBoot2.x整合Mybatis3.x增删改查实操和控制台打印SQL语句
+```
+#增加打印sql语句，一般用于本地开发测试
+mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
+```
+增加mapper代码	
+
+```java
+@Select("SELECT * FROM user")
+@Results({
+    @Result(column = "create_time",property = "createTime")  //javaType = java.util.Date.class        
+})
+List<User> getAll();
+
+@Select("SELECT * FROM user WHERE id = #{id}")
+@Results({
+     @Result(column = "create_time",property = "createTime")
+})
+User findById(Long id);
+
+@Update("UPDATE user SET name=#{name} WHERE id =#{id}")
+void update(User user);
+
+@Delete("DELETE FROM user WHERE id =#{userId}")
+void delete(Long userId);
+```
+
+增加Controller
+```java
+@GetMapping("find_all")
+public Object findAll(){
+   return JsonData.buildSuccess(userMapper.getAll());
+}
+
+@GetMapping("find_by_Id")
+public Object findById(long id){
+   return JsonData.buildSuccess(userMapper.findById(id));
+}
+
+@GetMapping("del_by_id")
+public Object delById(long id){
+userMapper.delete(id);
+   return JsonData.buildSuccess();
+}
+
+@GetMapping("update")
+public Object update(String name,int id){
+    User user = new User();
+    user.setName(name);
+    user.setId(id);
+    userMapper.update(user);
+    return JsonData.buildSuccess();
+}
+```
+
+### 26.事务介绍和常见的隔离级别，传播行为
+不需要的时候不要加事务比较好费性能 它有个锁
+1、service逻辑引入事务 
+```
+@Transantional(propagation=Propagation.REQUIRED)
+```
+
+2、service代码
+
+```java
+@Override
+@Transactional
+public int addAccount() {
+User user = new User();
+user.setAge(9);
+user.setCreateTime(new Date());
+user.setName("事务测试");
+user.setPhone("000121212");
+
+userMapper.insert(user);
+int a = 1/0;
+
+return user.getId();
+}
+```
