@@ -9,6 +9,7 @@ image:
 ---
 <p class="description"></p>
 <meta name="referrer" content="no-referrer" />
+
 <img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/title.png>
 
 <!-- more -->
@@ -1518,6 +1519,8 @@ public interface UserMapper {
 //
 //    @Select("SELECT * FROM user")
 //    @Results({
+            //create_time表示数据库的字段 property表示实体类的字段
+            //从数据库查出来数据以后将数据库数据映射到实体类上
 //        @Result(column = "create_time",property = "createTime")  //javaType = java.util.Date.class        
 //    })
 //    List<User> getAll();
@@ -1633,7 +1636,6 @@ public Object update(String name,int id){
 
 ```java
 @Override
-@Transactional
 public int addAccount() {
 User user = new User();
 user.setAge(9);
@@ -1647,3 +1649,151 @@ int a = 1/0;
 return user.getId();
 }
 ```
+此时尽管抛异常了但数据还是执行成功了
+
+3、讲解场景的隔离级别  
+Serializable： 最严格，串行处理，消耗资源大  
+Repeatable Read：保证了一个事务不会修改已经由另一个事务读取但未提交（回滚）的数据  
+Read Committed：大多数主流数据库的默认事务等级  
+Read Uncommitted：保证了读取过程中不会读取到非法数据。  
+
+4、讲解常见的传播行为
+PROPAGATION_REQUIRED--支持当前事务，如果当前没有事务，就新建一个事务,最常见的选择。  
+
+PROPAGATION_SUPPORTS--支持当前事务，如果当前没有事务，就以非事务方式执行。  
+
+PROPAGATION_MANDATORY--支持当前事务，如果当前没有事务，就抛出异常。  
+
+PROPAGATION_REQUIRES_NEW--新建事务，如果当前存在事务，把当前事务挂起, 两个事务之间没有关系，一个异常，一个提交，不会同时回滚  
+
+PROPAGATION_NOT_SUPPORTED--以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。  
+
+PROPAGATION_NEVER--以非事务方式执行，如果当前存在事务，则抛出异常  
+
+
+### 26.SpringBoot整合mybatis之事务处理实战
+1、service逻辑引入事务 @Transantional(propagation=Propagation.REQUIRED)
+
+2、service代码
+
+```java
+@Override
+@Transactional
+public int addAccount() {
+    User user = new User();
+    user.setAge(9);
+    user.setCreateTime(new Date());
+    user.setName("事务测试");
+    user.setPhone("000121212");
+    
+userMapper.insert(user);
+int a = 1/0;
+
+return user.getId();
+}
+```
+
+
+### 27.SpringBoot2.x整合redis实战讲解
+1、快速安装  https://redis.io/download
+
+启动服务端：src/redis-server
+启动客户端：src/redis-cli
+
+2、默认是本地访问的，需要开放外网访问
+    1）打开redis.conf文件在NETWORK部分修改
+       注释掉bind 127.0.0.1可以使所有的ip访问redis
+       修改 protected-mode，值改为no
+       
+ 以守护进程启动
+ ```
+ nohup ./redis-server
+ ```
+ ```
+./redis-server &
+```
+快速查看服务
+```
+lsof -i 端口号
+```
+ 
+ 
+ ### 28.SpringBoot2.x整合redis实战讲解
+ 1、官网：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-redis
+ 			集群文档：https://docs.spring.io/spring-data/data-redis/docs/current/reference/html/#cluster
+ 
+2、springboot整合redis相关依赖引入
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+```
+
+3、相关配置文件配置
+```
+#=========redis基础配置=========
+spring.redis.database=0
+spring.redis.host=redis远程主机IP
+spring.redis.port=redis端口号
+# 连接超时时间 单位 ms（毫秒）
+spring.redis.timeout=3000
+
+#=========redis线程池设置=========
+# 连接池中的最大空闲连接，默认值也是8。
+spring.redis.pool.max-idle=200
+
+#连接池中的最小空闲连接，默认值也是0。
+spring.redis.pool.min-idle=200
+
+# 如果赋值为-1，则表示不限制；pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
+spring.redis.pool.max-active=2000
+
+# 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时
+spring.redis.pool.max-wait=1000
+```
+
+ 
+4、常见redistemplate种类讲解和缓存实操(使用自动注入)  
+注入模板:  
+@Autowired  
+private StirngRedisTemplate strTplRedis  
+
+类型String，List,Hash,Set,ZSet:  
+对应的方法分别是opsForValue()、opsForList()、opsForHash()、opsForSet()、opsForZSet()  
+
+```java
+@RestController
+@RequestMapping("/api/v1/redis")
+public class RdisTestController {
+
+	@Autowired
+	private StringRedisTemplate redisTpl; //jdbcTemplate
+
+	@GetMapping(value="add")
+	public Object add(){
+		
+		//opsForValue : Returns the operations performed on simple values (or Strings in Redis terminology).
+ 
+		redisTpl.opsForValue().set("name", "demo");
+		
+		return JsonData.buildSuccess();
+		
+	}
+	
+	@GetMapping(value="get")
+	public Object get(){
+		
+		String value = redisTpl.opsForValue().get("name");		
+		return JsonData.buildSuccess(value);
+	}
+}
+
+```
+ 
+注:  
+为redis分配一个8888端口，操作步骤如下:  
+1.把redis.conf重新复制一份，重命名为redis8888.conf。  
+2.打开redis8888.conf配置文件，找到port 6379这行，把6379改为8888。 
+3.启动redis服务:./redis-server ~/redis-4.0.9/redis10008.conf &  
+

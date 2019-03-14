@@ -16,6 +16,7 @@ RedHat 系列
 常见的安装包格式 rpm包,安装rpm包的命令是“rpm -参数”
 包管理工具 yum
 支持tar包
+
 Debian系列 
 
 常见的安装包格式 deb包,安装deb包的命令是“dpkg -参数”
@@ -40,3 +41,9 @@ wget 下载地址
 sudo apt-get update  
 sudo apt-get install wget  
 wget --version 
+
+
+RedHat系列:   rpm相当于好压  yum相当于下载工具下载的是rpm包
+Debian系列:   deb相当于好压  apt-get相当于下载工具下载的是deb包
+
+wget是两个系列通吃的下载软件下载的是源码
