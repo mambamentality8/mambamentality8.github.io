@@ -12,7 +12,7 @@ image:
 
 <meta name="referrer" content="no-referrer" />
 
-<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/title.png>
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/title.png">
 
 <!-- more -->
 
@@ -1720,7 +1720,7 @@ lsof -i 端口号
 ```
  
  
- ### 28.SpringBoot2.x整合redis实战讲解
+### 28.SpringBoot2.x整合redis实战讲解
  1、官网：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-redis
  			集群文档：https://docs.spring.io/spring-data/data-redis/docs/current/reference/html/#cluster
  
@@ -1799,3 +1799,24 @@ public class RdisTestController {
 2.打开redis8888.conf配置文件，找到port 6379这行，把6379改为8888。 
 3.启动redis服务:./redis-server ~/redis-4.0.9/redis10008.conf &  
 
+### 29.SpringBoot整合定时任务schedule
+1、常见定时任务 Java自带的java.util.Timer类  
+timer:配置比较麻烦，时间延后问题  
+timertask:不推荐  
+
+2、Quartz框架  
+配置更简单  
+xml或者注解  
+
+3、SpringBoot使用注解方式开启定时任务  
+1）启动类里面 @EnableScheduling开启定时任务，自动扫描  
+2）定时任务业务类 加注解 @Component被容器扫描  
+3）定时执行的方法加上注解 @Scheduled(fixedRate=2000) 定期执行一次  
+
+
+### 30.SpringBoot常用定时任务配置实战
+1)cron 定时任务表达式 @Scheduled(cron="*/1 * * * * *") 表示每秒  
+  crontab 工具  https://tool.lu/crontab/  
+2)fixedRate: 定时多久执行一次（上一次开始执行时间点后xx秒再次执行;)  
+3)fixedDelay: 上一次执行结束时间点后xx秒再次执行  
+4)fixedDelayString:  字符串形式，可以通过配置文件指定  
