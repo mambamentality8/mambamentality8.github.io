@@ -451,6 +451,7 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
 然后在FileController中添加后台代码
 <font color=red>注意替换自己存放文件的路径</font>  
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/34.png)
+
 ```java
 //注意替换路径
  private static final String filePath = "D:\\springboot_workspace\\demo\\src\\main\\resources\\static\\image\\";
@@ -587,17 +588,17 @@ spring.resources.static-locations=classpath:/META-INF/resources/,classpath:/reso
          <groupId>org.springframework.boot</groupId>  
          <artifactId>spring-boot-devtools</artifactId>  
          <optional>true</optional>  
-   	</dependency>
+      	</dependency>
 2. 在IDEA设置中打开自动编译
  ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/41.png)
 3. 打开运行时编译,按快捷键 Shift+Ctrl+Alt+/ ，打开maintenance面板, 选择 Registry  
    勾选如图所示:
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/42.png)
 不被热部署的文件  
- 		1、/META-INF/maven, /META-INF/resources, /resources, /static, /public, or /templates  
- 		2、指定文件不进行热部署 spring.devtools.restart.exclude=static/**,public/**  
- 		3、手工触发重启 spring.devtools.restart.trigger-file=trigger.txt(trigger.txt放在最外层的resource下)
- 			改代码不重启，通过一个文本去控制
+	 		1、/META-INF/maven, /META-INF/resources, /resources, /static, /public, or /templates  
+	 		2、指定文件不进行热部署 spring.devtools.restart.exclude=static/**,public/**  
+	 		3、手工触发重启 spring.devtools.restart.trigger-file=trigger.txt(trigger.txt放在最外层的resource下)
+	 			改代码不重启，通过一个文本去控制
 
 官方地址：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#using-boot-devtools
 
@@ -1072,7 +1073,7 @@ public class LoginFilter  implements Filter{
 			     }
 			}
 ```
-			
+
 ### 17.Servlet3.0的注解原生Linstener监听器实战
 在启动类添加注解@ServletComponentScan
 自定义Listener(常用的监听器 servletContextListener、httpSessionListener、servletRequestListener)
@@ -1400,7 +1401,7 @@ public class ThymeleafController {
 比上一步简单点
     官网:https://commons.apache.org/proper/commons-dbutils/
 ```
-    
+
 3、jpa框架
 ```
 spring-data-jpa
@@ -1417,8 +1418,8 @@ jpa在复杂查询的时候性能不是很好
 ```
 互联网行业通常使用mybatis
 不提供对象和关系模型的直接映射,半ORM
-``` 
-    
+```
+
 ### 24.SpringBoot2.x整合Mybatis3.x注解配置实战
 
 1、使用starter, maven仓库地址：http://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
@@ -1713,17 +1714,17 @@ return user.getId();
  ```
  ```
 ./redis-server &
-```
+ ```
 快速查看服务
 ```
 lsof -i 端口号
 ```
- 
- 
+
+
 ### 28.SpringBoot2.x整合redis实战讲解
  1、官网：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-redis
  			集群文档：https://docs.spring.io/spring-data/data-redis/docs/current/reference/html/#cluster
- 
+
 2、springboot整合redis相关依赖引入
 ```
 <dependency>
@@ -1755,7 +1756,7 @@ spring.redis.pool.max-active=2000
 spring.redis.pool.max-wait=1000
 ```
 
- 
+
 4、常见redistemplate种类讲解和缓存实操(使用自动注入)  
 注入模板:  
 @Autowired  
@@ -1792,7 +1793,7 @@ public class RdisTestController {
 }
 
 ```
- 
+
 注:  
 为redis分配一个8888端口，操作步骤如下:  
 1.把redis.conf重新复制一份，重命名为redis8888.conf。  
@@ -1820,3 +1821,906 @@ xml或者注解
 2)fixedRate: 定时多久执行一次（上一次开始执行时间点后xx秒再次执行;)  
 3)fixedDelay: 上一次执行结束时间点后xx秒再次执行  
 4)fixedDelayString:  字符串形式，可以通过配置文件指定  
+
+### 31.SpringBoot 整合logback
+
+在resource目录下创建logback-spring.xml文件
+
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <appender name="consoleApp" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %date{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread]%logger{56}.%method:%L -%msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <appender name="fileInfoApp" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>
+                %date{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread]%logger{56}.%method:%L -%msg%n
+            </pattern>
+        </encoder>
+        <!-- 滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 路径 -->
+            <fileNamePattern>app_log/log/app.info.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="fileErrorApp" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>
+                %date{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread]%logger{56}.%method:%L -%msg%n
+            </pattern>
+        </encoder>
+
+        <!-- 设置滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 路径 -->
+            <fileNamePattern>app_log/log/app.err.%d.log</fileNamePattern>
+
+            <!-- 控制保留的归档文件的最大数量，超出数量就删除旧文件，假设设置每个月滚动，
+            且<maxHistory> 是1，则只保存最近1个月的文件，删除之前的旧文件 -->
+            <MaxHistory>1</MaxHistory>
+
+        </rollingPolicy>
+    </appender>
+
+    <!--控制输出的最更高级别-->
+    <root level="INFO">
+        <appender-ref ref="consoleApp"/>
+        <appender-ref ref="fileInfoApp"/>
+        <appender-ref ref="fileErrorApp"/>
+    </root>
+</configuration>
+```
+
+### 32.**搜索框架elasticsearch介绍**SpringBoot 整合**elasticsearch**
+
+简介：通过京东电商 介绍什么是搜索引擎，和开源搜索框架ElasticSearch6.x新特性介绍
+
+前言：介绍ES的主要特点和使用场景，新特性讲解
+
+mysql：like 模糊，性能问题,
+
+solr:针对企业，Lucene
+
+elasticsearch：针对数据量特别大，PB,TB
+
+纯java开发，springboot使用，5.6版本
+
+es升级4->5版本，改动大，但是5版本后，改动不大
+
+elasticSearch主要特点
+
+1、特点：全文检索，结构化检索，数据统计、分析，接近实时处理，分布式搜索(可部署数百台服务器)，处理PB级别的数据
+
+搜索纠错，自动完成
+
+2、使用场景：日志搜索，数据聚合，数据监控，报表统计分析
+
+3、国内外使用者：维基百科，Stack Overflow，GitHub
+
+新特性讲解
+
+1、6.2.x版本基于Lucene 7.x，更快，性能进一步提升,对应的序列化组件，升级到Jackson 2.8
+
+<font color=red>mysql：database   table   rocord</font>
+
+<font color=red>es   : index   type（一个数据库只能存在一个表)    document</font>
+
+2、推荐使用5.0版本推出的Java REST/HTTP客户端，依赖少，比Transport使用更方便，在基准测试中，性能并不输于Transport客户端，
+
+在5.0到6.0版本中，每次有对应的API更新, 文档中也说明，推荐使用这种方式进行开发使用,所有可用节点间的负载均衡
+
+在节点故障和特定响应代码的情况下进行故障转移,失败的连接处罚（失败的节点是否重试取决于失败的连续次数;失败的失败次数越多，客户端在再次尝试同一节点之前等待的时间越长）
+
+
+
+3、(重要)不再支持一个索引库里面多个type，6.x版本已经禁止一个index里面多个type，所以一个index索引库只能存在1个type
+
+官方文档：
+
+1、6.0更新特性
+
+https://www.elastic.co/guide/en/elasticsearch/reference/6.0/release-notes-6.0.0.html#breaking-java-6.0.0
+
+2、6.1更新特性 
+
+https://www.elastic.co/guide/en/elasticsearch/reference/6.1/release-notes-6.1.0.html
+
+### 33.**快速部署ElastcSearch5.6.x**
+
+配置JDK1.8
+
+使用wget 下载elasticsearch安装包
+
+wget  https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.8.tar.gz
+
+解压
+
+tar -zxvf elasticsearch-5.6.8.tar.gz
+
+官网：https://www.elastic.co/products/elasticsearch 
+
+外网访问配置： 
+
+config目录下面elasticsearch.yml
+
+修改为 
+```
+network.host: 0.0.0.0
+```
+端口号也要去掉注释
+
+ES后台运行命令:
+
+
+
+```
+
+nohup ./bin/elasticsearch &
+
+./elasticsearch  -d
+
+```
+
+配置es出现相关问题处理（阿里云、腾讯云，亚马逊云安装问题集合）：
+
+
+
+1、问题一
+Java HotSpot(TM) 64-Bit Server VM warning: INFO: os::commit_memory(0x00000000c5330000, 986513408, 0) failed; error='Cannot allocate memory' (errno=12)
+#
+There is insufficient memory for the Java Runtime Environment to continue.
+Native memory allocation (mmap) failed to map 986513408 bytes for committing reserved memory.
+An error report file with more information is saved as:
+/usr/local/software/temp/elasticsearch-6.2.2/hs_err_pid1912.log
+解决：内存不够，购买阿里云的机器可以动态增加内存
+修改jvm.options   -Xms128m     -Xmx128m
+
+-Xmx :用来设置你的应用程序(不是JVM)能够使用的最大内存数，如果你的程序要花很大内存的话，那就需要修改缺省的设置，比如配置tomcat的时候，如果流量啊程序啊都很大的话就需要加大这个值了，BUT不要大得超过你的机器的内存。
+
+-Xms:用来设置程序初始化的时候内存栈的大小，增加这个值的话你的程序的启动性能会得到提高。不过同样有前面的限制，以及受到-Xmx的限制。
+
+
+
+2、问题二
+			[root@iZwz95j86y235aroi85ht0Z bin]# ./elasticsearch
+			[2018-02-22T20:14:04,870][WARN ][o.e.b.ElasticsearchUncaughtExceptionHandler] [] uncaught exception in thread [main]
+			org.elasticsearch.bootstrap.StartupException: java.lang.RuntimeException: can not run elasticsearch as root
+			at org.elasticsearch.bootstrap.Elasticsearch.init(Elasticsearch.java:125) ~[elasticsearch-6.2.2.jar:6.2.2]
+			at org.elasticsearch.bootstrap.Elasticsearch.execute(Elasticsearch.java:112) ~[elasticsearch-6.2.2.jar:6.2.2]
+			at org.elasticsearch.cli.EnvironmentAwareCommand.execute(EnvironmentAwareCommand.java:86) ~[elasticsearch-6.2.2.jar:6.2.2]
+			at org.elasticsearch.cli.Command.mainWithoutErrorHandling(Command.java:124) ~[elasticsearch-cli-6.2.2.jar:6.2.2]
+		解决：用非root用户
+			添加用户：useradd -m 用户名  
+     然后设置密码  passwd 用户名
+
+普通用户切换到root用户：su   root->回车->输入root密码
+root用户切换到普通用户： su    "普通用户名"
+
+
+
+3、问题三
+./elasticsearch
+Exception in thread "main" java.nio.file.AccessDeniedException: /usr/local/software/temp/elasticsearch-6.2.2/config/jvm.options
+   解决：
+原因：当前用户没有执行权限 
+解决方法： chown linux用户名 elasticsearch安装目录 -R 
+权限不够 chown jack /usr/local/software/ES5.6.8/ -R
+
+
+
+4、问题四
+ 错误“max file descriptors [65535] for elasticsearchprocess is too low, increase to at least [65536]”，maxfile descriptors为最大文件描述符，设置其大于65536即可。解决方法是修改/etc/security/limits.conf文件，添加“* - nofile65536 * - memlock unlimited”，“*”表示给所有用户起作用，修改后的配置如下图所示：
+如果要给只读文件加上写权限，chmod a+w filename 就可以了。
+![](springboot/60.png)
+
+
+
+5、问题五
+failed to load elasticsearch nodes : org.elasticsearch.client.transport.NoNodeAvailableException: None of the configured nodes are available: [{#transport#-1}{OPWUYZ3_RWqG8w_BYEZ8DA}{47.92.109.56}{47.92.109.56:9300}]
+常见配置问题资料：https://www.jianshu.com/p/c5d6ec0f35e0
+
+http:/47.92.109.56:9200/_cat/health  查看ES的健康状态
+
+
+### 34.ElasticSearch5.6测试数据准备
+简介: ElasticSearch5.6.x简单测试
+1、步骤 https://www.elastic.co/guide/en/elasticsearch/reference/5.6/index.html
+2、使用POSTMAN 工具
+基础
+查看集群状态：localhost:9200/_cat/health?v
+查看索引列表：localhost:9200/_cat/indices?v
+
+### 34.SpringBoot2.x整合elasticsearch5.6.x
+简介：SpringBoot2.x整合elasticSearch5.6.8实战
+Spring Data Elasticsearch文档地址
+spring data是spring推出和我们多个数据库整合的一个中间件
+https://docs.spring.io/spring-data/elasticsearch/docs/3.0.6.RELEASE/reference/html/
+版本说明：SpringBoot整合elasticsearch
+https://github.com/spring-projects/spring-data-elasticsearch/wiki/Spring-Data-Elasticsearch---Spring-Boot---version-matrix
+1、添加maven依赖 
+
+```java
+<dependency>  
+          <groupId>org.springframework.boot</groupId>  
+          <artifactId>spring-boot-starter-dataelasticsearch</artifactId>  
+</dependency>
+```
+2、定义ArticleController
+```java
+@RestController
+@RequestMapping("/api/v1/article")
+public class ArticleController {
+
+	@Autowired
+	private ArticleRepository articleRepository;
+	
+	@PostMapping("save")
+	public Object save(){
+	
+		Article article = new Article();
+		article.setId(2L);
+		article.setPv(123);
+		article.setContent("springboot整合elasticsearch");
+		article.setTitle("我是title");
+		article.setSummary("搜索框架整合");
+		
+		articleRepository.save(article);
+	
+		return JsonData.buildSuccess();
+	}
+	
+	
+	@GetMapping("search")
+	public Object search(String title){
+
+		//QueryBuilder queryBuilder = QueryBuilders.matchAllQuery(); //搜索全部文档
+		QueryBuilder queryBuilder = QueryBuilders.matchQuery("title", title);
+
+		Iterable<Article> list =  articleRepository.search(queryBuilder);
+		
+		return JsonData.buildSuccess(list);
+	}
+	
+}
+```
+
+2、自定义接口继承ElasticSearchRepository,里面有很多默认实现
+
+```java
+@Component 
+//@Repository
+public interface ArticleRepository extends ElasticsearchRepository<Article, Long> {
+
+	
+}
+```
+3、新建实体对象Article
+
+注意点：
+  索引名称记得小写，类属性名称也要小写
+
+```java
+@Document(indexName = "blog", type = "article")
+public class Article implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
+	private long id;
+	
+	private String title;
+	
+	private String summary;
+	
+	private String content;
+	
+	private int pv;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public int getPv() {
+		return pv;
+	}
+
+	public void setPv(int pv) {
+		this.pv = pv;
+	}
+	
+
+}
+```
+
+
+5、配置文件：
+https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/htmlsingle/
+application.properties默认配置地址
+
+#ELASTICSEARCH (ElasticsearchProperties)
+#这里的elasticsearch需要和 在secureCRT里面的curl http://localhost:9200 得到JSON值中的cluster-name保持一致
+```
+#Elasticsearch cluster name.
+spring.data.elasticsearch.cluster-name=elasticsearch  
+#Comma-separated list of cluster node addresses.
+spring.data.elasticsearch.cluster-nodes=localhost:9300 
+#多节点配置
+#spring.data.elasticsearch.cluster-nodes=localhost:9300,localhost:9300
+#Whether to enable Elasticsearch repositories.
+spring.data.elasticsearch.repositories.enabled=true 
+```
+
+这两个端口都得在安全组里面打开.
+9200   9300:ES端口
+9300端口： ES节点之间通讯使用 
+9200端口： ES节点 和 外部 通讯使用 
+（9300是tcp通讯端口，集群间和TCPClient都走的它；9200是http协议的RESTful接口）
+
+6379:redis提供服务的端口
+8161:是activeMQ的默认端口号
+22:端口就是ssh端口,secureCRT
+3389:是远程协助的端口，默认的只有本机帐号发起的连接才有可能被外界连接
+80:端口是为HTTP（HyperText Transport Protocol)即超文本传输协议开放的，此为上网冲浪使用次数最多的协议，主要用于WWW（World Wide Web）即万维网传输信息的协议。可以通过HTTP地址（即常说的“网址”）加“:80”来访问网站，因为浏览网页服务默认的端口号都是80，因此只需输入网址即可，不用输入“:80”了
+443:端口即网页浏览端口，主要是用于HTTPS服务，是提供加密和通过安全端口传输的另一种HTTP。在一些对安全性要求较高的网站，比如银行、证券、购物等，都采用HTTPS服务，这样在这些网站上的交换信息，其他人抓包获取到的是加密数据，保证了交易的安全性。网页的地址以https://开始，而不是常见的http://。
+
+4、QueryBuilder使用
+https://www.elastic.co/guide/en/elasticsearch/client/java-api/1.3/query-dsl-queries.html
+//单个匹配，搜索name为jack的文档  
+QueryBuilder queryBuilder = QueryBuilders.matchQuery("title", "搜"); 
+4、查看es数据
+查看索引信息：http://localhost:9200/_cat/indices?v
+查看某个索引库结构：http://localhost:9200/blog
+查看某个对象：http://localhost:9200/blog/article/1
+
+### 34.JMS的基础知识和使用场景
+
+1、什么是JMS: Java消息服务（Java Message Service),Java平台中关于面向消息中间件的接口
+
+2、JMS是一种与厂商无关的 API，用来访问消息收发系统消息，
+
+它类似于JDBC(Java Database Connectivity)。这里，JDBC 是可以用来访问许多不同关系数据库的 API  
+
+JDBC也是一个接口(规范)mysql和oracle的厂商都去实现了这个规范,这样JDBC就能实现java代码连接不同的数据库
+
+3、使用场景：
+
+1）跨平台 
+
+2）多语言 
+
+3）多项目
+
+4）解耦
+
+5）分布式事务
+
+6）流量控制
+
+7）最终一致性
+
+8）RPC调用
+
+上下游对接，数据源变动->通知下属
+
+![](./springboot/61.png)
+
+4、概念 
+
+JMS提供者：Apache ActiveMQ、RabbitMQ、Kafka、Notify、MetaQ、RocketMQ
+
+JMS生产者(Message Producer)
+
+JMS消费者(Message Consumer)
+
+JMS消息
+
+JMS队列
+
+JMS主题
+
+JMS消息通常有两种类型：点对点（Point-to-Point)、发布/订阅（Publish/Subscribe） 
+
+![](./springboot/62.png)
+
+![](./springboot/63.png)
+
+5、编程模型
+
+MQ中需要用的一些类
+
+ConnectionFactory ：连接工厂，JMS 用它创建连接
+
+Connection ：JMS 客户端到JMS Provider 的连接
+
+Session： 一个发送或接收消息的线程
+
+Destination ：消息的目的地;消息发送给谁.
+
+MessageConsumer / MessageProducer： 消息接收者，消费者
+
+![](./springboot/64.png)
+
+### 35.ActiveMQ5.x消息队列基础特性和本地快速安装
+
+特点：
+
+1）支持来自Java，C，C ++，C＃，Ruby，Perl，Python，PHP的各种跨语言客户端和协议
+
+2）支持许多高级功能，如消息组，虚拟目标，通配符和复合目标
+
+3) 完全支持JMS 1.1和J2EE 1.4，支持瞬态，持久，事务和XA消息
+
+4) Spring支持，ActiveMQ可以轻松嵌入到Spring应用程序中，并使用Spring的XML配置机制进行配置
+
+5) 支持在流行的J2EE服务器（如TomEE，Geronimo，JBoss，GlassFish和WebLogic）中进行测试
+
+6) 使用JDBC和高性能日志支持非常快速的持久化
+
+...
+
+1、下载地址：http://activemq.apache.org/activemq-5153-release.html
+
+2、快速开始：http://activemq.apache.org/getting-started.html
+
+3、如果我们是32位的机器，就双击win32目录下的activemq.bat,如果是64位机器，则双击win64目录下的activemq.bat
+
+4、bin目录里面启动 选择对应的系统版本和位数，activeMQ start 启动
+
+5、启动后访问路径http://127.0.0.1:8161/
+
+6、后台管理员界面用户名和密码默认都是admin
+
+7、官方案例集合
+
+https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples
+
+面板： 
+
+Name：队列名称。
+
+Number Of Pending Messages：等待消费的消息个数。
+
+Number Of Consumers：当前连接的消费者数目
+
+Messages Enqueued：进入队列的消息总个数，包括出队列的和待消费的，这个数量只增不减。
+
+Messages Dequeued：已经消费的消息数量。
+
+### 36.SpringBoot2.x整合ActiveMQ实战之点对点消息
+
+1、官网地址：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-activemq
+
+2、加入依赖
+```java
+
+<!-- 整合消息队列ActiveMQ -->
+
+<dependency>  
+
+	<groupId>org.springframework.boot</groupId>  
+
+	<artifactId>spring-boot-starter-activemq</artifactId>  
+
+</dependency>          
+
+<!-- 如果配置线程池则加入 -->
+
+<dependency>  
+
+	<groupId>org.apache.activemq</groupId>  
+
+	<artifactId>activemq-pool</artifactId>  
+
+</dependency>
+```
+
+3、application.properties配置文件配置
+```java
+
+#整合jms测试，安装在别的机器，防火墙和端口号记得开放
+#集群配置
+spring.activemq.broker-url=tcp://127.0.0.1:61616
+
+#spring.activemq.broker-url=failover:(tcp://localhost:61616,tcp://localhost:61617)
+
+spring.activemq.user=admin
+
+spring.activemq.password=admin
+
+#下列配置要增加依赖
+
+spring.activemq.pool.enabled=false
+
+spring.activemq.pool.max-connections=100
+```
+
+  4、springboot启动类 @EnableJms，开启支持jms
+
+ 5、在启动类加上此方法代表点对点
+
+```java
+//common是队列的名称
+@Bean
+public Queue queue(){
+    return new ActiveMQQueue("common.queue");
+}
+```
+
+  5、模拟请求
+
+  localhost:8080/api/v1/order?msg=12312321321312
+
+![1553742882488](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1553742882488.png)
+
+  6、消费者：实时监听对应的队列
+
+  @JmsListener(destination = "order.queue")
+
+
+
+### 37.SpringBoot整合ActiveMQ实战之发布订阅模式(pub/sub),及同时支持点对点和发布订阅模型
+
+1、需要加入配置文件，支持发布订阅模型，默认只支持点对点
+
+```java
+#default point to point
+spring.jms.pub-sub-domain=true
+```
+2、在启动类中加入代码
+
+```java
+@Bean
+public Topic topic(){
+    return new ActiveMQTopic("video.topic");
+}
+```
+
+注意点： 
+
+1、默认消费者并不会消费订阅发布类型的消息，这是由于springboot默认采用的是p2p模式进行消息的监听
+
+修改配置：spring.jms.pub-sub-domain=true
+
+2、如果点对点  和  话题订阅同时存在的话  话题订阅模式正常而点对点只能往消息队列中发送数据而不能消费数据
+
+为了解决这个问题
+
+@JmsListener
+
+修改订阅者sub：@JmsListener(destination=**"video.topic"**,containerFactory=**"jmsListenerContainerTopic"**)
+
+//需要在启动类里面给topic定义独立的JmsListenerContainer
+```java
+@Bean
+public JmsListenerContainerFactory<?> jmsListenerContainerTopic(ConnectionFactory activeMQConnectionFactory) {
+
+DefaultJmsListenerContainerFactory bean = new DefaultJmsListenerContainerFactory();
+
+bean.setPubSubDomain(true);
+
+bean.setConnectionFactory(activeMQConnectionFactory);
+
+return bean;
+
+}
+```
+​    在配置文件里面，注释掉 #spring.jms.pub-sub-domain=true
+
+
+
+### 38.RocketMQ4.x介绍和新概念讲解
+
+1、Apache RocketMQ作为阿里开源的一款高性能、高吞吐量的分布式消息中间件
+
+2、特点
+
+1)在高压下1毫秒内响应延迟超过99.6％。
+
+2)适合金融类业务，高可用性跟踪和审计功能。
+
+3)支持发布订阅模型，和点对点
+
+4）支持拉pull和推push两种消息模式
+
+5)单一队列百万消息
+
+6)支持单master节点，多master节点，多master多slave节点
+
+...
+
+3、概念
+
+Producer:消息生产者
+
+Producer Group:消息生产者组，发送同类消息的一个消息生产组
+
+
+
+Consumer:消费者
+
+Consumer Group:消费同类消息的一个消息消费组
+
+
+
+Tag:标签，Topic的子主题（二级分类）,用于区分同一个主题下的不同业务的消息
+
+
+
+Topic:主题
+
+
+
+Message：消息
+
+
+
+Broker：MQ程序，接收生产的消息，提供给消费者消费的程序
+
+
+
+Name Server：给生产和消费者提供路由信息，提供轻量级的服务发现和路由 
+
+![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\rmq-basic-arc%20.png)
+
+NameServver Cluster里面存放的是Broker对应的IP
+
+Data Sync 同步复制 如果一个节点挂掉另一个节点还能保证工作
+
+Data async异步复制
+
+
+
+Ajax请求默认的都是异步的 
+
+如果想同步 async设置为false就可以（默认是true）
+
+3、官网地址：<http://rocketmq.apache.org/>
+
+学习资源：
+
+1）http://jm.taobao.org/2017/01/12/rocketmq-quick-start-in-10-minutes/ 
+
+2）https://www.jianshu.com/p/453c6e7ff81c
+
+### 34.RocketMQ4.x本地快速部署
+
+1、安装前提条件(推荐)
+
+64bit OS, Linux/Unix/Mac
+
+64bit JDK 1.8+;
+
+2、快速开始 http://rocketmq.apache.org/docs/quick-start/
+
+   下载安装包：https://www.apache.org/dyn/closer.cgi?path=rocketmq/4.2.0/rocketmq-all-4.2.0-bin-release.zip
+
+   路径：/Users/jack/Desktop/person/springboot/资料/第13章/第5课/rocketmq-all-4.2.0-bin-release/bin
+
+3、解压压缩包 
+
+1）进入bin目录，启动namesrv
+```java
+nohup sh mqnamesrv & 
+```
+如果内存溢出
+
+解决方法：修改bin/runbroker.sh,bin/runserver.sh
+```java
+JAVA_OPT="${JAVA_OPT} -server -Xms128m -Xmx256m -Xmn256m -XX:PermSize=128m -XX:MaxPermSize=320m"
+```
+2) 查看日志 tail -f nohup.out
+
+结尾：The Name Server boot success. serializeType=JSON 表示启动成功
+
+3、启动broker    
+
+如果内存溢出
+
+解决方法：修改bin/runbroker.sh,bin/runmqbroker.sh
+```java
+JAVA_OPT="${JAVA_OPT} -server -Xms128m -Xmx256m -Xmn256m -XX:PermSize=128m -XX:MaxPermSize=320m"
+```
+```java
+点对点后台启动
+nohup sh mqbroker -n 172.21.0.10:9876 & 
+```
+```java
+话题订阅后台启动
+nohup sh mqbroker -n 172.21.0.10:9876 autoCreateTopicEnable=true &
+```
+
+4)、关闭nameserver broker执行的命令
+```
+sh mqshutdown namesrv
+
+sh mqshutdown broker
+```
+
+### RoekerMQ4.x可视化控制台讲解
+
+1、下载 <https://github.com/apache/rocketmq-externals>
+
+先下载maven，找到下载的文件，运行如下命令解压
+
+tar -zxvf  apache-maven-3.3.9-bin.tar.gz
+
+
+
+解压后的文件夹名为apache-maven-3.3.9
+
+
+
+3.配置环境变量，编辑/etc/profile文件，添加如下代码
+
+MAVEN_HOME=/usr/local/softs/apache-maven-3.6.0
+
+export MAVEN_HOME
+
+export PATH=${PATH}:${MAVEN_HOME}/bin
+
+
+
+4.保存文件，并运行如下命令使环境变量生效
+
+source /etc/profile
+
+
+
+5.在控制台输入如下命令，如果能看到Maven相关版本信息，则说明Maven已经安装成功
+
+mvn -v
+
+进入rocketmq-console
+
+2、编译打包  mvn clean package -Dmaven.test.skip=true    //跳过单元测试
+
+3、target目录 通过java -jar rocketmq-console-ng-1.0.0.jar 的方式运行
+
+守护进程:nohup java -jar rocketmq-console-ng-1.0.0.jar &
+
+4、无法连接获取broker信息
+
+1）修改配置文件,名称路由地址为 namesrvAddr，例如我本机为
+
+2）src/main/resources/application.properties
+
+rocketmq.config.namesrvAddr=172.26.34.74:9876     //这个ip为私有ip
+
+5、默认端口 localhost:8080 
+
+6、注意：
+
+在阿里云，腾讯云或者虚拟机，记得检查端口号和防火墙是否启动
+
+### 35.Springboot2.x整合RocketMQ4.x实战，加入相关依赖，开发生产者代码 
+
+![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\rocketmq%E5%BC%80%E5%8F%91.001.png)
+
+api能很快向应给微信支付,然后把订单信息和积分信息丢到消息队列中去.所以api能承受很高的并发.
+
+启动nameser和broker
+
+1、加入相关依赖
+```java
+<dependency>
+    <groupId>org.apache.rocketmq</groupId>
+    <artifactId>rocketmq-client</artifactId>
+    <version>${rocketmq.version}</version>
+</dependency>
+
+<dependency>
+    <groupId>org.apache.rocketmq</groupId>
+    <artifactId>rocketmq-common</artifactId>
+    <version>${rocketmq.version}</version>
+</dependency>
+```
+```java
+<properties>
+    <rocketmq.version>4.1.0-incubating</rocketmq.version>
+</properties>
+```
+
+​	还需要在pom.xml中配置好版本信息
+
+2、application.properties加入配置文件 
+
+```
+#消费者的组
+apache.rocketmq.consumer.PushConsumer=orderConsumer
+#生产者的组名
+apache.rocketmq.producer.producerGroup=Producer
+#NameServer地址
+apache.rocketmq.namesrvAddr=127.0.0.1:9876
+```
+3、开发MsgProducer
+
+```java
+ /**
+     * 生产者的组名
+     */
+    @Value("${apache.rocketmq.producer.producerGroup}")
+    private String producerGroup;
+
+    /**
+     * NameServer 地址
+     */
+    @Value("${apache.rocketmq.namesrvAddr}")
+    private String namesrvAddr;
+
+    private  DefaultMQProducer producer ;
+
+    	
+    public DefaultMQProducer getProducer(){
+    	return this.producer;
+    }
+    
+    
+    
+    
+    @PostConstruct
+    public void init() {
+        //生产者的组名
+    	producer = new DefaultMQProducer(producerGroup);
+        //指定NameServer地址，多个地址以 ; 隔开
+    	//如 producer.setNamesrvAddr("192.168.100.141:9876;192.168.100.142:9876;192.168.100.149:9876"); 
+        producer.setNamesrvAddr(namesrvAddr);
+        
+        producer.setVipChannelEnabled(false);
+        
+        try {
+            /**
+             * Producer对象在使用之前必须要调用start初始化，只能初始化一次
+             */
+            producer.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        
+        // producer.shutdown();  一般在应用上下文，关闭的时候进行关闭，用上下文监听器
+
+    }
+```
