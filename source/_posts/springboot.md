@@ -2541,7 +2541,30 @@ Ajax请求默认的都是异步的
 
 3、解压压缩包 
 
-1）进入bin目录，启动namesrv
+CentOS 7.0默认使用的是firewall作为防火墙
+
+1)查看防火墙状态
+
+```
+firewall-cmd --state1
+```
+
+停止firewall
+
+```
+systemctl stop firewalld.service1
+```
+
+禁止firewall开机启动
+
+```java
+systemctl disable firewalld.service 
+```
+
+2)开放端口号8080、9876、10911
+
+进入bin目录，启动namesrv
+
 ```java
 nohup sh mqnamesrv & 
 ```
@@ -2561,14 +2584,10 @@ JAVA_OPT="${JAVA_OPT} -server -Xms128m -Xmx256m -Xmn256m -XX:PermSize=128m -XX:M
 
 解决方法：修改bin/runbroker.sh,bin/runmqbroker.sh
 ```java
-JAVA_OPT="${JAVA_OPT} -server -Xms128m -Xmx256m -Xmn256m -XX:PermSize=128m -XX:MaxPermSize=320m"
+JAVA_OPT="${JAVA_OPT} -server -Xms128m -Xmx256m -Xmn256m -XX:PermSize=128m -XX:MaxPermSize=320m
 ```
 ```java
-点对点后台启动
-nohup sh mqbroker -n 172.21.0.10:9876 & 
-```
-```java
-话题订阅后台启动
+#启动broker并且能自动创建topic 不然java代码调用的时候会出错
 nohup sh mqbroker -n 172.21.0.10:9876 autoCreateTopicEnable=true &
 ```
 
@@ -2627,7 +2646,7 @@ mvn -v
 
 2）src/main/resources/application.properties
 
-rocketmq.config.namesrvAddr=172.26.34.74:9876     //这个ip为私有ip
+rocketmq.config.namesrvAddr=172.21.0.10:9876     //这个ip为私有ip
 
 5、默认端口 localhost:8080 
 
@@ -2724,3 +2743,423 @@ apache.rocketmq.namesrvAddr=127.0.0.1:9876
 
     }
 ```
+
+### 37.SpringBoot介绍多环境配置和使用场景
+
+1、不同环境使用不同配置
+
+例如数据库配置，在开发的时候，我们一般用开发数据库，而在生产环境的时候，我们是用正式的数据
+
+2、配置文件存放路径
+
+classpath根目录的“/config”包下
+
+classpath的根目录下
+
+3、spring boot允许通过命名约定按照一定的格式(application-{profile}.properties)来定义多个配置文件
+
+### 38.SprinBoot2.x响应式编程简介
+
+![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\wechatimg5.jpeg)
+
+讲解什么是reactive响应式编程和使用的好处
+
+![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard.png)
+
+1、基础理解：					
+每个客户就相当于一个请求
+
+依赖于事件，事件驱动(Event-driven)    
+服务员做好奶茶通知客户的过程就是一个事件
+
+一系列事件称为“流”					
+一系列的流程
+
+异步		   						
+后台人员在做奶茶的同时还能做西瓜冰,1号2号点的奶茶10分钟才能做好 ,而3号的西瓜冰5分钟就做好了这样3号就能比1号和2号优先喝上东西
+
+非阻塞							
+用户不用都在前台人员那里排队可以再休息区去玩手机
+
+观察者模式						
+前台人员一直在看后台人员那个东西做完了,做完之后就可以去喊顾客了
+
+
+
+2、官网：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-webflux
+
+SpingBoot2底层是用spring5,开始支持响应式编程，Spring又是基于Reactor试下响应式。
+
+学习资料
+
+1、reactive-streams学习资料：http://www.reactive-streams.org/
+
+2、web-flux相关资料：<https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#spring-webflux>
+
+![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard-1553940054995.png)
+
+### 39.讲解SpringBoot2.x响应式编程介绍 Mono、Flux对象和优缺点
+
+![img](file:///D:/softs/%E6%9C%89%E9%81%93%E4%BA%91%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E5%86%85%E5%AE%B9/m15510050030@163.com/532488daf54844f097def498389fbf64/clipboard.png)
+
+1、Spring WebFlux是Spring Framework 5.0中引入的新的反应式Web框架
+
+与Spring MVC不同，它不需要Servlet API，完全异步和非阻塞，并 通过Reactor项目实现Reactive Streams规范。
+
+RxJava
+
+
+
+2、Flux和Mono  User List<User>
+
+1）简单业务而言：和其他普通对象差别不大，复杂请求业务，就可以提升性能
+
+2）通俗理解：
+
+Mono 表示的是包含 0 或者 1 个元素的异步序列
+
+mono->单一对象 User     redis->用户ID-》唯一的用户Mono<User>  
+
+Flux 表示的是包含 0 到 N 个元素的异步序列
+
+flux->数组列表对象 List<User>   redis->男性用户->Flux<User>
+
+Flux 和 Mono 之间可以进行转换
+
+3、Spring WebFlux有两种风格：基于功能和基于注解的。基于注解非常接近Spring MVC模型，如以下示例所示：
+
+第一种：
+```java
+@RestController 
+
+@RequestMapping（“/ users”）
+
+public  class MyRestController {
+
+@GetMapping（“/ {user}”）
+
+public Mono <User> getUser（ @PathVariable Long user）{
+
+// ...
+
+} 
+@GetMapping（“/ {user} / customers”）
+public Flux <Customer> getUserCustomers（ @PathVariable Long user）{
+
+// ...
+
+}
+
+@DeleteMapping（“/ {user}”）
+public Mono <User> deleteUser（ @PathVariable Long user）{
+
+// ...
+
+}
+
+}
+```
+
+第二种： 路由配置与请求的实际处理分开
+
+```java
+@Configuration
+
+public  class RoutingConfiguration {
+
+@Bean
+public RouterFunction <ServerResponse> monoRouterFunction（UserHandler userHandler）{
+
+return route（GET（ “/ {user}”）.and（accept（APPLICATION_JSON）），userHandler :: getUser）
+
+.andRoute（GET（“/ {user} / customers”）.and（accept（APPLICATION_JSON）），userHandler :: getUserCustomers）
+
+.andRoute（DELETE（“/ {user}”）.and（accept（APPLICATION_JSON）），userHandler :: deleteUser）;
+
+}
+
+
+
+}
+
+@Component
+
+public class UserHandler {
+
+公共 Mono <ServerResponse> getUser（ServerRequest请求）{
+
+// ...
+
+}public Mono <ServerResponse> getUserCustomers（ServerRequest request）{
+
+// ...
+
+}
+
+公共 Mono <ServerResponse> deleteUser（ServerRequest请求）{
+
+// ...
+
+}
+
+}
+```
+4、Spring WebFlux应用程序不严格依赖于Servlet API，因此它们不能作为war文件部署，也不能使用src/main/webapp目录
+
+5、可以整合多个模板引擎
+
+除了REST Web服务外，您还可以使用Spring WebFlux提供动态HTML内容。Spring WebFlux支持各种模板技术，包括Thymeleaf，FreeMarker
+
+### 40.webflux响应式编程实战 
+
+```java
+Adding both `spring-boot-starter-web` and `spring-boot-starter-webflux` modules in your application results in Spring Boot auto-configuring Spring MVC, not WebFlux. This behavior has been chosen because many Spring developers add `spring-boot-starter-webflux` to their Spring MVC application to use the reactive `WebClient`. You can still enforce your choice by setting the chosen application type to`SpringApplication.setWebApplicationType(WebApplicationType.REACTIVE)`.
+    在应用程序中添加`spring-boot-starter-web`和`spring-boot-starter-webflux`模块会导致Spring Boot自动配置Spring MVC，而不是WebFlux。 选择此行为是因为许多Spring开发人员将“spring-boot-starter-webflux”添加到他们的Spring MVC应用程序中以使用被动的`WebClient`。 您仍然可以通过将所选应用程序类型设置为`SpringApplication.setWebApplicationType（WebApplicationType.REACTIVE）`来强制执行您的选择。
+```
+
+1、WebFlux中，请求和响应不再是WebMVC中的ServletRequest和ServletResponse，而是ServerRequest和ServerResponse
+
+2、把spring-boot-starter-web注释掉加入依赖，如果同时存在spring-boot-starter-web，则会优先用spring-boot-starter-web
+```java
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-webflux</artifactId>
+</dependency>
+```
+
+在controller加入代码
+```java
+@GetMapping("test")
+public Mono<String> order(){
+
+   return Mono.just("hello world");
+}
+```
+测试
+
+localhost:8080/api/v1/user/test
+
+3、启动方式默认是Netty,8080端口
+
+4、参考：https://spring.io/blog/2016/04/19/understanding-reactive-types
+
+### 41.讲解SpringBoot2.x WebFlux客户端WebClient的介绍和使用
+
+1、反应式客户端
+
+官网地址：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-webclient
+
+### 42.服务端常用推送技术
+
+1、客户端轮询:ajax定时拉取
+
+定时服务端返回,得到的结果有可能不是最新的.
+
+2、服务端主动推送:WebSocket
+
+全双工的，本质上是一个额外的tcp连接，建立和关闭时握手使用http协议，其他数据传输不使用http协议
+
+更加复杂一些，适用于需要进行复杂双向数据通讯的场景
+
+发生变化时返回给客户端,客户端能保证获得最新的消息.
+
+比如聊天系统客户端会向服务端发送数据,服务端也会向客户端发送数据,是双向的.
+
+3、服务端主动推送:SSE (Server Send Event)
+
+html5新标准，用来从服务端实时推送数据到浏览器端，
+
+直接建立在当前http连接上，本质上是保持一个http长连接，轻量协议
+
+简单的服务器数据推送的场景，使用服务器推送事件 
+
+服务端会不停地向客户端发送信息,而客户端不会向服务器发送信息.
+
+弊端:假如股票停盘的话数据没有变化,服务器还是会向客户端不断地推送消息.浪费资源和带宽
+
+学习资料：http://www.w3school.com.cn/html5/html_5_serversentevents.asp
+
+### 42.讲解SpringBoot2.x服务端主动推送Sever-Send-Events
+
+1、localhost:8080/index.html
+
+2、需要把response的类型 改为 text/event-stream，才是sse的类型
+
+### 43.阿里云服务器上安装JDK8和配置环境变量
+
+进到目录/usr/local/software
+
+配置环境变量
+
+vim /etc/profile
+
+加入
+
+export JAVA_HOME=/usr/local/software/jdk8
+
+export PATH=$PATH:$JAVA_HOME/bin
+
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+
+export JAVA_HOME PATH CLASSPATH
+
+退出插入模式     :wq保存一下
+
+使用 source /etc/profile   让配置立刻生效
+
+java -version 看看配置是否成功 
+
+### 44.讲解SpringBoot生产环境部署和常见注意事项 
+
+1、去除相关生产环境没用的jar
+
+比如热部署dev-tool
+
+2、本地maven打包成jar包 
+
+先把target文件夹下生成的文件全部删除掉
+
+mvn clean package  -Dmaven.test.skip=true 跳过测试
+
+3、服务器安装jdk，上传Jar包
+
+上传工具：
+
+windows:
+
+winscp
+
+securtyCRT
+
+mac：
+
+filezilla
+
+ssh root@120.79.160.143
+
+访问路径 http://120.79.160.143:8080/api/v1/user/find
+
+java -jar xxxx.jar
+
+守护进程、系统服务、shell脚本
+
+nohup java -jar xxxx.jar
+
+这个命令会把所有的日志输出到nohup.out中
+
+tail -f  nohup.out就能查看对应输出的日志
+
+lsof  -i:8080 查看我们的8080端口被哪个应用占用
+
+或者用 ps -ef|grep java
+
+打包指定配置文件
+
+1、使用maven的profiles
+
+2、使用springboot的profile=active
+
+访问不了
+
+1、阿里云防火墙是否开启，可以选择关闭，关闭是不安全的，可以选择开放端口
+
+2、阿里云的安全访问组，开启对应的端口，如果应用是以80端口启动，则默认可以访问  可以通过配置文件将端口改成80端口
+
+配置logback将需要查看的日志放到对应的文件中
+
+4、成熟的互联网公司应该有的架构
+
+本地提交生产代码->gitlab仓库->Jenkins自动化构建->运维或者开发人员发布
+
+### 45.讲解SpringBoot使用actuator监控配置和使用
+
+1、介绍什么是actuator
+
+官方介绍：
+
+Spring Boot包含许多附加功能，可帮助您在将应用程序投入生产时监视和管理应用程序。 可以选择使用HTTP端点或JMX来管理和监控您的应用程序，自动应用于审计，健康和指标收集;
+
+
+
+一句话：springboot提供用于监控和管理生产环境的模块
+
+官方文档：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#production-ready
+
+2、加入依赖
+```java
+<dependency>  
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-starter-actuator</artifactId>  
+</dependency> 
+```
+
+
+3、加入上述依赖后，访问几个url
+
+/actuator/health
+
+/actuator/info
+
+/actuator
+
+![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B.001.png)
+
+### SpringBoot2.x监控Actuator实战下集及生产环境建议，SpringBoot新旧版本区别
+
+注意点: 网上的资料大多数没有讲到访问的前缀
+
+端点基础路径由 / 调整到 /actuator
+
+如：/info调整为/actuator/info 
+
+/actuator/xxx
+
+1、只能访问几个url
+
+1）需要在配置文件中加入下列配置
+
+management.endpoints.web.exposure.include=*
+
+2）官网说明：https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-security-actuator
+
+原因：
+
+出于安全考虑，除/ health和/ info之外的所有执行器默认都是禁用的。 management.endpoints.web.exposure.include属性可用于启用执行器
+
+2、建议
+
+在设置management.endpoints.web.exposure.include之前，请确保暴露的执行器不包含敏感信息和/
+
+或通过将其放置在防火墙进行控制，不对外进行使用禁用的端点将从应用程序上下文中完全删除。如果您只想更改端点所暴露的技术，请改用 include和exclude属性 。
+
+例子：
+
+开启全部：management.endpoints.web.exposure.include=*
+
+开启某个：management.endpoints.web.exposure.include=metrics
+
+关闭某个：management.endpoints.web.exposure.exclude=metrics
+
+
+
+或者用springadmin进行管理
+
+相关资料：https://www.cnblogs.com/ityouknow/p/8440455.html
+
+
+
+或者用自己编写脚本监控
+
+CPU、内存、磁盘、nginx的http响应状态码200,404,5xx 
+
+
+
+3、介绍常用的几个
+
+/health 查看应用健康指标
+
+/actuator/metrics 查看应用基本指标列表
+
+/actuator/metrics/{name} 通过上述列表，查看具体 查看具体指标
+
+/actuator/env 显示来自Spring的 ConfigurableEnvironment的属性
