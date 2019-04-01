@@ -12,7 +12,7 @@ image:
 
 <meta name="referrer" content="no-referrer" />
 
-<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com//springboot//title.png">
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/title.png">
 
 <!-- more -->
 
@@ -71,11 +71,11 @@ Absolutely no code generation and no requirement for XML configuration
 ## 第一章   快速入门
 
 - 进入https://start.spring.io/
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/1.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/01.png)
 - 将下载的包解压并导入IDEA
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/2.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/02.png)
 - 启动我们的项目,访问8080端口
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/3.png?)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/03.png?)
 看到找不到页面选项就代表成功,因为我们还没有配置静态资源  
 
 ## 第二章   http协议开发
@@ -83,9 +83,9 @@ Absolutely no code generation and no requirement for XML configuration
 ### 1.路由配置
 
 - 首先要明白几个注解
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/4.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/04.png)
 - 创建一个controller
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/5.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/05.png)
 ```java
 @RequestMapping("/")
     public String home(){
@@ -100,8 +100,8 @@ public Map<String,String> testMap(){
 }
 ```
 - 然后进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/6.png)
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/7.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/06.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/07.png)
 
 ### 2.postman接口测试  
 
@@ -109,7 +109,7 @@ public Map<String,String> testMap(){
 postman下载地址https://www.getpostman.com/downloads/
 ```
 - 在GetController中添加代码进行测试  
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/8.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/08.png)
 
 ```java
 private Map<String,Object> params = new HashMap<>();
@@ -133,7 +133,7 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/9.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/09.png)
 
 - GetMapping
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/10.png)
