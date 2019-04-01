@@ -2032,7 +2032,7 @@ Exception in thread "main" java.nio.file.AccessDeniedException: /usr/local/softw
 
 
 5、问题五
-failed to load elasticsearch nodes : org.elasticsearch.client.transport.NoNodeAvailableException: None of the configured nodes are available: [{#transport#-1}{OPWUYZ3_RWqG8w_BYEZ8DA}{47.92.109.56}{47.92.109.56:9300}]
+failed to load elasticsearch nodes : org.elasticsearch.client.transport.NoNodeAvailableException: None of the configured nodes are available: [{&#35transport#-1}{OPWUYZ3_RWqG8w_BYEZ8DA}{47.92.109.56}{47.92.109.56:9300}]
 常见配置问题资料：https://www.jianshu.com/p/c5d6ec0f35e0
 
 http:/47.92.109.56:9200/_cat/health  查看ES的健康状态
