@@ -1326,7 +1326,7 @@ spring.thymeleaf.content-type=text/html
 spring.thymeleaf.suffix=.html
 ```
 3、建立Controller
-![](springboot/59.png)
+![](springboot/58.png)
 ```java
 @Controller
 @RequestMapping("/tyhmeleaf")
@@ -1352,7 +1352,7 @@ public class ThymeleafController {
 4、建立文件夹
 1)src/main/resources/templates/tl/
 2)在template下admin模块下建一个info.html
-![](springboot/58.png)
+![](springboot/59.png)
 ```html
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
@@ -1941,7 +1941,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/6.0/release-notes-6.0.0.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/6.1/release-notes-6.1.0.html
 
-### 33.**快速部署ElastcSearch5.6.x**
+### 33.快速部署ElastcSearch5.6.x
 
 配置JDK1.8
 
@@ -2393,7 +2393,7 @@ public Queue queue(){
 
   localhost:8080/api/v1/order?msg=12312321321312
 
-![1553742882488](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1553742882488.png)
+![](./springboot/65.png)
 
   6、消费者：实时监听对应的队列
 
@@ -2503,7 +2503,7 @@ Broker：MQ程序，接收生产的消息，提供给消费者消费的程序
 
 Name Server：给生产和消费者提供路由信息，提供轻量级的服务发现和路由 
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\rmq-basic-arc%20.png)
+![](./springboot/66.png)
 
 NameServver Cluster里面存放的是Broker对应的IP
 
@@ -2656,7 +2656,7 @@ rocketmq.config.namesrvAddr=172.21.0.10:9876     //这个ip为私有ip
 
 ### 35.Springboot2.x整合RocketMQ4.x实战，加入相关依赖，开发生产者代码 
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\rocketmq%E5%BC%80%E5%8F%91.001.png)
+![](./springboot/67.png)
 
 api能很快向应给微信支付,然后把订单信息和积分信息丢到消息队列中去.所以api能承受很高的并发.
 
@@ -2760,11 +2760,11 @@ classpath的根目录下
 
 ### 38.SprinBoot2.x响应式编程简介
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\wechatimg5.jpeg)
+![](./springboot/68.png)
 
 讲解什么是reactive响应式编程和使用的好处
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard.png)
+![](./springboot/69.png)
 
 1、基础理解：					
 每个客户就相当于一个请求
@@ -2796,11 +2796,11 @@ SpingBoot2底层是用spring5,开始支持响应式编程，Spring又是基于Re
 
 2、web-flux相关资料：<https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#spring-webflux>
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard-1553940054995.png)
+![](./springboot/70.png)
 
 ### 39.讲解SpringBoot2.x响应式编程介绍 Mono、Flux对象和优缺点
 
-![img](file:///D:/softs/%E6%9C%89%E9%81%93%E4%BA%91%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E5%86%85%E5%AE%B9/m15510050030@163.com/532488daf54844f097def498389fbf64/clipboard.png)
+![](./springboot/71.png)
 
 1、Spring WebFlux是Spring Framework 5.0中引入的新的反应式Web框架
 
@@ -3102,7 +3102,7 @@ Spring Boot包含许多附加功能，可帮助您在将应用程序投入生产
 
 /actuator
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B.001.png)
+![](./springboot/72.png)
 
 ### SpringBoot2.x监控Actuator实战下集及生产环境建议，SpringBoot新旧版本区别
 
