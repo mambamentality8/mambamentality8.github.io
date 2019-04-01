@@ -12,7 +12,7 @@ image:
 
 <meta name="referrer" content="no-referrer" />
 
-<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/title.png">
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/title.png">
 
 <!-- more -->
 
@@ -71,11 +71,11 @@ Absolutely no code generation and no requirement for XML configuration
 ## 第一章   快速入门
 
 - 进入https://start.spring.io/
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/1.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/1.png)
 - 将下载的包解压并导入IDEA
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/2.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/2.png)
 - 启动我们的项目,访问8080端口
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/3.png?)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/3.png?)
 看到找不到页面选项就代表成功,因为我们还没有配置静态资源  
 
 ## 第二章   http协议开发
@@ -83,9 +83,9 @@ Absolutely no code generation and no requirement for XML configuration
 ### 1.路由配置
 
 - 首先要明白几个注解
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/4.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/4.png)
 - 创建一个controller
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/5.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/5.png)
 ```java
 @RequestMapping("/")
     public String home(){
@@ -100,8 +100,8 @@ public Map<String,String> testMap(){
 }
 ```
 - 然后进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/6.png)
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/7.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/6.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/7.png)
 
 ### 2.postman接口测试  
 
@@ -109,7 +109,7 @@ public Map<String,String> testMap(){
 postman下载地址https://www.getpostman.com/downloads/
 ```
 - 在GetController中添加代码进行测试  
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/8.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/8.png)
 
 ```java
 private Map<String,Object> params = new HashMap<>();
@@ -133,10 +133,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/9.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/9.png)
 
 - GetMapping
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/10.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/10.png)
 ```java
  /**
      * 功能描述：测试GetMapping
@@ -155,10 +155,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/11.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/11.png)
 
 - GetMapping默认值
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/12.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/12.png)
 ```java
 /**
      * 功能描述：默认值，是否必须的参数
@@ -178,12 +178,12 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/13.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/13.png)
 如果没有传入参数那么将会启用默认值
 
 - bean对象传参
 在domain包下创建一个实体类
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/24.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/24.png)
 
 ```java
 public class User {
@@ -236,7 +236,7 @@ public class User {
 }
 ```
 
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/14.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/14.png)
 ```java
  /**
      * 功能描述：bean对象传参
@@ -253,10 +253,10 @@ public class User {
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/15.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/15.png)
 
 - 获取请求头信息
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/16.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/16.png)
 ```java
 /**
      * 功能描述：测试获取http头信息
@@ -273,9 +273,9 @@ public class User {
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/17.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/17.png)
 - post提交方式
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/18.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/18.png)
 
 ```java
 private Map<String,Object> params = new HashMap<>();
@@ -295,10 +295,10 @@ private Map<String,Object> params = new HashMap<>();
 ```
 
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/19.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/19.png)
 
 - put提交方式
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/20.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/20.png)
 
 ```java
   @PutMapping("/v1/put")
@@ -309,10 +309,10 @@ private Map<String,Object> params = new HashMap<>();
     }
 ```
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/21.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/21.png)
 
 - delete提交方式
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/22.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/22.png)
 
 ```java
    @DeleteMapping("/v1/del")
@@ -324,7 +324,7 @@ private Map<String,Object> params = new HashMap<>();
 ```
 
 然后我们用postman进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/23.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/23.png)
 
 ### 3.常用json框架介绍和jackson返回结果处理
 ```
@@ -334,7 +334,7 @@ Jackson、FastJson、Gson类库各有优点，各有自己的专长
 空间换时间，时间换空间
 ```
 为我们的User类添加一个新字段重新生成get/set方法
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/25.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/25.png)
 
 在SampleController中添加一个新接口
 ```java
@@ -345,11 +345,11 @@ Jackson、FastJson、Gson类库各有优点，各有自己的专长
     }
 ```
 测试结果
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/26.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/26.png)
 但是密码不应该暴露给前端,我们在User类中添加一个注解
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/27.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/27.png)
 添加完之后启动应用再次测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/28.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/28.png)
 这样就保证了我们的数据安全
 
 ```
@@ -375,9 +375,9 @@ src/main/resources目录下资源加载的顺序
 
 ```
 我们先把restful风格的接口注释掉防止影响
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/29.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/29.png)
 然后按照图中示例进行测试
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/30.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/30.png)
 
 <font color=red>templates下的文件一般是静态模板没有加入classpath中,直接访问会找不到资源路径需要引入依赖</font>  
 
@@ -389,7 +389,7 @@ src/main/resources目录下资源加载的顺序
 </dependency>
 ```
 新建一个FileController
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/31.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/31.png)
 加入代码
 ```java
  @RequestMapping(value = "/api/v1/gopage")
@@ -412,7 +412,7 @@ src/main/resources目录下资源加载的顺序
 </html>
 ```
 再次访问url
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/32.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/32.png)
 
 官方默认spring加载静态资源配置路径
 ```
@@ -424,7 +424,7 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
 ```
 ### 5.springboot文件上传实战
 在static加入上传文件的页面
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/33.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/33.png)
 ```html
 <!DOCTYPE html>
 <html>
@@ -450,7 +450,7 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
 ```
 然后在FileController中添加后台代码
 <font color=red>注意替换自己存放文件的路径</font>  
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/34.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/34.png)
 
 ```java
 //注意替换路径
@@ -494,7 +494,7 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
     }
 ```
 响应的时候应该返回给前台一个包装的json类
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/35.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/35.png)
 ```java
 	private static final long serialVersionUID = 1L;
 
@@ -545,9 +545,9 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
 	}
 ```
 向后台发送文件之后
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/36.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/36.png)
 这里会有一个问题当上传文件过大时,会抛出异常,那么我们应该如何去配置呢?
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/37.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/37.png)
 在含有Config注解的类下配置一个bean注解,解决文件上传问题
 ```java
 @Bean
@@ -573,10 +573,10 @@ spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/re
 	</build>
 ```
 使用 mvn install 将项目打包
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/38.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/38.png)
 将jar包后缀换成zip并解压查看目录
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/39.png)
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/40.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/39.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/40.png)
 如果你上传的图片路径是自定义的,请自行在配置文件中添加
 web.images-path=自定义路径
 spring.resources.static-locations=classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/test/,file:${web.upload-path} 
@@ -590,10 +590,10 @@ spring.resources.static-locations=classpath:/META-INF/resources/,classpath:/reso
          <optional>true</optional>  
       	</dependency>
 2. 在IDEA设置中打开自动编译
- ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/41.png)
+ ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/41.png)
 3. 打开运行时编译,按快捷键 Shift+Ctrl+Alt+/ ，打开maintenance面板, 选择 Registry  
    勾选如图所示:
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/42.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/42.png)
 不被热部署的文件  
 	 		1、/META-INF/maven, /META-INF/resources, /resources, /static, /public, or /templates  
 	 		2、指定文件不进行热部署 spring.devtools.restart.exclude=static/**,public/**  
@@ -685,7 +685,7 @@ public String toString() {
 使用前缀
 @ConfigurationProperties（prefix = "xxx"）
 如果使用前缀的话则不需要@Value注解
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/43.png)  
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/43.png)  
 常见问题：  
     1、配置文件注入失败，Could not resolve placeholder  
         解决：根据springboot启动流程，会有自动扫描包没有扫描到相关注解,   
@@ -707,7 +707,7 @@ public String toString() {
 ```
 2. 使用@RunWith(SpringRunner.class)  //底层用junit  SpringJUnit4ClassRunner 
        @SpringBootTest(classes={DemoApplication.class})//启动整个springboot工程  
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/44.png)  
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/44.png)  
 
 SpringBoot测试进阶高级篇之MockMvc讲解   
 简介:讲解MockMvc类的使用和模拟Http请求实战   
@@ -727,13 +727,13 @@ andReturn：最后返回相应的MvcResult->Response
 2）在applicatoin.properties增加banner文件的路径地址   
     spring.banner.location=banner.txt  
 3）官网地址 https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-banners  
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/45.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/45.png)
 
 ### 12.SpringBoot2.x配置全局异常实战  
 讲解：服务端异常讲解和SpringBoot配置全局异常实战  
 1、默认异常测试  int i = 1/0，不友好,如果是前后端分离前端你抛一个404的页面前端不知道该如何去处理  
 先定义一个异常
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/46.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/46.png)
 ```java
 @RestController  
 public class ExcptionController {  
@@ -749,7 +749,7 @@ public class ExcptionController {
 @ControllerAdvice 如果是返回json数据 则用 RestControllerAdvice,就可以不加 @ResponseBody  
 //捕获全局异常,处理所有不可知的异常  
 @ExceptionHandler(value=Exception.class)  
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/47.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/47.png)
 ```java
 @RestControllerAdvice
 public class CustomExtHandler {
@@ -781,7 +781,7 @@ public class CustomExtHandler {
 
 ```
 2、创建自定义异常类
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/48.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/48.png)
 ```java
 public class MyException extends RuntimeException {
 
@@ -2245,7 +2245,7 @@ JDBC也是一个接口(规范)mysql和oracle的厂商都去实现了这个规范
 
 上下游对接，数据源变动->通知下属
 
-![](./springboot/61.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/61.png)
 
 4、概念 
 
@@ -2263,9 +2263,9 @@ JMS主题
 
 JMS消息通常有两种类型：点对点（Point-to-Point)、发布/订阅（Publish/Subscribe） 
 
-![](./springboot/62.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/62.png)
 
-![](./springboot/63.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/63.png)
 
 5、编程模型
 
@@ -2281,7 +2281,7 @@ Destination ：消息的目的地;消息发送给谁.
 
 MessageConsumer / MessageProducer： 消息接收者，消费者
 
-![](./springboot/64.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/64.png)
 
 ### 35.ActiveMQ5.x消息队列基础特性和本地快速安装
 
@@ -2393,7 +2393,7 @@ public Queue queue(){
 
   localhost:8080/api/v1/order?msg=12312321321312
 
-![](./springboot/65.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/65.png)
 
   6、消费者：实时监听对应的队列
 
@@ -2503,7 +2503,7 @@ Broker：MQ程序，接收生产的消息，提供给消费者消费的程序
 
 Name Server：给生产和消费者提供路由信息，提供轻量级的服务发现和路由 
 
-![](./springboot/66.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/66.png)
 
 NameServver Cluster里面存放的是Broker对应的IP
 
@@ -2656,7 +2656,7 @@ rocketmq.config.namesrvAddr=172.21.0.10:9876     //这个ip为私有ip
 
 ### 35.Springboot2.x整合RocketMQ4.x实战，加入相关依赖，开发生产者代码 
 
-![](./springboot/67.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/67.png)
 
 api能很快向应给微信支付,然后把订单信息和积分信息丢到消息队列中去.所以api能承受很高的并发.
 
@@ -2760,11 +2760,11 @@ classpath的根目录下
 
 ### 38.SprinBoot2.x响应式编程简介
 
-![](./springboot/68.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/68.png)
 
 讲解什么是reactive响应式编程和使用的好处
 
-![](./springboot/69.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/69.png)
 
 1、基础理解：					
 每个客户就相当于一个请求
@@ -2796,11 +2796,11 @@ SpingBoot2底层是用spring5,开始支持响应式编程，Spring又是基于Re
 
 2、web-flux相关资料：<https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#spring-webflux>
 
-![](./springboot/70.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/70.png)
 
 ### 39.讲解SpringBoot2.x响应式编程介绍 Mono、Flux对象和优缺点
 
-![](./springboot/71.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/71.png)
 
 1、Spring WebFlux是Spring Framework 5.0中引入的新的反应式Web框架
 
@@ -3102,7 +3102,7 @@ Spring Boot包含许多附加功能，可帮助您在将应用程序投入生产
 
 /actuator
 
-![](./springboot/72.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/72.png)
 
 ### SpringBoot2.x监控Actuator实战下集及生产环境建议，SpringBoot新旧版本区别
 
