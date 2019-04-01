@@ -808,7 +808,7 @@ public class MyException extends RuntimeException {
 }
 ```
 3、写一个异常路由
-![](springboot/49.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/49.png)
 ```java
 /**
 	 * 功能描述：模拟自定义异常
@@ -823,7 +823,7 @@ public class MyException extends RuntimeException {
 ```
 
 4、处理自定义异常
-![](springboot/50.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/50.png)
 ```java
 	/**
 	 * 功能描述：处理自定义异常
@@ -1045,9 +1045,9 @@ public class LoginFilter  implements Filter{
 }
 ```
 放行
-![](springboot/51.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/51.png)
 不放行
-![](springboot/52.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/52.png)
 
 1、官网地址：https://docs.spring.io/spring-boot/docs/2.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-embedded-container-servlets-filters-listeners
 
@@ -1121,13 +1121,13 @@ public class CustomContextListener implements ServletContextListener{
 
 2、
 自定义类继承SpringBoot2.X新版本配置拦截器 implements WebMvcConfigurer.记得加注解@Configuration
-![](springboot/53.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/53.png)
 
 自定义类继承WebMvcConfigurationAdapter(SpringBoot2.X之前旧版本).记得加注解@Configuration
-![](springboot/54.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/54.png)
 
 2、自定义拦截器 HandlerInterceptor
-![](springboot/55.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/55.png)
 preHandle：调用Controller某个方法之前
 postHandle：Controller之后调用，视图渲染之前，如果控制器Controller出现了异常，则不会执行此方法
 afterCompletion：不管有没有异常，这个afterCompletion都会被调用，用于资源清理
@@ -1261,7 +1261,7 @@ public class FreemakerController {
 }
 ```
 5、将ServerSettings这个模型类添加进来以供测试
-![](springboot/57.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/57.png)
 ```java
 @Component
 @PropertySource({"classpath:application.properties"})
@@ -1326,7 +1326,7 @@ spring.thymeleaf.content-type=text/html
 spring.thymeleaf.suffix=.html
 ```
 3、建立Controller
-![](springboot/58.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/58.png)
 ```java
 @Controller
 @RequestMapping("/tyhmeleaf")
@@ -1352,7 +1352,7 @@ public class ThymeleafController {
 4、建立文件夹
 1)src/main/resources/templates/tl/
 2)在template下admin模块下建一个info.html
-![](springboot/59.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/59.png)
 ```html
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
@@ -2027,7 +2027,7 @@ Exception in thread "main" java.nio.file.AccessDeniedException: /usr/local/softw
 4、问题四
  错误“max file descriptors [65535] for elasticsearchprocess is too low, increase to at least [65536]”，maxfile descriptors为最大文件描述符，设置其大于65536即可。解决方法是修改/etc/security/limits.conf文件，添加“* - nofile65536 * - memlock unlimited”，“*”表示给所有用户起作用，修改后的配置如下图所示：
 如果要给只读文件加上写权限，chmod a+w filename 就可以了。
-![](springboot/60.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/60.png)
 
 
 
