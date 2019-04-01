@@ -12,7 +12,7 @@ image:
 
 <meta name="referrer" content="no-referrer" />
 
-<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/title.png">
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com//springboot//title.png">
 
 <!-- more -->
 
