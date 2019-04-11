@@ -13,7 +13,7 @@ image:
 
 <meta name="referrer" content="no-referrer" />
 
-<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/title.png">
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/title.jpg">
 
 <!-- more -->
 
@@ -33,11 +33,11 @@ image:
 
 ​		等等
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8.png)
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/01.png)
 
 2.分布式架构:
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84.png)
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/02.png)
 
 ​	3、微服务
 
@@ -47,7 +47,7 @@ image:
 
 
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84.png)
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/03.png)
 
 ​		不足：
 
@@ -155,7 +155,7 @@ QPS = 并发量 / 平均响应时间
 
 ​				配置中心：diamond
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\dubbo.png)
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/04.png)
 
 ​		2、springcloud: 全家桶+轻松嵌入第三方组件(Netflix 奈飞)
 
@@ -175,7 +175,7 @@ QPS = 并发量 / 平均响应时间
 
 ​				分布式追踪系统：sleuth+zipkin
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\springcloud.png)
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/05.png)
 
 学习资料：https://blog.csdn.net/zhangweiwei2020/article/details/78646252
 
@@ -268,7 +268,7 @@ springcloud适合链路比较长的因为有现成的组件 或者小公司没�
 
 比如用户在这个终端看到的是已支付,在另一个终端也得看到已支付
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\%E4%B8%80%E8%87%B4%E6%80%A7.png)
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/06.png)
 
 
 ​		可用性（A）：负载过大后，集群整体是否还能响应客户端的读写请求。（服务一直可用，而且是正常响应时间）
@@ -344,7 +344,7 @@ springcloud适合链路比较长的因为有现成的组件 或者小公司没�
 
 ​		Eureka的基础知识-->画图讲解交互流程，服务提供者<-->服务消费者 ;
 
-![1554117524132](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554117524132.png)
+![1554117524132](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/07.png)
 
 ​		Eureka 2.x闭源后选择
 
@@ -356,13 +356,13 @@ springcloud适合链路比较长的因为有现成的组件 或者小公司没�
 
 5、服务注册和发现Eureka Server搭建实战
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard-1554119051205.png)
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/08.png)
 
-​	![img](file:///D:/softs/%E6%9C%89%E9%81%93%E4%BA%91%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E5%86%85%E5%AE%B9/m15510050030@163.com/1392dbc7cc8b4032895c35b5c698a165/clipboard_meitu_1.jpg)
+​	![img](https://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/09.png)
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard-1554120266576.png)
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/10.png)
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard-1554120276321.png)
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/11.png)
 
 简介：使用IDEA搭建Eureka服务中心Server端并启动，项目基本骨架介绍
 
@@ -408,13 +408,13 @@ maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html (替换国�
 
 ​	1、创建一个SpirngBoot应用，增加服务注册和发现依赖
 
-![img](D:/softs/%E6%9C%89%E9%81%93%E4%BA%91%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E5%86%85%E5%AE%B9/m15510050030@163.com/96dcdb7984ec4bbf8493b3294a87a7a7/clipboard.png)
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/12.png)
 
-![1554173411474](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554173411474.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/13.png)
 
-​	![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard-1554172699196.png)
+​	![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/14.png)
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard-1554172716892.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/15.png)
 
 ​	2、模拟商品信息，存储在内存中
 
@@ -426,11 +426,11 @@ maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html (替换国�
 
 ​		使用eureka客户端 官方文档：http://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#netflix-eureka-client-starter
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard-1554114176340.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/16.png)
 
 启动多个实例
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard-1554177140979.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/17.png)
 
 
 
@@ -458,7 +458,7 @@ maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html (替换国�
 
 ​    注意：自我保护模式禁止关闭，默认是开启状态true
 
-![1554179474717](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554179474717.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/18.png)
 
 保护模式的作用:假如有一天商品服务的上报给Euraka-Server的时候网络出错了,然后订单服务去注册中心找商品服务找不到,此时Euraka-Server并不会剔除商品服务,反之如果关闭了保护模式那么注册中心就会认为没注册成功的商品服务挂掉了将会被剔除,.
 
@@ -520,9 +520,9 @@ maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html (替换国�
 
 ​		1、创建order_service项目
 
-![1554200583352](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554200583352.png)![1554206770688](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554206770688.png)![1554206889013](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554206889013.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/19.png)![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/20.png)![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/21.png)
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard-1554114176340.png)
+
 
 ​		2、开发伪下单接口
 
@@ -608,7 +608,7 @@ product-service:
 
 ​		1、使用feign步骤讲解（新旧版本依赖名称不一样）
 
-![1554263916239](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554263916239.png)
+![](https://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/22.png)
 
 ​			启动类增加@EnableFeignClients
 
@@ -622,15 +622,15 @@ product-service:
 
 ​			1、路径
 
-![1554275709133](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554275709133.png)
+![1554275709133](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/23.png)
 
 ​			2、Http方法必须对应
 
 这里的name= 里面的值必须和被调用方保持一致
 
-![1554276236257](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554276236257.png)
+![1554276236257](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/24.png)
 
-​			![1554276269639](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554276269639.png)
+​			![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/25.png)
 
 ​			3、被调用方使用@RequestParam的时候调用方也必须使用	@RequestParam
 
@@ -720,13 +720,13 @@ client:
 
 ​				-》用户服务 （出现异常-》熔断）
 
-![1554344346029](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554344346029.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/26.png)
 
 ​	2、降级：
 
 ​		抛弃一些非核心的接口和数据
 
-![1554344611770](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554344611770.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/27.png)
 
 ​		旅行箱的例子：只带核心的物品，抛弃非核心的，等有条件的时候再去携带这些物品
 
@@ -961,7 +961,7 @@ feign:
 
 5、熔断降级服务异常报警通知实战
 
-![1554361309931](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554361309931.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/28.png)
 
 ​	简介：完善服务熔断处理，报警机制完善
 
@@ -1177,7 +1177,7 @@ management:
 
 ​	简介：讲解网关的作用和使用场景 (画图)
 
-​	![WechatIMG1](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\WechatIMG1.png)
+​	![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/29.png)
 
 ​	1）什么是网关
 
@@ -1239,9 +1239,9 @@ zuul是和你下游服务组成一个局域网可以防止DDOS攻击
 
 ​	简介：讲解zuul网关基本使用
 
-![1554432866593](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554432866593.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/30.png)
 
-![1554432963705](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554432963705.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/31.png)
 
 ​	1、加入依赖
 
@@ -1309,7 +1309,7 @@ zuul:
 ```
 
 
-![WechatIMG1](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\WechatIMG1-1554439178384.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/32.png)
 
 
 
@@ -1317,7 +1317,7 @@ zuul:
 
 3、高级篇幅之Zuul常用问题分析和网关过滤器原理分析
 
-![zuul流程](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\zuul流程-1554449431293.png)
+![zuul流程](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/33.png)
 
 ​	简介：讲解Zuul网关原理和过滤器生命周期，
 
@@ -1386,7 +1386,7 @@ zuul:
 
 ​	简介：谷歌guava框架介绍，网关限流使用 (令牌桶算法)
 
-![token_bucket](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\token_bucket.JPG)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/34.JPG)
 
 ​	1、nginx层限流
 
@@ -1402,7 +1402,7 @@ zuul:
 
 ​	简介：微服务网关Zull集群搭建
 
-![WechatIMG1](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\WechatIMG1-1554460303307.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/35.jpg)
 
 ​	1、nginx+lvs+keepalive 
 
@@ -1632,7 +1632,7 @@ spring:
 
 第八章 微服务核心知识分布式配置中心Config实战
 
-​	![WechatIMG1](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\WechatIMG1-1554555560701.png)
+​	![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/36.png)
 
 ​	1、微服务下的分布式配置中心
 
@@ -1684,9 +1684,9 @@ spring:
 
 ​		1、新建项目，创建config-server
 
-![1554565624264](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554565624264.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/37.png)
 
-​		![1554565639339](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554565639339.png)	![1554565729259](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554565729259.png)
+​		![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/38.png)	![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/39.png)
 
 ​			
 
@@ -1694,7 +1694,7 @@ spring:
 
 @EnableConfigServer
 
-![1554566194282](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554566194282.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/40.png)
 
 
 
@@ -1982,7 +1982,7 @@ spring:
 
 ​	3、高级篇幅消息总线整合配置中心架构流程图
 
-![1554689982795](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\1554689982795.png)
+![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/41.png)
 
 ​		简介：讲解消息总线Bus结合config组件搭建配置中心项目架构图和操作流程
 
