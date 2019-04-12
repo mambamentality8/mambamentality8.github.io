@@ -1,13 +1,21 @@
 ---
-title: markdown语法练习
-date: 
-categories: 
-    -markdown
-tags: 
-    -markdown
-    
-description: markdown语法
+title: markdown
+tags: []
+date: 2019-03-09 23:11:21
+permalink:
+categories: markdown
+description: markdown语法练习2
+image:
 ---
+
+<p class="description"></p>
+
+<meta name="referrer" content="no-referrer" />
+
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/markdown/title.jpg">
+
+<!-- more -->
+
 #内嵌式链接
 - 外部链接:[百度](www.baidu.com)  
 - 内部链接1:链接仓库的其它文件[demo1](markdown_demo1.md)

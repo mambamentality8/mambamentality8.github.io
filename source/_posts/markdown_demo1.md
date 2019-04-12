@@ -1,12 +1,20 @@
 ---
-title: markdown语法练习
-date: 
-categories: 
-    -markdown
-tags: 
-    -markdown
-description: markdown语法
+title: markdown
+tags: []
+date: 2019-03-09 23:11:21
+permalink:
+categories: markdown
+description: markdown语法练习1
+image:
 ---
+
+<p class="description"></p>
+
+<meta name="referrer" content="no-referrer" />
+
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/markdown/title.jpg">
+
+<!-- more -->
 
 # 标题
 
