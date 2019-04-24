@@ -41,6 +41,9 @@ sign参数一般是不可逆的算法
 
 数字签名一般用MD5 + RSA   SHA1+RSA  SHA256+RSA
 
+签名的时候一般先对你提交的表单的数据(里面可能有一个时间戳)做一个排序的操作
+操作完以后再进行摘要算法
+
 ```javascript
 //获取sign
 var getSign = function(sPara){
@@ -371,7 +374,7 @@ function AES(){
     var iv  = CryptoJS.enc.utf8.parse("9BD2C547935C46F2"); //ECB模式没有偏移向量
     var value = CryptoJS.AES.encrypt(pwd,key,{   //DES的话就把AES换成DES  一般AES的秘钥是16个字节或者是32个字节8个字节也可以DES是8个字节3DES是24个字节
         mode:CryptoJS.mode.CBC,  
-        padding:CryptoJS.pad.pkcs7,  
+        padding:CryptoJS.pad.pkcs7,
         iv:iv  
     }).toString()
     
@@ -399,3 +402,10 @@ var document = {}
 document.cookie="";
 
 cookie有可能会失效过一段时间就去请求一下
+
+# 15.转义\
+如果签名有\的话那么在加密的时候需要转义将\转义为\\
+然后再去进行计算
+
+# 16.时间戳
+在进行sign签名的时候一定要记得用同一个时间戳

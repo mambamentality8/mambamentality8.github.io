@@ -8,12 +8,12 @@ categories: dubbo
 description: dubbo
 image:
 ---
- 
+
 <p class="description"></p>
 
 <meta name="referrer" content="no-referrer" />
 
-<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/title.png">
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/dubbo/title.png">
 
 <!-- more -->
 # dubbo官方文档:
@@ -124,9 +124,9 @@ SOA架构:
 ‘消沉了很长一段时间后’，dubbo于2017年，凤凰磐涅，浴火重生,捐献给Apache
 
 
- 
 
- 
+
+
 
 第四节 dubbo与spring-cloud比较
 简介：对目前主流微服务框架进行对比，给技术选型提供相应的参考
@@ -140,13 +140,13 @@ springcloud: 全家桶+轻松嵌入第三方组件(Netflix 奈飞)
 官网：http://projects.spring.io/spring-cloud/ ​	配套 ​	通信方式：http restful ​	注册中心：eruka/consul ​	配置中心：config ​	断路器：hystrix ​	网关：zuul ​	分布式追踪系统：sleuth+zipkin
 
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/dubbo/08.png)
- 
 
- 
 
- 
 
- 
+
+
+
+
 
 
 
@@ -484,11 +484,11 @@ session过期的时候，该session创建的所有临时节点都会被抛弃
  
 
 子节点的watcher操作（监控父节点，当父节点对应的子节点发生变更增删的时候，父节点上的watcher事件会被触发） ls ls2 增删会触发、修改不会，如果子节点再去新增子节点，不会触发（也就是说，触发watcher事件一定是直系子节点即父子关系而非爷孙关系）
- 
 
- 
 
- 
+
+
+
 
 第九、十节 zookeeper的acl（access control lists）权限控制
 针对节点可以设置相关的读写等权限，目的是为了保证数据的安全性
@@ -580,9 +580,9 @@ zk的核心是广播机制，该机制保证了各个zk之间数据同步（数�
 广播模式：客户端想写入数据，这个时候leader发起提议，当leader的提议被大多数的zkServer同意之后，leader就会去修改自身的数据，并将修改后的数据广播给其他的follower
 
 
- 
 
- 
+
+
 
 第三节 zk节群选举核心概念及选举时状态
 简介：介绍zookeeper节群选举相关的核心概念以及选举时的状态
@@ -707,13 +707,13 @@ redis、memcache:对应的去设置一个值做为锁的一标志，每次获取
 简介：介绍基于zk实现分布式锁的多种方式
 注意事项： 创建节点的时候，一定要创建临时节点，避免应用获取到锁后，宕机，导致锁一致被持有
 具体实现方式详见视频
- 
 
- 
 
- 
 
- 
+
+
+
+
 
 第三节 实战--基于zk原生的api实现分布式锁
 简介：介绍基于zk原生的api实现分布式锁
@@ -725,46 +725,46 @@ redis、memcache:对应的去设置一个值做为锁的一标志，每次获取
 </dependency>
 注意点：原生api不支持递归创建节点
 如果是单一应用，尽量不要使用分布式锁
- 
 
- 
 
- 
 
- 
 
- 
+
+
+
+
+
 
 
 第七章 从零开始搭建dubbo开发环境
 第一节 企业中常见dubbo项目分层
 简介：介绍在企业中常见的dubbo项目的分层
 详见课程视频
- 
 
- 
 
- 
+
+
+
 
 第二节 从零开始搭建springboot+Dubbo开发环境
 简介：从零开始搭建springboot+Dubbo开发环境
 详见课程视频
- 
 
- 
 
- 
+
+
+
 
 第三节 图解dubbo开发环境搭建中各个配置的作用
 简介：图解dubbo开发环境搭建中各个配置的作用
 详见课程视频
- 
 
- 
 
- 
 
- 
+
+
+
+
 
 
 
@@ -778,9 +778,9 @@ redis、memcache:对应的去设置一个值做为锁的一标志，每次获取
 服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。
 服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。
 详见 http://dubbo.apache.org/zh-cn/docs/user/preface/architecture.html
- 
 
- 
+
+
 
 第二节 企业中dubbo常见的多种开发方式
 简介：介绍企业中dubbo常见的多种开发方式
@@ -789,11 +789,11 @@ github查看代码的插件 ectotree
 通过xml配置
 通过api的方式----日常开发中比较少见
 具体配置方式,详见视频
- 
 
- 
 
- 
+
+
+
 
 第三节 详解dubbo服务注册中心
 简介：介绍dubbo主流的服务注册中心，包括最新节成的dubbo开源组件nacos
@@ -802,20 +802,20 @@ Multicast 注册中心 ----开发阶段使用
 zookeeper 注册中心 ----目前企业中最常用，也是官方推荐
 redis 注册中心 ----虽然支持，但是较少使用
 nacos 注册中心 ----后起之秀 参考https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html
- 
 
- 
 
- 
+
+
+
 
 第四节 应用实战之dubbo整合zookeeper
 简介：介绍dubbo整合zookeeper的具体步骤
 具体整合步骤详见课程视频
- 
 
- 
 
- 
+
+
+
 
 第五节 应用实战之dubbo使用xml的配置方式
 简介：介绍使用xml的配置方式进行dubbo项目的开发
@@ -825,13 +825,13 @@ nacos 注册中心 ----后起之秀 参考https://nacos.io/zh-cn/docs/use-nacos-
 在服务消费方，新增consumer.xml的配置文件
 在启动类中新增@ImportResource("consumer.xml")
 使用spring的@autowire注解替代@Reference
- 
 
- 
 
- 
 
- 
+
+
+
+
 
 
 
@@ -856,11 +856,11 @@ Dubbo 缺省会在启动时检查依赖的服务是否可用，不可用时会�
 dubbo.reference.check=false，强制改变所有 reference 的 check 值，就算配置中有声明，也会被覆盖。
 dubbo.consumer.check=false，是设置 check 的缺省值，如果配置中有显式的声明，如：<dubbo:reference check="true"/>，不会受影响。
 dubbo.registry.check=false，前面两个都是指订阅成功，但提供者列表是否为空是否报错，如果注册订阅失败时，也允许启动，需使用此选项，将在后台定时重试。
- 
 
- 
 
- 
+
+
+
 
 第二节 核心知识点之dubbo配置加载流程
 简介：介绍dubbo配置加载流程及其配置的优先级
@@ -961,13 +961,13 @@ new SpringApplicationBuilder(ServiceApplication.class).web(WebApplicationType.NO
 第五节 高级特性之Dubbo多注册中心及其配置
 简介：介绍dubbo的多注册中心以及如何进行配置
 新增<dubbo:registry address="zookeeper://192.1.1.101:2181"/>，多个注册中心使用id属性进行区分 id="remote"，服务暴露时，多个注册中心使用逗号分隔
- 
 
- 
 
- 
 
- 
+
+
+
+
 
 第六节 高级特性之Dubbo服务分组及其配置
 简介：介绍Dubbo服务分组的作用及其配置
@@ -1068,22 +1068,22 @@ java -jar dubbo-admin-0.1.jar
 
 非核心配置外部化
 服务测试时可以使用元数据中心的数据
- 
 
- 
 
- 
 
- 
 
- 
+
+
+
+
+
 
 
 
 第十章 课程总结
 第一节 课程总结及未知知识学习方法
 详见视频
- 
+
 
 第二节 zookeeper与dubbo核心面试题
 简单介绍下zk选举机制？
@@ -1091,8 +1091,7 @@ zk节群是怎么处理读写请求的？
 分布式锁的实现原理以及如何实现？
 dubbo的架构是怎样的？
 Dubbo接口不兼容升级怎么处理？
- 
 
- 
 
- 
+
+
