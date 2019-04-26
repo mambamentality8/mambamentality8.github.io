@@ -8,6 +8,14 @@ tags:
 description: 常用的git操作命令
 ---
 
+<p class="description"></p>
+
+<meta name="referrer" content="no-referrer" />
+
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/git/title.png">
+
+<!-- more -->
+
 #########查看本地git的配置  
 ```
 git config --list
