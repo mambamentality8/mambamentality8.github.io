@@ -216,3 +216,215 @@ rwx r:4 w:2 x:1
 - 为什么这个文件没有执行权限仍然可以执行呢?
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/linux/shell/03.png)
 - 因为sh是一个执行脚本的命令只要sh有执行权限而且你这个文件是可读的那么就可以去执行这个文件
+
+- 常见的执行方法
+
+方法1：添加执行权限 chmod +x shell.sh
+
+方法1：./shell.sh
+
+方法2：sh shell.sh 或者bash shell.sh
+
+方法3：source shell.sh
+
+# shell的常见变量
+```
+    不同于其它语言需要先声明变量
+	shell的变量直接使用，eg:a=15
+	调用变量的话 $或者a 或者 ${a}   ${a}能够和其它字符连在一起
+
+	$?	#判断上一条命令执行的是否成功,如果返回0代表成功,返回1代表失败
+
+	$0	#返回脚本的文件名称
+
+	$1-$9 #返回对应的参数值
+
+	$* #返回所有的参数值是什么
+
+	$# #返回参数的个数和
+```
+
+vi shell.sh
+```
+#!/bin/bash
+#test
+#by作者XXX 20XX年XX月XX日
+echo "脚本: $0"
+echo "第一个参数是: $1"
+echo "第一个参数是: $2"
+echo "一共有多少参数: $#"
+echo "这些参数都是什么: $*"
+```
+
+运行命令 sh shell.sh 12 abc 45 kkk po
+输出内容:
+```
+脚本: shell.sh
+第一个参数是:12
+第二个参数是:abc
+一共有多少个参数:5
+这些参数是什么:12 abc 45 kkk po
+```
+
+# shell的常见的几个符号
+```
+>  #会覆盖原有的内容
+
+>>  #不会覆盖原有的内容  
+
+;	#执行多条命令
+
+|  #管道符
+
+&& #前面的命令执行成功，后面的才可以执行
+
+|| #前面的命令执行失败，后面的才可以执行
+
+"" #会输出变量值 eg:
+vi abc.sh
+echo "第一个参数是:$1"
+echo '第一个参数是:$1'
+
+sh abc.sh 100
+第一个参数是: 100
+第一个参数是: $1
+
+'' #输出本身
+
+`` #输出命令结果 eg:a=`date`;echo $a
+
+2>/dev/null  #错误输出到无底洞
+1>/dev/null	 #正确输出到无底洞
+```
+
+# 秒变计算器的运算符
+- 整数:
+```
+    加：expr 12 + 6 		expr $a + $b
+
+		echo $[12 + 6]		echo $[a + b]
+
+		echo $((12 + 6))	echo $((a + b))
+		
+	减：expr 12 - 6			expr $a - $b
+
+		echo $[12 - 6]		echo $[a - b]
+
+		echo $((12 - 6)) 	echo $((a - b))
+
+	乘：expr 12 \* 6		expr $a \* $b    #\*转义为乘,否则它就是个通配符
+
+		echo $[12 * 6]	  	echo $[a * b]
+
+		echo $((12 * 6))	echo $((a * b))
+
+	除：expr 12 / 6			expr $a / $b
+
+		echo $((12 / 6))	echo $((a / b))
+
+		echo $[12 / 6]		echo $[a / b]
+
+	求余：expr 12 % 6 		expr $a % $b
+
+		  echo $((12 % 6))	echo $((a % b))
+
+		  echo $[12 % 6]	echo $[a % b]
+
+```
+- 小数:
+```
+bc #交互模式
+使用管道|  #可以不用交互模式
+echo "1+2" | bc
+
+bc计算器
+保留多少位小数可以通过scale
+echo "scale=2;1.2+1.3" | bc4
+echo "scale=2;(1.2+1.3)/1" | bc
+但是scale只对除法，取余数，乘幂 有效，对加减没有效。
+
+echo "scale=2;(0.2+0.3)/1" | bc 	#计算出0.2+0.3的和并保留俩位小数，此时bc计算器会省略掉个位数的0
+echo "scale=2;(1.2+1.3)/1" | bc   #计算出1.2+1.3的和并保留俩位小数
+```
+
+# 常见的条件判断
+- 语法: [判断表达式]
+```
+文件（夹）或者路径：
+-e  目标是否存在（exist）
+[ -e xxx.sh ] && echo '存在'  #如果有这个文件就输出存在
+-d  是否为路径（directory）
+[ -d /home/username ] && echo '/home/username存在'
+-f  是否为文件（file）
+[ -e xxx.sh ] || touch xxx.sh 	#判断当前目录下是否有foer.sh这个文件，假如没有就创建出foer.sh文件
+```
+- 权限:
+```
+-r  是否有读取权限（read）
+-w  是否有写入权限（write）
+-x  是否有执行权限（excute）
+
+[ -x xxx.txt ] && echo '有执行权限'
+```
+- 整数值（int型）：
+```
+-eq 等于（equal）
+-ne 不等于(not equal)
+-gt 大于（greater than）
+-lt 小于（lesser than）
+-ge 大于或者等于（greater or equal）
+-le 小于或者等于（lesser or equal）
+
+[ 9 -gt 8 ] && echo '大于'
+```
+
+- 小数(浮点型):
+```
+[ `echo '1.2 < 1.3' | bc` -eq 1 ] && echo '小于'
+如果是一条语句就用繁体号括起来
+```
+
+- 字符串:
+```
+=    相等
+!=   不相等
+
+[ 'kkkkk' != 'kkkk' ] && echo '不等于'
+```
+
+- 制作一个简单的脚本
+```
+cat > panduan.sh
+
+#!/bin/bash
+#判断输入的第一个数是否大于输入的第二个数
+#by author
+if [ $s1 -eq $2 ]
+then
+echo "$1等于$2"
+
+else
+
+echo "$1 不等于 $2"
+fi
+
+sh panduan.sh 12 13
+```
+
+```
+#创建一个文件如果文件创建成功就返回0
+#!/bin/bash
+touch $1
+if [ $? -eq 0 ];then
+echo "$1 创建成功!"
+fi
+```
+
+# shell脚本输入之read命令
+- 语法：read -参数
+```
+-p：给出提示符。默认不支持"\n"换行
+-s：隐藏输入的内容
+-t：给出等待的时间，超时会退出read
+-n：限制读取字符的个数，触发到临界值会自动执行
+```

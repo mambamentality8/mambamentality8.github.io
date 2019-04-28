@@ -3,7 +3,7 @@ path = require('path')
 gulp = require('gulp')
 jshint = require('gulp-jshint')
 stylish = require('jshint-stylish')
-shell   = require('gulp-shell')
+shell   = require('gulp-shell.md')
 yaml = require('js-yaml')
 
 gulp.task 'lint', ->
