@@ -1,16 +1,24 @@
 ---
 title: python基础
-top: 9997
+top: 9999
 tags: []
 date: 2019-03-09 23:11:21
 permalink:
-categories: python基础
-description: boostrap
+categories: python
 image:
 
-
 ---
+
+<p class="description"></p>
+
+<meta name="referrer" content="no-referrer" />
+
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/title.png">
+
+<!-- more -->
+
 # 计算机组成原理和Python基础语法知识(一)
+
 笔记大纲:
 1. 计算机有哪两部分组成
 2. 操作系统的作用

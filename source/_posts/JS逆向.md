@@ -1,4 +1,24 @@
+---
+title: JS逆向
+top: 9999
+tags: []
+date: 2019-03-09 23:11:21
+permalink:
+categories: JS逆向
+image:
+
+---
+
+<p class="description"></p>
+
+<meta name="referrer" content="no-referrer" />
+
+<img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/title.png">
+
+<!-- more -->
+
 # 1.搜索方法  
+
 直接在login包的后面的JS链接里面去找讨主意观察页面是否刷新如果刷新顺着往下找排除JS框架
 在值栈框里面寻找一直找到不是作为形参的地方为止
 出现Digest可以再当前页面搜索一些数据摘要算法的名称例如md  sha
@@ -129,7 +149,7 @@ Base64/btoa/atob
 •  所有的数据都能被编码为只用65个字符就能表示的文本。
 •  65字符：A~Z a~z 0~9 + / =
 一般base64以后都需要替换或者URL编码
- 
+
 2、单向散列函数 消息摘要算法
 ·  加密后的密文定长
 ·  明文不一样，散列后结果一定不一样
@@ -384,7 +404,7 @@ function AES(){
 
 # 12.$().val()
 $().val()如果括号中没有值代表取值,如果括号中有值代表赋值
- 
+
 # 13.$.fn
 valAesEncryptSet($("#txtPassword").val())
 
