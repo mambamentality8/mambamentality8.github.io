@@ -12,7 +12,7 @@ script:
 after_script:
   - cd ./public
   - git init
-  - git config user.name "mambamentality8" # 修改name
+  - git config user.name "houshiwei" # 修改name
   - git config user.email "858968850@qq.com" # 修改email
   - git add .
   - git commit -m "Travis CI Auto Builder"
