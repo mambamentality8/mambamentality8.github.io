@@ -22,19 +22,25 @@ image:
 直接在login包的后面的JS链接里面去找,注意观察页面是否刷新如果刷新顺着往下找排除JS框架
 在值栈框里面寻找一直找到不是作为形参的地方为止
 出现Digest可以再当前页面搜索一些数据摘要算法的名称例如md  sha
+去看数据包中哪个是返回表单的数据包将这个数据包提取出来排除干扰
 setpublickey
 登录框按钮ID
 登录框提示的错误红字
 登录框的登录中
 还有placehoder
 URL的后缀
-password
-password:
-password=
-password =
+password : 中文冒号(搜出来的最少)
+password= (第二少的)
+password =(第三少的)
+password: 英文冒号(第四少的)
+pwd
+Pwd
 username
 trim
 encrypt
+
+Base64
+
 xhr断点  把URL里面的内容加到Breakpoints里面
 
 # 2.系统引擎和V8引擎有什么区别
@@ -42,6 +48,7 @@ xhr断点  把URL里面的内容加到Breakpoints里面
 系统引擎   IE7的引擎   ES3的标准
 V8引擎   谷歌开源的  谷歌浏览器内置JS解析引擎  用的是ES5的标准
 比如说定义了一个对象
+
 ```javascript
 var obj = {
     a:"xxxxxxxx",
@@ -69,7 +76,7 @@ sign参数一般是不可逆的算法
 var getSign = function(sPara){
     //把参数的键值取出来
     var keys = object.keys(sPara);
-    //因为取出来的兼职顺序每次都不一样所以需要按键值升序排列
+    //因为取出来的键值顺序每次都不一样所以需要按键值升序排列
     keys = keys.sort();
     var split = "";
     var signString = "";
@@ -105,7 +112,7 @@ if (type == null || "aes" == type.toLowerCase()) {
 function AES(){  
     
     var pwd = "a12456"  
-    var key = CryptoJS.enc.utf8.parse("4F233463B63EA99F");  //key和iv在使用之前要先解析成字节集  其实这个解析不解析无所谓
+    var key = CryptoJS.enc.utf8.parse("4F233463B63EA99F");  //key和iv在使用之前要先解析成字节集其实这个解析不解析无所谓,默认就是uft8解析
     var iv  = CryptoJS.enc.utf8.parse("9BD2C547935C46F2"); //ECB模式没有偏移向量
     var value = CryptoJS.AES.encrypt(pwd,key,{   //DES的话就把AES换成DES  一般AES的秘钥是16个字节或者是32个字节8个字节也可以DES是8个字节3DES是24个字节
         mode:CryptoJS.mode.CBC,  
@@ -429,3 +436,4 @@ cookie有可能会失效过一段时间就去请求一下
 
 # 16.时间戳
 在进行sign签名的时候一定要记得用同一个时间戳
+
