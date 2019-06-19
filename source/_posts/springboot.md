@@ -759,7 +759,7 @@ public class CustomExtHandler {
 	@ExceptionHandler(value=Exception.class)
 	//@ResponseBody
     Object handleException(Exception e,HttpServletRequest request){
-		LOG.error("url {}, msg {}",request.getRequestURL(), e.getMessage()); 
+		LOG.error("url { }, msg { }",request.getRequestURL(), e.getMessage()); 
 		Map<String, Object> map = new HashMap<>();
 	        map.put("code", 100);
 	        map.put("msg", e.getMessage());
@@ -1077,6 +1077,7 @@ public class LoginFilter  implements Filter{
 ### 17.Servlet3.0的注解原生Linstener监听器实战
 在启动类添加注解@ServletComponentScan
 自定义Listener(常用的监听器 servletContextListener、httpSessionListener、servletRequestListener)
+
 ```java
 @WebListener
 public class RequestListener implements ServletRequestListener {
@@ -1353,6 +1354,7 @@ public class ThymeleafController {
 1)src/main/resources/templates/tl/
 2)在template下admin模块下建一个info.html
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/59.png)
+
 ```html
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
@@ -1514,7 +1516,7 @@ mapper:
 ```java
 public interface UserMapper {
 	
-	//推荐使用#{}取值，不要用${},因为存在注入的风险
+	//推荐使用#{ }取值，不要用${ },因为存在注入的风险
 	 @Insert("INSERT INTO user(name,phone,create_time,age) VALUES(#{name}, #{phone}, #{createTime},#{age})")
 	 @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")   //keyProperty java对象的属性；keyColumn表示数据库的字段
 	 int insert(User user);
