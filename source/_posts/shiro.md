@@ -229,7 +229,7 @@ https://github.com/mambamentality8/shiro
 
 认证：用户身份识别，俗称为用户“登录”
 
-![1560748769729](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1560748769729.png)
+![1560748769729](https://blog-mamba.oss-cn-beijing.aliyuncs.com/shiro/03.png)
 
 
 
@@ -269,13 +269,11 @@ subject.logout();
 
 - 开发中，往往是自定义realm , 即集成 AuthorizingRealm
 
-  ![1560771788661](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1560771788661.png)
+  ![1560771788661](https://blog-mamba.oss-cn-beijing.aliyuncs.com/shiro/05.png)
 
-![1560771911678](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1560771911678.png)
+![1560771911678](https://blog-mamba.oss-cn-beijing.aliyuncs.com/shiro/06.png)
 
-![1560771955816](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1560771955816.png)
-
-![1560756811866](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1560756811866.png)
+![1560771955816](https://blog-mamba.oss-cn-beijing.aliyuncs.com/shiro/07.png)
 
 
 
@@ -413,8 +411,6 @@ System.out.println("是否有任意权限:"+ subject.isPermitted("aaaa:xxxxxxxxx
 
 ```
 
-### 
-
 ### 自定义Realm实战基础
 
 - 步骤：
@@ -439,3 +435,4 @@ System.out.println("是否有任意权限:"+ subject.isPermitted("aaaa:xxxxxxxxx
   - SimpleAuthenticationInfo ：代表该用户的认证信息  数据库的用户名账号密码和盐
 
   - SimpleAuthorizationInfo：代表用户角色权限信息
+
