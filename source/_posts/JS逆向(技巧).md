@@ -324,7 +324,7 @@ RSA:
 4、e 是和f(n)互质的质数
 5、计算参数d
 6、经过上面5步计算得到公钥KU=(e,n) 私钥KR=(d,n)
-RSA三步骤 :
+RSA三步曲 :
 1:初始化 n = new JSEncrypt;
 2:设置公钥 n.setPublicKey(r);
 3:进行加密 var e = n.encrypt($("#input1").val())
