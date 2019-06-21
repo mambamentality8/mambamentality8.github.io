@@ -29,6 +29,29 @@ RSA:
 
 
 
+<font size='4px' style=color:red>RSA解密技巧:</font>
+
+​			1.搜索的时候先去搜索-----BEGIN PUBLIC KEY-----
+
+​			2.或者尝试去搜索-----END PUBLIC KEY-----
+
+​			格式以这个为准:
+
+```
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCh5Nk2GLiyQFMIU+h3OEA4UeFb
+u3dCH5sjd/sLTxxvwjXq7JLqJbt2rCIdzpAXOi4jL+FRGQnHaxUlHUBZsojnCcHv
+hrz2knV6rXNogt0emL7f7ZMRo8IsQGV8mlKIC9xLnlOQQdRNUssmrROrCG99wpTR
+RNZjOmLvkcoXdeuaCQIDAQAB
+-----END PUBLIC KEY-----
+```
+
+​			3.将上面的公钥进行16进制的转换然后带入到调试工具中(<font size='4px' style=color:red>转换为16进制以后应该是256位的公钥</font>)
+
+​			4.去调试密码利用Envalue  in  Console尝试看看密码是否会发生变化,如果发生变化证明是PKCS1模式
+
+​			5.然后进行内存反转或者字符反转
+
 RSAkey的三种来源:
 
 1. 来源于数据包的响应体中
