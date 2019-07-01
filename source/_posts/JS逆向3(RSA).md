@@ -27,7 +27,7 @@ RSA:
 5、计算参数d
 6、经过上面5步计算得到公钥KU=(e,n) 私钥KR=(d,n)
 
-
+**公式:密文 = (明文 的 指数次方)  取余 公钥**
 
 <font size='4px' style=color:red>RSA解密技巧:</font>
 
