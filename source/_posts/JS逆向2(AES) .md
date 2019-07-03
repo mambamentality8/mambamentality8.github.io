@@ -99,3 +99,6 @@ var wordArray = CryptoJS.enc.Hex.parse(hexString);
 var wordArray = CryptoJS.enc.Base64.parse(base64String); 
 ```
 
+
+
+AES可以直接搜索mode   CryptoJS   utf8  CBC  类似的值

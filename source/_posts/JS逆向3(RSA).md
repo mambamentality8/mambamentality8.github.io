@@ -29,6 +29,8 @@ RSA:
 
 **公式:密文 = (明文 的 指数次方)  取余 公钥**
 
+**RSA的指数常见的就是10001**
+
 <font size='4px' style=color:red>RSA解密技巧:</font>
 
 ​			1.搜索的时候先去搜索-----BEGIN PUBLIC KEY-----
@@ -72,7 +74,7 @@ RSA三步曲 :
 3:进行加密 var e = n.encrypt($("#input1").val())
 ```
 
-example:
+example(一):
 
 ```javascript
 function getPwd(pwd){
@@ -96,6 +98,21 @@ function getRSA(password, pubkey) {
     return encryptedString(key, password);
 }
 ```
+
+example(二):
+
+```javascript
+var rsa = function (arg) {
+      setMaxDigits(130);
+      //指数
+      var PublicExponent = "10001";
+      var modulus = "be44aec4d73408f6b60e6fe9e3dc55d0e1dc53a1e171e071b547e2e8e0b7da01c56e8c9bcf0521568eb111adccef4e40124b76e33e7ad75607c227af8f8e0b759c30ef283be8ab17a84b19a051df5f94c07e6e7be5f77866376322aac944f45f3ab532bb6efc70c1efa524d821d16cafb580c5a901f0defddea3692a4e68e6cd";
+      var key = new RSAKeyPair(PublicExponent, "", modulus);
+      return encryptedString(key, arg);
+  };
+```
+
+
 
 它两种模式ECB和NONE但是两者的结果是一样的 
 填充方式有
@@ -153,3 +170,6 @@ RNZjOmLvkcoXdeuaCQIDAQAB
 -----END PUBLIC KEY-----
 ```
 
+
+
+<font size='4px' style=color:red>如何判断自己调试出来的RSA算法
