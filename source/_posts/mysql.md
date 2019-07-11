@@ -1,4 +1,4 @@
-### 安装mysql:
+# 安装mysql:
 
 安装mysql有三种方式
 
@@ -134,7 +134,9 @@ flush privileges;
 
 
 
-### DDL
+# DDL
+
+### mysql数据库创建、查看以及使用/切换
 
 - 直接创建数据库 db1
 
@@ -374,7 +376,8 @@ insert into test_time values(now(), now(), now(), now(), now());
   drop table  if exists teacher;
   ```
 
-  
+
+# DML
 
 ### 表数据新增
 
@@ -428,3 +431,108 @@ insert into test_time values(now(), now(), now(), now(), now());
   ```
 
   
+
+### 表数据的修改以及删除
+
+- 修改（更新）：
+
+  ```
+  update 表名 set 字段名1=值1 where 字段名=值;
+  
+  update 表名 set 字段名1=值1,字段名2=值2 where 字段名=值;
+  ```
+
+- 删除：
+
+  ```
+  delete from 表名 where 字段名=值;
+  
+   truncate table 表名;
+   delete from 表名;
+   drop table 表名;
+  ```
+
+- 注意事项：
+
+  ```
+  面试时：面试官问在删改数据之前，你会怎么做？
+  答案：会对数据进行备份操作，以防万一，可以进行数据回退
+  
+  面试时：面试官会问，delete与truncate与drop 这三种删除数据的共同点都是删除数据，他们的不同点是什么?
+  delele 会把删除的操作记录给记录起来，以便数据回退，不会释放空间，而且不会删除定义。
+  truncate不会记录删除操作，会把表占用的空间恢复到最初，不会删除定义
+  drop会删除整张表，释放表占用的空间。
+  删除速度：
+  ```
+
+- 删除速度：
+
+  ```
+  drop > truncate > delete
+  ```
+
+  
+
+### mysql核心知识之中文乱码问题
+
+- 查看当前mysql使用的字符集：show variables like 'character%';
+
+  ```
+  mysql> show variables like 'character%';
+  +--------------------------+----------------------------------+
+  | Variable_name            | Value                            |
+  +--------------------------+----------------------------------+
+  | character_set_client     | utf8                             |
+  | character_set_connection | utf8                             |
+  | character_set_database   | utf8                             |
+  | character_set_filesystem | binary                           |
+  | character_set_results    | utf8                             |
+  | character_set_server     | utf8                             |
+  | character_set_system     | utf8                             |
+  | character_sets_dir       | /usr/local/mysql/share/charsets/ |
+  +--------------------------+----------------------------------+
+  ```
+
+- character_set_client：客户端请求数据的字符集
+
+- character_set_connection：客户端与服务器连接的字符集
+
+- character_set_database：数据库服务器中某个库使用的字符集设定，如果建库时没有指明，将默认使用配置上的字符集
+
+- character_set_results：返回给客户端的字符集(从数据库读取到的数据是什么编码的)
+
+- character_set_server：为服务器安装时指定的默认字符集设定。
+
+- character_set_system：系统字符集(修改不了的，就是utf8)
+
+- character_sets_dir：mysql字符集文件的保存路径
+
+- 临时：set names gbk;
+
+- 永久：修改配置文件my.cnf里边的
+
+  ```
+  [client]
+  default-character-set=gbk
+  作用于外部的显示
+  
+  [mysqld]
+  character_set_server=gbk
+  作用于内部，会作用于创建库表时默认字符集
+  ```
+
+- 修改库的字符集编码
+
+  ```
+  alter database xiaoxiao default character set gbk;
+  ```
+
+- 修改表的字符集编码
+
+  ```
+  alter table employee default character set utf8;
+  ```
+
+
+
+## DQL
