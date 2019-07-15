@@ -104,3 +104,264 @@ java.sql.Timestamp---->java.util.Date
 
 ```
 
+### 配置文件自动映射到属性和实体类配置
+
+```
+1、添加 @Configuration 注解；
+                
+2、使用 @PropertySource 注解指定配置文件位置；(属性名称规范: 大模块.子模块.属性名)
+        #=================================微信相关==================
+        #公众号
+        wxpay.appid=wx5beac15ca207cdd40c
+        wxpay.appsecret=554801238f17fdsdsdd6f96b382fe548215e9
+
+3、必须 通过注入IOC对象Resource 进来 ， 才能在类中使用获取的配置文件值。
+
+例子:
+        @Autowired
+        private WeChatConfig weChatConfig;
+        
+        @Configuration
+        @PropertySource(value="classpath:application.properties")
+        public class WeChatConfig {
+            @Value("${wxpay.appid}")
+            private String appId;
+        }
+```
+
+### springboot整合mybatis数据源
+
+```
+1、加入依赖(可以用 http://start.spring.io/ 下载)
+        <!-- 引入starter-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+        <!-- MySQL的JDBC驱动包  -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- 引入第三方数据源 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.6</version>
+        </dependency>
+        
+2、加入配置文件
+    #可以自动识别
+    #spring.datasource.driver-class-name =com.mysql.jdbc.Driver
+    
+    #替换自己的数据库信息
+    spring.datasource.url=jdbc:mysql://localhost:3306/classdemo?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    spring.datasource.username =root
+    spring.datasource.password =root
+    
+    #如果不使用默认的数据源 （com.zaxxer.hikari.HikariDataSource）
+    spring.datasource.type =com.alibaba.druid.pool.DruidDataSource
+    
+    加载配置，注入到sqlSessionFactory等都是springBoot帮我们完成
+    
+3、启动类增加mapper扫描@MapperScan("com.example.wxpay.mapper")
+            
+    VideoMapper类例子
+    @Select("select * from video")
+    List<Video> findAll();
+    
+    !!!如果数据库中有数据没有映射过来可以采用两种办法
+    1. @Results({
+                        @Result(column = "create_time",property = "createTime")  //javaType = java.util.Date.class
+                })
+    2.
+    	在application.properties中配置数据库字段下划线和Java实体类映射
+            # mybatis 下划线转驼峰配置,两者都可以
+            #mybatis.configuration.mapUnderscoreToCamelCase=true
+            mybatis.configuration.map-underscore-to-camel-case=true
+4、开发mapper
+    参考语法 http://www.mybatis.org/mybatis-3/zh/java-api.html
+    xml配置：http://www.mybatis.org/mybatis-3/zh/configuration.html
+```
+
+### 使用Mybatis注解增删改查
+
+```
+1、application.properties增加控制台打印sql语句        
+    #增加打印sql语句，一般用于本地开发测试
+    mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
+
+2、增加mapper代码        
+    @Select("select * from video")
+    List<Video> findAll();
+    
+    @Select("SELECT * FROM video WHERE id = #{id}")
+    Video findById(int id);
+    
+    @Update("UPDATE video SET title=#{title} WHERE id =#{id}")
+    int update(Video Video);
+    
+    @Delete("DELETE FROM video WHERE id =#{id}")
+    int delete(int id);
+    
+    @Insert("INSERT INTO `video` ( `title`, `summary`, " +
+    "`cover_img`, `view_num`, `price`, `create_time`," +
+    " `online`, `point`)" +
+    "VALUES" +
+    "(#{title}, #{summary}, #{coverImg}, #{viewNum}, #{price},#{createTime}" +
+    ",#{online},#{point});")
+    //技巧：保存对象，获取数据库自增id 
+    @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
+    int save(Video video);
+
+3、保存保存
+    技巧：保存对象，获取数据库自增id 
+    @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
+
+4、技巧：
+	application.properties增加
+    数据库字段下划线和Java实体类映射
+    # mybatis 下划线转驼峰配置,两者都可以
+    #mybatis.configuration.mapUnderscoreToCamelCase=true
+    mybatis.configuration.map-underscore-to-camel-case=true
+    
+5、接口测试:
+	删除使用delete提交
+	修改使用put提交在Body中选择x-www-form-urlencode
+	添加时使用post提交在Body中选择x-www-form-urlencode
+```
+
+### 规范接口
+
+```
+普通用户应该只有查权限
+管理员有增删改权限
+删除时候参数只需要ID
+修改和增加的时候参数需要一个pojo
+
+接口测试:
+	测试修改和保存时应该在Body中选择raw 提交JSON格式的数据
+```
+
+### 动态Sql语句Mybaties SqlProvider
+
+```
+1、
+    在provider包中写好代码
+	 public String updateVideo(final Video video){
+        return new SQL(){{
+
+            UPDATE("video");
+
+            //条件写法.
+            if(video.getTitle()!=null){
+                SET("title=#{title}");
+            }
+            if(video.getSummary()!=null){
+                SET("summary=#{summary}");
+            }
+            if(video.getCoverImg()!=null){
+                SET("cover_img=#{coverImg}");
+            }
+            if(video.getViewNum()!=null){
+                SET("view_num=#{viewNum}");
+            }
+            if(video.getPrice()!=null){
+                SET("price=#{price}");
+            }
+            if(video.getOnline()!=null){
+                SET("online=#{online}");
+            }
+            if(video.getPoint()!=null){
+                SET("point=#{point}");
+            }
+
+            WHERE("id=#{id}");
+
+        }}.toString();
+    }
+
+2、写法
+	在VideoMapper中修改好注解
+	@UpdateProvider(type = VideoProvider.class,method = "updateVideo")
+	
+3、使用postman测试选择Body raw JSON 
+	使用JSON测试
+	{
+        "id":10,
+        "summary":"动态语句测试"
+	}
+```
+
+### PageHelper分页插件使用
+
+```
+1、引入依赖
+		<!--分页插件-->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.1.0</version>
+		</dependency>
+		
+2、增加配置文件
+    @Configuration
+    public class MyBatisConfig {
+        @Bean
+        public PageHelper pageHelper(){
+            PageHelper pageHelper = new PageHelper();
+            Properties p = new Properties();
+
+            // 设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用
+            p.setProperty("offsetAsPageNum","true");
+
+            //设置为true时，使用RowBounds分页会进行count查询
+            p.setProperty("rowBoundsWithCount","true");
+            p.setProperty("reasonable","true");
+            pageHelper.setProperties(p);
+            return pageHelper;
+        }
+}
+
+3、代码修改
+@GetMapping("page")
+    public Object pageVideo(@RequestParam(value = "page",defaultValue = "1")int page,
+                            @RequestParam(value = "size",defaultValue = "10")int size){
+
+        PageHelper.startPage(page,size);
+
+        List<Video> list = videoService.findAll();
+        PageInfo<Video> pageInfo = new PageInfo<>(list);
+        Map<String,Object> data = new HashMap<>();
+        data.put("total_size",pageInfo.getTotal());//总条数
+        data.put("total_page",pageInfo.getPages());//总页数
+        data.put("current_page",page);//当前页
+        data.put("data",pageInfo.getList());//数据
+
+        return data;
+    }
+    
+4、基本原理  
+        sqlsessionFactory -> sqlSession-> executor -> mybatis sql statement
+        通过mybatis plugin 增加拦截器，然后拼装分页
+        org.apache.ibatis.plugin.Interceptor
+```
+
+### JWT微服务下的用户登录权限校验
+
+```
+为什么要用JWT?
+    分布式应用中session共享
+        真实的应用不可能单节点部署，所以就有个多节点登录session共享的问题需要解决
+                1）tomcat支持session共享，但是有广播风暴；用户量大的时候，占用资源就严重，不推荐
+                2）使用redis存储token:
+                        服务端使用UUID生成随机64位或者128位token，放入redis中，然后返回给客户端并存储在cookie中
+                        用户每次访问都携带此token，服务端去redis中校验是否有此用户即可
+                 这样压力还是在服务端
+
+             
+```
+
