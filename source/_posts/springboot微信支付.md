@@ -362,6 +362,188 @@ java.sql.Timestamp---->java.util.Date
                         用户每次访问都携带此token，服务端去redis中校验是否有此用户即可
                  这样压力还是在服务端
 
-             
+
+1、JWT 是一个开放标准，它定义了一种用于简洁，自包含的用于通信双方之间以 JSON 对象的形式安全传递信息的方法。
+            JWT 可以使用 HMAC 算法或者是 RSA 的公钥密钥对进行签名
+
+            简单来说，就是通过一定规范来生成token，然后可以通过解密算法逆向解密token，这样就可以获取用户信息
+            {
+                id:888,
+                name:'昵称',
+                expire:10000
+            }
+            
+            funtion 加密(object, appsecret){
+                xxxx
+                return base64( token);
+            }
+
+            function 解密(token ,appsecret){
+
+                xxxx
+                //成功返回true,失败返回false
+            }
+
+            优点：
+                1）生产的token可以包含基本信息，比如id、用户昵称、头像等信息，避免再次查库
+
+                2）存储在客户端，不占用服务端的内存资源
+
+            缺点：
+                token是经过base64编码，所以可以解码，因此token加密前的对象不应该包含敏感信息
+                如用户权限，密码等
+
+2、JWT格式组成 头部、负载、签名
+           header+payload+signature
+
+           头部：主要是描述签名算法
+           负载：主要描述是加密对象的信息，如用户的id等，也可以加些规范里面的东西，如iss签发者，exp 过期时间，sub 面向的用户
+           签名：主要是把前面两部分进行加密，防止别人拿到token进行base解密后篡改token(例如将存活时间修改为很久这时候你去利用header+payload算出来的值就不是signature了)
+
+3、关于jwt客户端存储
+            可以存储在cookie，localstorage和sessionStorage里面
+
+
+
+
+
+1、加入相关依赖
+
+            <!-- JWT相关 -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>0.7.0</version>
+            </dependency>
+
+2、开发生产token方法
+	public static final String SUBJECT = "subjectdemo";
+
+    public static final long EXPIRE = 1000*60*60*24*7;  //过期时间，毫秒，一周
+
+    //秘钥
+    public static final  String APPSECRET = "miyaodemo";
+
+    /**
+     * 生成jwt
+     * @param user
+     * @return
+     */
+    public static String geneJsonWebToken(User user){
+
+        if(user == null || user.getId() == null || user.getName() == null
+                || user.getHeadImg()==null){
+            return null;
+        }
+        String token = Jwts.builder().setSubject(SUBJECT)
+                .claim("id",user.getId())
+                .claim("name",user.getName())
+                .claim("img",user.getHeadImg())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis()+EXPIRE))
+                .signWith(SignatureAlgorithm.HS256,APPSECRET).compact();
+
+        return token;
+    }
+
+3、开发检验token方法
+/**
+     * 校验token
+     * @param token
+     * @return
+     */
+    public static Claims checkJWT(String token ){
+
+        try{
+            final Claims claims =  Jwts.parser().setSigningKey(APPSECRET).
+                    parseClaimsJws(token).getBody();
+            return  claims;
+
+        }catch (Exception e){
+            //打印日志
+        }
+        return null;
+
+    }
+
+```
+
+### 微信授权一键登录功能
+
+```
+前期准备
+	微信开放平台介绍（申请里面的网站应用需要企业资料）
+                    网站:https://open.weixin.qq.com/
+                    
+    获取腾讯给开发者的appid和appsecret
+    开发者需要给腾讯那边一个授权回调域名,就是用户登陆成功以后要跳转到哪个URL
+    
+    用户扫完二维码点击确认以后,微信开发平台会返回给开发者一个code授权码
+    开发者拿着appid appsecret和code授权码去微信换取access_token
+```
+
+![](https://res.wx.qq.com/op_res/D0wkkHSbtC6VUSHX4WsjP5ssg5mdnEmXO8NGVGF34dxS9N1WCcq6wvquR4K_Hcut)
+
+```
+获取二维码
+    1.增加结果工具类，JsonData;
+    2.在application.properties
+        增加appid  appsecret  redirect_url的配置
+    3.添加WeChatConfig
+    4.添加WechatController
+```
+
+```
+使用httpClient
+	1.加入httpClient的依赖
+    2.封装httpclient工具类
+    3.使用内网穿透软件
+   	将自己的物理机配置一个域名部署到外网,这个域名需要和你在微信开放平台申请的授权回调域名相同,微信服务器需要响应到你在微信开发平台申请的授权回调域名
+   	4.再次添加回调的路由WechatController
+   	5.接收微信那边传过来的授权码code
+   	6.把授权码code+appid+appsecret交给腾讯那边
+   	7.腾讯那边返回给我们一个
+   		{ 
+            "access_token":"ACCESS_TOKEN", 
+            "expires_in":7200, 
+            "refresh_token":"REFRESH_TOKEN",
+            "openid":"OPENID", 
+            "scope":"SCOPE",
+            "unionid": "o6_bmasdasdsad6_2sgVt7hMZOPfL"
+        }
+    8.通过这个获得的token和openid去请求腾讯那边的服务器,服务器会返回给我们用户信息
+    {
+        "openid":"OPENID",
+        "nickname":"NICKNAME",
+        "sex":1,
+        "province":"PROVINCE",
+        "city":"CITY",
+        "country":"COUNTRY",
+        "headimgurl": "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0",
+        "privilege":[
+        "PRIVILEGE1",
+        "PRIVILEGE2"
+        ],
+        "unionid": " o6_bmasdasdsad6_2sgVt7hMZOPfL"
+    }
+    9.封装用户信息将用户信息存入数据库
+    10.存入数据库以后使用jwt将token交给前台
+```
+
+```
+开发拦截器
+	让某些路由没有token不能访问
+   
+   1.创建一个类LoginIntercepter 实现HandlerInterceptor
+	 重写preHandle方法
+   
+   2.创建一个类IntercepterConfig 实现WebMvcConfigurer
+   	 作为LoginIntercepter的配置
+   	 
+   	 
+   3.定义一个测试接口OrderController
+	 接口的路由要在拦截器的配置里面
+	
+	
 ```
 
