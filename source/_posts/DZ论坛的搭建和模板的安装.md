@@ -1,5 +1,5 @@
 ---
-title: springboot
+title: DZ论坛搭建以及模板的安装
 top: 9999
 tags: []
 date: 2019-03-09 23:11:21
@@ -116,8 +116,9 @@ image:
   - ![1562500851025](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1562500851025.png)
 
 - 资讯频道模板，如下图所示；下级分类子版块每次新建一个就需要设置一次。
-  - ![1562500872674](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1562500872674.png)
-
+  
+- ![1562500872674](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1562500872674.png)
+  
 - 关于我们频道页，如下图所示；内容页不需设置。
 
   - ![1562500891249](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1562500891249.png)
@@ -127,6 +128,7 @@ image:
   ![1562500915137](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1562500915137.png)
 
 - 下面是diy操作方式方法：
+  
   - **进入前台页面，分别进行DIY数据导入操作（\**\**\**\*****即门户.xml文件就导入到门户页面中，论坛首页.xml文件导入到论坛首页中。****建议大家先发布论坛和文章数据，让导入DIY包有数据可以读取,如果您的网站没有数据，那么导入diy文件后，页面同样也是空白一片。需要说明的是，门户等频道页如果在有数据却无法读取出来的情况，是因为帖子或者文章没有插入图片造成的（或者文章没有设置封面），注意是插入图片，而不是复制黏贴图片。\**\**\**\*）**。正确方法如下图所示：
 
 帖子:
