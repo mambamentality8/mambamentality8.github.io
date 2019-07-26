@@ -326,7 +326,7 @@ java.sql.Timestamp---->java.util.Date
         }
 }
 
-3、代码修改
+3、开发VideoController
 @GetMapping("page")
     public Object pageVideo(@RequestParam(value = "page",defaultValue = "1")int page,
                             @RequestParam(value = "size",defaultValue = "10")int size){
@@ -543,7 +543,24 @@ java.sql.Timestamp---->java.util.Date
    	 
    3.定义一个测试接口OrderController
 	 接口的路由要在拦截器的配置里面
-	
-	
+```
+
+### 微信扫一扫网页支付
+
+![](<https://pay.weixin.qq.com/wiki/doc/api/img/chapter6_5_1.png>)
+
+```
+1、时序图地址：https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_5
+2、开发videoOrder接口
+3、封装常用工具类CommonUtils和WXpayUtils
+4、开发controller，开发期间不加入拦截器登录校验
+5、iputils工具类介绍
+6、加入微信支付配置
+            #微信商户平台
+            wxpay.mer_id=1503808832
+            wxpay.key=xdclasss20182018xdclass2018x018d
+            wxpay.callback=16web.tunnel.qydev.com/pub/api/v1/wechat/order/callback1      
+7、开发微信他一下单接口 post提交  需要带一系列参数
+7、谷歌二维码工具生成扫一扫支付二维码
 ```
 
