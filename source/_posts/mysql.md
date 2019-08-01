@@ -59,7 +59,7 @@ tar -xf ./mysql-5.7.26-1.el7.x86_64.rpm-bundle.tar
 - 解压完以后开始安装rpm包
 
 ```
-rpm  -ivh mysql-community-common-5.7.26-1.el7.x86_64.rpm
+rpm -ivh mysql-community-common-5.7.26-1.el7.x86_64.rpm
 rpm -ivh mysql-community-libs-5.7.26-1.el7.x86_64.rpm
 rpm -ivh mysql-community-client-5.7.26-1.el7.x86_64.rpm
 rpm -ivh mysql-community-server-5.7.26-1.el7.x86_64.rpm
