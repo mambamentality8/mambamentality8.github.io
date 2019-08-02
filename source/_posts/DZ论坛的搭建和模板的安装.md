@@ -63,7 +63,7 @@ image:
 
 - 进入后台管理界面<http://www.yiqifeiyang.com/admin.php>
 
-- 找到本次商业版安装，并设置为默认模板，提交保存，然后更新css缓存。
+- 找到本次商业版<font style=color:red>点击安装</font>，并设置为默认模板，提交保存，然后更新css缓存。
 
   去工具栏目下更新一下缓存。此时已经安装好模板。
 

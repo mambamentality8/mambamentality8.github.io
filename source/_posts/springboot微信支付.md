@@ -561,6 +561,9 @@ java.sql.Timestamp---->java.util.Date
             wxpay.key=xdclasss20182018xdclass2018x018d
             wxpay.callback=16web.tunnel.qydev.com/pub/api/v1/wechat/order/callback1      
 7、开发微信他一下单接口 post提交  需要带一系列参数
-7、谷歌二维码工具生成扫一扫支付二维码
+8、谷歌二维码工具生成扫一扫支付二维码
 ```
 
+```
+幂等性: 同样的参数和值，不管调用你的接口多少次，响应结果都和调用一次是一样的
+```
