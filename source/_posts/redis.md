@@ -30,3 +30,36 @@
 - 编译安装 make MALLOC=libc
 - cd src ./redis-server
 
+### 4.redis三种启动方式以及其中的使用区别
+
+- 直接启动
+
+- 通过指定配置文件启动
+
+- 使用redis启动脚本设置开机自启动，linux配置开启自启动 /etc/init.d
+
+  - 配置步骤
+
+    - 启动脚本 redis_init_script 位于Redis的 /utils/ 目录下
+    - mkdir /etc/redis
+    - cp redis.conf /etc/redis/6379.conf
+    - 将启动脚本复制到/etc/init.d目录下，本例将启动脚本命名为redisd（通常都以d结尾表示是后台自启动服务）。
+
+    ```
+    cp redis_init_script /etc/init.d/redisd
+    ```
+
+  - 设置为开机自启动，直接配置开启自启动 chkconfig redisd on 发现错误： service redisd does not support chkconfig
+
+    解决办法，在启动脚本开头添加如下注释来修改运行级别：
+
+    ```
+    #!/bin/sh
+    # chkconfig:   2345 90 10
+    ```
+
+  - 设置为开机自启动服务器
+    - chkconfig redisd on
+    - service redisd start 打开服务
+    - service redisd stop 关闭服务
+
