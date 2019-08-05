@@ -22,13 +22,13 @@
 
 ### 3.如何使用redis
 
-- 安装wget yum install wget
-- 下载redis安装包 wget <http://download.redis.io/releases/redis-4.0.6.tar.gz>
-- 解压压缩包 tar -zxvf redis-4.0.6.tar.gz
-- yum install gcc
-- 跳转到redis解压目录下 cd redis-4.0.6
-- 编译安装 make MALLOC=libc
-- cd src ./redis-server
+- 安装wget 			                          yum install wget
+- 下载redis安装包                           wget <http://download.redis.io/releases/redis-4.0.6.tar.gz>
+- 解压压缩包                                    tar -zxvf redis-4.0.6.tar.gz
+- 安装gcc                                          yum install gcc
+- 跳转到redis解压目录下                cd redis-4.0.6
+- 编译安装                                        make MALLOC=libc
+- 启动redis                                       cd src ./redis-server
 
 ### 4.redis三种启动方式以及其中的使用区别
 

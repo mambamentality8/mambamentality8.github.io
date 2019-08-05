@@ -61,6 +61,8 @@ image:
 
 - 将模板包template目录下的文件夹扔到服务器的/data/wwwroot/default/discuz/template目录下
 
+  ​                                                                                 /www/wwwroot/www.yiqifeiyang.com/template
+
 - 进入后台管理界面<http://www.yiqifeiyang.com/admin.php>
 
 - 找到本次商业版<font style=color:red>点击安装</font>，并设置为默认模板，提交保存，然后更新css缓存。
@@ -112,9 +114,10 @@ image:
 
 
 - **添加频道页方法：后台门户栏目**
+  
   - 案例频道，如下图所示。下级分类子版块每次新建一个就需要设置一次。
-  - ![1562500851025](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1562500851025.png)
-
+- ![1562500851025](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1562500851025.png)
+  
 - 资讯频道模板，如下图所示；下级分类子版块每次新建一个就需要设置一次。
   
 - ![1562500872674](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1562500872674.png)
@@ -172,4 +175,284 @@ image:
 ![1562499084221](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1562499084221.png)
 
 ![1562501835718](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1562501835718.png)
+
+
+
+
+
+
+
+
+
+
+
+### 网站前台
+
+#### 计算机学习首选易起飞扬
+
+- course1
+
+```HTML
+<div class="nexcoursetop">
+                        	<a href="#" target="_blank">
+                            	<div class="nexcoursepiv"><img src="./template/zvis_edu_180113/neoconex/index/course1.jpg"></div>
+                                <div class="nexcourseiners">
+                                	<div class="nexcourse_name">
+                                    	<em>热<br>门</em>
+                                        <span style="letter-spacing:4px;font-size:36px;">易语言</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="nexcoursetitles">中国人自己的语言</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="nexcousebtm">
+                        	<h5><a href="#" target="_blank">易语言基础入门</a></h5>
+                            <div class="nexcourseinterso">其非常接近自然语言，精简了很多不必要的分号和括号，非常容易阅读理解。编程简单直接，更适合初学编程者，让其专注于编程逻辑，而不是困惑于晦涩的语法细节上，比起JAVA、C#和C/C++这些编程语言相对容易很多。因此，即使是非计算机专业或者没有基础的小白，也能分分钟入门。</div>
+                            <div class="nexcourseghtns">
+                            	<div class="nexcourselps">难度<em>★</em></div>
+                                <div class="nexcourserps"><em>3669</em>人在学</div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+```
+
+- course2
+
+```html
+<div class="nexcoursetop">
+                        	<a href="http://www.yixuebc.com/forum.php?mod=viewthread&tid=21" target="_blank">
+                            	<div class="nexcoursepiv"><img src="./template/zvis_edu_180113/neoconex/index/course2.jpg"></div>
+                                <div class="nexcourseiners">
+                                	<div class="nexcourse_name">
+                                    	<em>热<br>门</em>
+                                        <span style="letter-spacing:4px;font-size:28px;">POST&JS</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="nexcoursetitles">POST&JS加解密</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="nexcousebtm">
+                        	<h5><a href="#" target="_blank">POST和JS加解密</a></h5>
+                            <div class="nexcourseinterso">我们常常认为POST就是抓包，JS就是脚本。其实POST方法是HTTP协议中的一个重要组成部分。在编程人员眼中，POST方法一般用来向目的服务器发出更新请求，并附有请求实体。我们在抓包过程中，遇到的大多数数据都是POST形式发送，有用的包大多数是POST包，久而久之，大家都直接将POST理解为抓包。</div>
+                            <div class="nexcourseghtns">
+                            	<div class="nexcourselps">难度<em>★★★</div>
+                                <div class="nexcourserps"><em>878</em>人在学</div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+```
+
+- course3
+
+```html
+<div class="nexcoursetop">
+                        	<a href="http://www.yixuebc.com/forum.php?mod=viewthread&tid=8" target="_blank">
+                            	<div class="nexcoursepiv"><img src="./template/zvis_edu_180113/neoconex/index/course3.jpg"></div>
+                                <div class="nexcourseiners">
+                                	<div class="nexcourse_name">
+                                    	<em>热<br>门</em>
+                                        <span style="letter-spacing:2px;font-size:32px;">多线程</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="nexcoursetitles">你经常使用，却各种难受</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="nexcousebtm">
+                        	<h5><a href="#" target="_blank">多线程原理剖析</a></h5>
+                            <div class="nexcourseinterso">多线程(英文名称：multithreading)是指从软件或者硬件上实现多个线程并发执行的技术。简单的理解，就是同时开多个东西，这个东西我们称之为线程，如何处理好多线程，是程序员必备的技能。本教程将带你进入多线程的时间！</div>
+                            <div class="nexcourseghtns">
+                            	<div class="nexcourselps">难度<em>★★☆</em></div>
+                                <div class="nexcourserps"><em>766</em>人在学</div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+```
+
+- course4
+
+```html
+<div class="nexcoursetop">
+                        	<a href="http://www.yixuebc.com/forum.php?mod=viewthread&tid=12" target="_blank">
+                            	<div class="nexcoursepiv"><img src="./template/zvis_edu_180113/neoconex/index/course4.jpg"></div>
+                                <div class="nexcourseiners">
+                                	<div class="nexcourse_name">
+                                    	<em>经<br>典</em>
+                                        <span style="letter-spacing:2px;font-size:28px;">win32 API</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="nexcoursetitles">使用win系统API必学之</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="nexcousebtm">
+                        	<h5><a href="#" target="_blank">编程人员必备课程</a></h5>
+                            <div class="nexcourseinterso">win32 API，看似很深奥，其实很简单！其实它是Microsoft 32位平台的应用程序编程接口。所有在Win32平台上运行的应用程序都可以调用这些函数。</div>
+                            <div class="nexcourseghtns">
+                            	<div class="nexcourselps">难度<em>★★</em></div>
+                                <div class="nexcourserps"><em>578</em>人在学</div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+```
+
+- course5
+
+```html
+<div class="nexcoursetop">
+                        	<a href="http://www.yixuebc.com/forum.php?mod=viewthread&tid=17" target="_blank">
+                            	<div class="nexcoursepiv"><img src="./template/zvis_edu_180113/neoconex/index/course5.jpg"></div>
+                                <div class="nexcourseiners">
+                                	<div class="nexcourse_name">
+                                    	<em>火<br>爆</em>
+                                        <span style="letter-spacing:2px;font-size:28px;">驱动+内核</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="nexcoursetitles">这是大神的世界！</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="nexcousebtm">
+                        	<h5><a href="#" target="_blank">过保护，反调试</a></h5>
+                            <div class="nexcourseinterso">驱动与内核，这是菜鸟踏入大佬的必经之路，没有学会驱动与内核，永远只是菜鸟！学完之后你能达到的水平——独立制作能够过掉保护的CE，OD软件，让市面上几乎所有游戏，在你面前都是裸奔状态！前提，要懂得举一反三，触类旁通！</div>
+                            <div class="nexcourseghtns">
+                            	<div class="nexcourselps">难度<em>★★★★★</em></div>
+                                <div class="nexcourserps"><em>189</em>人在学</div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+```
+
+- course6
+
+```html
+<div class="nexcoursetop">
+                        	<a href="http://www.yixuebc.com/forum.php?mod=viewthread&tid=18" target="_blank">
+                            	<div class="nexcoursepiv"><img src="./template/zvis_edu_180113/neoconex/index/course6.jpg"></div>
+                                <div class="nexcourseiners">
+                                	<div class="nexcourse_name">
+                                    	<em>火<br>爆</em>
+                                        <span style="letter-spacing:2px;font-size:28px;">游戏脚本</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="nexcoursetitles">解放双手，智能刷图！</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="nexcousebtm">
+                        	<h5><a href="#" target="_blank">电脑和手机游戏脚本</a></h5>
+                            <div class="nexcourseinterso">随着时代的进步，手机游戏已经成为时代的象征。熟练的使用模拟器进行多开，从而实现自动撸金币，做任务，在解放双手的同时，也赢得了丰厚的回报！当然PC端的游戏脚本也不能忽视，比如某讯的XXX游戏，就有很多玩家使用。所以学习脚本制作，迫在眉睫！</div>
+                            <div class="nexcourseghtns">
+                            	<div class="nexcourselps">难度<em>★★★☆</em></div>
+                                <div class="nexcourserps"><em>1686</em>人在学</div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+```
+
+- course7
+
+```html
+<div class="nexcoursetop">
+                        	<a href="http://www.yixuebc.com/forum.php?mod=viewthread&tid=13" target="_blank">
+                            	<div class="nexcoursepiv"><img src="./template/zvis_edu_180113/neoconex/index/course7.jpg"></div>
+                                <div class="nexcourseiners">
+                                	<div class="nexcourse_name">
+                                    	<em>必<br>学</em>
+                                        <span style="letter-spacing:2px;font-size:28px;">汇编基础</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="nexcoursetitles">踏入内存解密的门槛</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="nexcousebtm">
+                        	<h5><a href="#" target="_blank">汇编入门基础</a></h5>
+                            <div class="nexcourseinterso">什么是汇编？汇编大多是指汇编语言，汇编程序。把汇编语言翻译成机器语言的过程称为汇编。学习汇编，对游戏分析，软件逆向，有着极大的帮助！不会汇编的朋友，游戏数据分析和软件逆向就不要奢望去学了。</div>
+                            <div class="nexcourseghtns">
+                            	<div class="nexcourselps">难度<em>★★★☆</em></div>
+                                <div class="nexcourserps"><em>1765</em>人在学</div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+```
+
+- course8
+
+```html
+<div class="nexcoursetop">
+                        	<a href="http://www.yixuebc.com/forum.php?mod=viewthread&tid=16" target="_blank">
+                            	<div class="nexcoursepiv"><img src="./template/zvis_edu_180113/neoconex/index/course8.jpg"></div>
+                                <div class="nexcourseiners">
+                                	<div class="nexcourse_name">
+                                    	<em>火<br>爆</em>
+                                        <span style="letter-spacing:2px;font-size:28px;">射击类游戏</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="nexcoursetitles">射击类游戏实战课程</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="nexcousebtm">
+                        	<h5><a href="#" target="_blank">今晚吃鸡否？</a></h5>
+                            <div class="nexcourseinterso">吃鸡，早已流传至大江南北，喜欢吃鸡的朋友必然知道，有一种东西叫做高科技！那么本套课程就是为您讲述此种高科技的制作原理！</div>
+                            <div class="nexcourseghtns">
+                            	<div class="nexcourselps">难度<em>★★★★</em></div>
+                                <div class="nexcourserps"><em>1622</em>人在学</div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+```
+
+#### 入门精选,稳扎稳打
+
+```html
+<a href="http://www.yiqifeiyang.com/forum.php?mod=viewthread&tid=7" target="_blank">
+                        	<img src="./template/zvis_edu_180113/neoconex/index/tc1.jpg">
+                            <div class="nexpricetags">
+                            	<span>原价：<i>￥199.00</i></span>
+                                <em>现价：<b>￥19.00</b></em>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="nexbuylinks">立即购买</div>
+                        </a>
+```
+
+```html
+<a href="http://www.yiqifeiyang.com/forum.php?mod=viewthread&tid=21" target="_blank">
+                        	<img src="./template/zvis_edu_180113/neoconex/index/tc2.jpg">
+                            <div class="nexpricetags">
+                            	<span>原价：<i>￥699.00</i></span>
+                                <em>现价：<b>￥399.00</b></em>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="nexbuylinks">立即购买</div>
+                        </a>
+```
+
+```html
+<a href="http://www.yiqifeiyang.com/forum.php?mod=viewthread&tid=17" target="_blank">
+                        	<img src="./template/zvis_edu_180113/neoconex/index/tc3.jpg">
+                            <div class="nexpricetags">
+                            	<span>原价：<i>￥6999.00</i></span>
+                                <em>现价：<b>￥3999.00</b></em>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="nexbuylinks">立即购买</div>
+                        </a>
+```
+
+```html
+<a href="http://www.yiqifeiyang.com/forum.php?mod=viewthread&tid=18" target="_blank">
+                        	<img src="./template/zvis_edu_180113/neoconex/index/tc4.jpg">
+                            <div class="nexpricetags">
+                            	<span>原价：<i>￥1389.00</i></span>
+                                <em>现价：<b>￥699.00</b></em>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="nexbuylinks">立即购买</div>
+                        </a>
+```
 
