@@ -11,16 +11,12 @@ image:
 ---
 
 <p class="description"></p>
-
 <meta name="referrer" content="no-referrer" />
-
 <img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/title.jpg">
 
 <!-- more -->
 
-1、传统架构演进到分布式架构
-
-​	简介：讲解单机应用和分布式应用架构演进基础知识 (画图)
+### 传统架构演进到分布式架构
 
 ​		高可用 LVS+keepalive 
 
@@ -42,9 +38,11 @@ image:
 
 ​	3、微服务
 
-​		易开发、理解和维护
+​		优点:
 
-​		独立的部署和启动 等
+​			易开发、理解和维护
+
+​			独立的部署和启动等
 
 
 
@@ -58,19 +56,25 @@ image:
 
 
 
-2、微服务核心基础讲解
 
-​	简介：讲解微服务核心知识 ：网关、服务发现注册、配置中心、链路追踪、负载均衡器、熔断
+
+### 讲解微服务核心知识 ：
+
+### 		网关、服务发现注册、配置中心、链路追踪、负载均衡器、熔断
 
 ​		1、网关：路由转发 + 过滤器
 
-​				/api/v1/pruduct/      商品服务
+​				/api/v1/pruduct/             商品服务
 
-​				/api/v1/order/        订单服务
+​				/api/v1/order/                 订单服务  (需要登录)
 
-​				/api/v1/user/   	  用户服务
+​				/api/v1/user/   	            用户服务
 
-![img](D:\workspace\java_workspace\mambamentality8.github.io\source\_posts\springboot\clipboard.png)
+​			   /api/v1/comment/           评论服务  (需要登录)
+
+![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/03.png)
+
+
 
 在网关这里做一层拦截判断用户是否登录,将校验前置实现动态插拔.
 
