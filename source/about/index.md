@@ -1,5 +1,8 @@
+```yaml
 ---
 title: about
-date: 2019-03-07 15:01:45
-comments: false
+date: 2018-09-30 17:25:30
+type: "about"
+layout: "about"
 ---
+```

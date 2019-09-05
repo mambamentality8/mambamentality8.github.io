@@ -1,5 +1,8 @@
+```yaml
 ---
 title: categories
-date: 2019-03-08 22:44:33
+date: 2018-09-30 17:25:30
 type: "categories"
+layout: "categories"
 ---
+```

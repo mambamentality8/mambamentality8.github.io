@@ -325,6 +325,8 @@ springcloud适合链路比较长的因为有现成的组件 或者小公司没�
 
 ​			官方地址：http://projects.spring.io/spring-cloud/
 
+​			注意版本问题!!!
+
 ​		Eureka的基础知识-->画图讲解交互流程，服务提供者<-->服务消费者 ;
 
 ![1554117524132](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/07.png)
@@ -337,13 +339,19 @@ springcloud适合链路比较长的因为有现成的组件 或者小公司没�
 
 
 
-5、服务注册和发现Eureka Server搭建实战
+### 9.注册中心Eureka Server搭建实战
+
+​	  新建一个项目,构建注册中心
 
 ![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/08.png)
 
 ​	![img](https://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/09.png)
 
 ![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/10.png)
+
+这里版本选择完毕以后去pom里面修改一下springboot的版本改为2.0.3
+
+此时这个Eureka Server就是一个maven依赖
 
 ![img](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/11.png)
 
@@ -369,10 +377,15 @@ eureka:
   instance:
     hostname: localhost
   client:
+  #下面这两个配置,声明自己是个服务器
     registerWithEureka: false
     fetchRegistry: false
+    
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    #关闭自我保护模式,不出现红字,生产环境不能关闭
+    enable-self-preservation: false
 ```
 
 ​	第四步：访问注册中心页面
@@ -380,11 +393,13 @@ eureka:
 http://localhost:8761/
 ```
 
+![1567485497143](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1567485497143.png)
+
 maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html (替换国内镜像源)
 
 
 
-6、服务注册和发现之Eureka Client搭建商品服务实战
+### 10.客户端Eureka Client搭建商品服务实战
 
 ​	简介：搭建用商品服务，并将服务注册到注册中心
 
@@ -401,29 +416,49 @@ maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html (替换国�
 
 ​	2、模拟商品信息，存储在内存中
 
+```
+代码详见: https://github.com/mambamentality8/springcloud
+```
 
 ​	3、开发商品列表接口，商品详情接口
 
+```
+代码详见: https://github.com/mambamentality8/springcloud
+```
 
 ​	4、配置文件加入注册中心地址
 
-​		使用eureka客户端 官方文档：http://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#netflix-eureka-client-starter
+```
+#客户端以877x开头
+server:
+  port: 8771
 
-![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/16.png)
+
+#指定注册中心地址
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+#客户端服务的名称
+spring:
+  application:
+    name: product-service
+```
+
+
 
 启动多个实例
 
+editConfigurations --> Enviroment
+
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/17.png)
 
+​		使用eureka客户端 官方文档：http://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#netflix-eureka-client-starter
 
 
 
-
-7、Eureka服务注册中心配置控制台问题处理
-
-​	简介：讲解服务注册中心管理后台，（后续还会细讲）
-
-
+### 11.Eureka服务注册中心配置控制台问题处理
 
 ​	问题：eureka管理后台出现一串红色字体：是警告，说明有服务上线率低
 
@@ -432,6 +467,10 @@ maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html (替换国�
 ​	EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.
 
 
+
+​	THE SELF PRESERVATION MODE IS TURNED OFF.THIS MAY NOT PROTECT INSTANCE EXPIRY IN CASE OF NETWORK/OTHER PROBLEMS.
+
+​	
 
 ​	关闭检查方法：eureka服务端配置文件加入
 
@@ -443,17 +482,20 @@ maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html (替换国�
 
 ![](http://blog-mamba.oss-cn-beijing.aliyuncs.com/springcloud/18.png)
 
-保护模式的作用:假如有一天商品服务的上报给Euraka-Server的时候网络出错了,然后订单服务去注册中心找商品服务找不到,此时Euraka-Server并不会剔除商品服务,反之如果关闭了保护模式那么注册中心就会认为没注册成功的商品服务挂掉了将会被剔除,.
+保护模式的作用:
+
+​		假如有一天商品服务的上报给Euraka-Server的时候网络出错了,然后订单服务去注册中心找商品服务找不到,此时Euraka-Server并不会剔除商品	
+
+​		反之如果关闭了保护模式那么注册中心就会认为没注册成功的商品服务挂掉了将会被剔除,.
 
 
-​	问题二：为什么只加一个注册中心地址不用@EnableEurekaClient注解，就可以注册?
+问题二：为什么只加一个注册中心地址不用@EnableEurekaClient注解，就可以注册?
 
 ​	By having spring-cloud-starter-netflix-eureka-client on the classpath, your application automatically registers with the Eureka Server. Configuration is required to locate the Eureka server, as shown in the following example:
 
 
 
-**第四章 服务消费者ribbon和feign实战和注册中心高可用**
-
+### 12.ribbon和feign实战和注册中心高可用
 
 1、常用的服务间调用方式讲解
 
@@ -463,9 +505,13 @@ maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html (替换国�
 
 ​			远程过程调用，像调用本地服务Service调DAO的(方法)一样调用服务器的服务
 
-​			支持同步、异步调用  假如有个请求线程过来调用订单服务,订单服务要调用商品服务如果为同步的话那么这个线程此时什么也做不了了
+​			支持同步、异步调用 :
+
+​				假如有个请求线程过来调用订单服务,订单服务要调用商品服务,商品服务需要去查询数据库,此时订单服务就被占用住了.
 
 ​			客户端和服务器之间建立TCP连接，可以一次建立一个，也可以多个调用复用一次链接
+
+​					就好比连接池的出现
 
 ​			优点:
 
@@ -493,7 +539,6 @@ maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html (替换国�
 ​			http数据包大
 
 ​			java开发：HttpClient，URLConnection
-
 
 
 
