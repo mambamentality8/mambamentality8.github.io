@@ -8,7 +8,7 @@
 
 
 
-##### 以下以rpm的方式安装mysql为例:
+### 以下以rpm的方式安装mysql为例:
 
 
 
@@ -241,7 +241,7 @@ insert into test_time values(now(), now(), now(), now(), now());
 
 
 
-### mysql数据表必备知识之创建表
+### mysql创建表
 
 - 语法：
 
@@ -297,7 +297,7 @@ insert into test_time values(now(), now(), now(), now(), now());
                       )engine=innodb charset=utf8;;
   ```
 
-- ### mysql数据表必备知识之查看表的基本结构信息
+### mysql查看表的基本结构信息
 
   ```
   查看数据库中的所有表：show tables；
@@ -309,7 +309,7 @@ insert into test_time values(now(), now(), now(), now(), now());
 
   
 
-### mysql数据表必备知识之**表结构的修改**
+### mysql表结构的修改
 
 - 修改表名
 
@@ -473,7 +473,7 @@ insert into test_time values(now(), now(), now(), now(), now());
 
   
 
-### mysql核心知识之中文乱码问题
+### mysql中文乱码问题
 
 - 查看当前mysql使用的字符集：show variables like 'character%';
 
@@ -535,4 +535,133 @@ insert into test_time values(now(), now(), now(), now(), now());
 
 
 
-## DQL
+# DQL
+### 对表中的数据进行各种查询
+
+- 构造数据
+
+  ```
+  /*创建部门表*/
+  CREATE TABLE dept(
+      deptnu      INT  PRIMARY KEY comment '部门编号',
+      dname       VARCHAR(50) comment '部门名称',
+      addr        VARCHAR(50) comment '部门地址'
+  );
+  
+  /*某个公司的员工表*/
+  CREATE TABLE employee(
+      empno       INT  PRIMARY KEY comment '雇员编号',
+      ename       VARCHAR(50) comment '雇员姓名',
+      job         VARCHAR(50) comment '雇员职位',
+      mgr         INT comment '雇员上级编号',
+      hiredate    DATE comment '雇佣日期',
+      sal         DECIMAL(7,2) comment '薪资',
+      deptnu      INT comment '部门编号'
+  )ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  
+  /*创建工资等级表*/
+  CREATE TABLE salgrade(
+      grade       INT  PRIMARY KEY comment '等级',
+      lowsal      INT comment '最低薪资',
+      higsal      INT comment '最高薪资'
+  );
+  
+  /*插入dept表数据*/
+  INSERT INTO dept VALUES (10, '研发部', '北京');
+  INSERT INTO dept VALUES (20, '工程部', '上海');
+  INSERT INTO dept VALUES (30, '销售部', '广州');
+  INSERT INTO dept VALUES (40, '财务部', '深圳');
+  
+  /*插入emp表数据*/
+  INSERT INTO employee VALUES (1009, '唐僧', '董事长', NULL, '2010-11-17', 50000,  10);
+  INSERT INTO employee VALUES (1004, '猪八戒', '经理', 1009, '2001-04-02', 29750, 20);
+  INSERT INTO employee VALUES (1006, '猴子', '经理', 1009, '2011-05-01', 28500, 30);
+  INSERT INTO employee VALUES (1007, '张飞', '经理', 1009, '2011-09-01', 24500,10);
+  INSERT INTO employee VALUES (1008, '诸葛亮', '分析师', 1004, '2017-04-19', 30000, 20);
+  INSERT INTO employee VALUES (1013, '林俊杰', '分析师', 1004, '2011-12-03', 30000, 20);
+  INSERT INTO employee VALUES (1002, '牛魔王', '销售员', 1006, '2018-02-20', 16000, 30);
+  INSERT INTO employee VALUES (1003, '程咬金', '销售员', 1006, '2017-02-22', 12500, 30);
+  INSERT INTO employee VALUES (1005, '后裔', '销售员', 1006, '2011-09-28', 12500, 30);
+  INSERT INTO employee VALUES (1010, '韩信', '销售员', 1006, '2018-09-08', 15000,30);
+  INSERT INTO employee VALUES (1012, '安琪拉', '文员', 1006, '2011-12-03', 9500,  30);
+  INSERT INTO employee VALUES (1014, '甄姬', '文员', 1007, '2019-01-23', 7500, 10);
+  INSERT INTO employee VALUES (1011, '妲己', '文员', 1008, '2018-05-23', 11000, 20);
+  INSERT INTO employee VALUES (1001, '小乔', '文员', 1013, '2018-12-17', 8000, 20);
+  
+  /*插入salgrade表数据*/
+  INSERT INTO salgrade VALUES (1, 7000, 12000);
+  INSERT INTO salgrade VALUES (2, 12010, 14000);
+  INSERT INTO salgrade VALUES (3, 14010, 20000);
+  INSERT INTO salgrade VALUES (4, 20010, 30000);
+  INSERT INTO salgrade VALUES (5, 30010, 99990);
+  ```
+
+### where条件查询
+
+- 简单查询
+
+  ```
+  select * from employee;
+  select empno,ename,job as ename_job from employee;
+  ```
+
+- 精确条件查询
+
+  ```
+  select * from employee where ename='后裔';
+  select * from employee where sal != 50000;
+  select * from employee where sal <> 50000;
+  select * from employee where sal > 10000;
+  ```
+
+- 模糊条件查询
+
+  ```
+  show variables like '%aracter%'; 
+  select * from employee  where ename like '林%';
+  ```
+
+- 范围查询
+
+  ```
+  select * from employee where sal between 10000 and 30000;
+  select * from employee where hiredate between '2011-01-01' and '2017-12-1';
+  ```
+
+- 离散查询
+
+  ```
+  select * from employee where ename in ('猴子','林俊杰','小红','小胡');  
+  ```
+
+- 清除重复值
+
+  ```
+  select distinct(job) from employee;
+  ```
+
+- 统计查询（聚合函数）:
+
+  ```
+         count(code)或者count(*)
+          select count(*) from employee;
+          select count(ename) from employee;
+          
+         sum()  计算总和 
+          select sum(sal) from employee;
+          
+         max()    计算最大值
+          select * from employee where sal= (select  max(sal) from employee);
+          
+         avg()   计算平均值
+          select avg(sal) from employee;
+          
+         min()   计算最低值
+          select * from employee where sal= (select  min(sal) from employee);
+          
+         concat函数： 起到连接作用
+          select concat(ename,' 是 ',job) as aaaa from employee;
+  ```
+
+### group by分组查询
+
