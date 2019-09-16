@@ -596,7 +596,7 @@ insert into test_time values(now(), now(), now(), now(), now());
   INSERT INTO salgrade VALUES (5, 30010, 99990);
   ```
 
-### where条件查询
+### where条件查询  (where后面不能跟聚合函数)
 
 - 简单查询
 
@@ -664,4 +664,53 @@ insert into test_time values(now(), now(), now(), now(), now());
   ```
 
 ### group by分组查询
+
+- 作用：把行 按 字段 分组
+
+- 语法：group by 列1，列2....列N (将多个字段组合成一个整体进行分组)
+
+- 适用场合：常用于统计场合，一般和聚合函数连用
+
+  ```
+  eg:
+       select deptnu,count(*) from employee group by deptnu;
+       select deptnu,job,count(*) from employee group by deptnu,job;
+       select job,count(*) from employee group by job;
+  ```
+
+### having条件查询
+
+- 作用：对查询的结果进行筛选操作
+
+- 语法：having 条件 或者 having 聚合函数 条件
+
+- 适用场合：一般跟在group by之后
+
+  ```
+  eg:
+      select job,count(*) from employee group by job having job ='文员';
+      select  deptnu,job,count(*) from employee group by deptnu,job having count(*)>=2;
+      select  deptnu,job,count(*) as 总数 from employee group by deptnu,job having 总数>=2;
+  ```
+
+### order by排序查询
+
+- 作用：对查询的结果进行排序操作
+
+- 语法：order by 字段1,字段2 .....
+
+- 适用场合：一般用在查询结果的排序
+
+  ```
+  eg:
+       select * from employee order by sal;
+       select * from employee order by hiredate;
+       select  deptnu,job,count(*) as 总数 from employee group by deptnu,job having 总数>=2 order by deptnu desc;
+       select  deptnu,job,count(*) as 总数 from employee group by deptnu,job having 总数>=2 order by deptnu asc;
+       select  deptnu,job,count(*) as 总数 from employee group by deptnu,job having 总数>=2 order by deptnu;
+  
+       顺序：where ---- group by ----- having ------ order by 
+  ```
+
+  
 
