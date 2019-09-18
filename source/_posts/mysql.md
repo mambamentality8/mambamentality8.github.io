@@ -712,5 +712,133 @@ insert into test_time values(now(), now(), now(), now(), now());
        顺序：where ---- group by ----- having ------ order by 
   ```
 
-  
+### limit分页查询
 
+- 作用：对查询结果起到限制条数的作用
+
+- 语法：limit n，m n:代表起始条数值，不写默认为0；m代表：取出的条数
+
+- 适用场合：数据量过多时，可以起到限制作用
+
+  ```
+  eg:
+      select * from XD.employee limit 4,5;
+  ```
+
+### exists子查询
+
+- exists型子查询后面是一个受限的select查询语句
+
+- exists子查询，如果exists后的内层查询能查出数据，则返回 TRUE 表示存在；为空则返回 FLASE则不存在。
+
+  ```
+  分为俩种：exists跟 not exists
+  
+  select 1 from employee where 1=1;
+  select * from 表名 a where exists (select 1 from 表名2 where 条件);
+  
+  eg:查询出公司有员工的部门的详细信息
+  select * from dept a where exists (select 1 from employee b where a.deptnu=b.deptnu);
+  select * from dept a where not exists (select 1 from employee b where a.deptnu=b.deptnu);
+  ```
+
+### 左连接查询与右连接查询
+
+- 左连接称之为左外连接 右连接称之为右外连接 这俩个连接都是属于外连接
+
+- 左连接关键字：left join 表名 on 条件 / left outer 表名 join on 条件 右连接关键字：right join 表名 on 条件/ right outer 表名 join on 条件
+
+- 左连接说明： left join 是left outer join的简写，左(外)连接，左表(a_table)的记录将会全部表示出来， 而右表(b_table)只会显示符合搜索条件的记录。右表记录不足的地方均为NULL。
+
+- 右连接说明：right join是right outer join的简写，与左(外)连接相反，右(外)连接，左表(a_table)只会显示符合搜索条件的记录，而右表(b_table)的记录将会全部表示出来。左表记录不足的地方均为NULL。
+  ```
+  eg:列出部门名称和这些部门的员工信息，同时列出那些没有的员工的部门
+          dept，employee
+          select a.dname,b.* from dept a  left join employee b on a.deptnu=b.deptnu;
+          select b.dname,a.* from employee a  right join  dept b on b.deptnu=a.deptnu;
+  
+  ```
+
+### 内连接查询与联合查询
+
+- 内连接：获取两个表中字段匹配关系的记录
+
+- 主要语法：INNER JOIN 表名 ON 条件;
+
+  ```
+  eg:想查出员工张飞的所在部门的地址
+      select a.addr  from dept a inner join employee b on a.deptnu=b.deptnu and b.ename='张飞';
+      select a.addr from dept a,employee b where a.deptnu=b.deptnu and b.ename='张飞';
+  
+  ```
+
+- 联合查询：就是把多个查询语句的查询结果结合在一起
+
+- 主要语法1：... UNION ... （去除重复） 主要语法2：... UNION ALL ...（不去重复）
+
+- union查询的注意事项：
+
+  ```
+  (1)两个select语句的查询结果的“字段数”必须一致；
+  
+  (2)通常，也应该让两个查询语句的字段类型具有一致性；
+  
+  (3)也可以联合更多的查询结果；
+  
+  (4)用到order by排序时，需要加上limit（加上最大条数就行），需要对子句用括号括起来
+  
+  eg:对销售员的工资从低到高排序，而文员的工资从高到低排序
+      (select * from employee a where a.job = '销售员'  order by a.sal limit 999999 ) union  (select * from employee b where b.job = '文员' order by b.sal desc limit 999999);
+  ```
+
+### 高级查询实战(一)
+
+- 出至少有一个员工的部门。显示部门编号、部门名称、部门位置、部门人数。
+
+  ```
+      涉及表： employee dept
+      语句：select deptnu,count(*) from employee group by deptnu
+      语句：select a.deptnu,a.dname,a.addr, b.zongshu from dept a,(select deptnu,count(*) as zongshu from employee group by deptnu) b where a.deptnu=b.deptnu;
+  ```
+
+- 列出薪金比安琪拉高的所有员工。
+
+  ```
+      涉及表：employee
+      语句：select * from  employee where sal > (select sal from employee where ename='安琪拉');
+  ```
+
+- 列出所有员工的姓名及其直接上级的姓名。
+
+  ```
+      涉及表：employee
+      语句：select a.ename,ifnull(b.ename,'BOSS') as leader from employee a left join employee b on a.mgr=b.empno;
+  ```
+
+- 列出受雇日期早于直接上级的所有员工的编号、姓名、部门名称。
+
+  ```
+      涉及表：employee dept
+      条件：a.hiredate < b.hiredate
+      语句：select a.empno,a.ename,c.dname from employee a left join employee b on a.mgr=b.empno left join dept c on a.deptnu=c.deptnu where a.hiredate < b.hiredate;
+  ```
+
+- 列出部门名称和这些部门的员工信息，同时列出那些没有员工的部门。
+
+  ```
+      涉及表：dept employee
+      语句：select a.dname,b.* from dept a left join employee b on a.deptnu=b.deptnu;
+  ```
+
+- 列出所有文员的姓名及其部门名称，所在部门的总人数。
+
+  ```
+      涉及表：employee dept
+      条件：job='文员'
+      语句：select deptnu,count(*) as zongshu from employee group by deptnu;
+      语句：select b.ename,a.dname,b.job,c.zongshu from dept a ,employee b ,(select deptnu,count(*) as zongshu from employee group by deptnu) c where a.deptnu=b.deptnu and b.job='文员' and b.deptnu=c.deptnu;
+  ```
+
+### 高级查询实战(二)
+
+- 列出最低薪金大于15000的各种工作及从事此工作的员工人数。
