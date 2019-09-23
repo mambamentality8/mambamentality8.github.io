@@ -59,7 +59,7 @@ vue.js是一个MVVM的框架，理解MVVM有利于学习vue.js。
 
 - Vue中的 MVVM
 
-  ![1569070208671](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569070208671.png)
+  ![1569070208671](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/01.png)
 
 从上图看出，VM(ViewModel)可以把view视图和Model模型解耦合，VM的要做的工作就是vue.js所承担的。 
 
@@ -102,7 +102,7 @@ vue.js是一个MVVM的框架，理解MVVM有利于学习vue.js。
 
 实现效果：
 
-![1569070305446](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569070305446.png)
+![1569070305446](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/02.png)
 
 代码如下：
 
@@ -249,44 +249,45 @@ vue.js是一个MVVM的框架，理解MVVM有利于学习vue.js。
 #### v-if和v-for
 
 ```
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF‐8">
-    <title>Document</title>
-    <script src="/js/vue/vue.min.js"></script>
+    <meta charset="UTF-8">
+    <title>vue.js入门程序</title>
 </head>
 <body>
-<div id="app">
-    <ul>
-        <!‐‐只显示偶数行‐‐>
-        <li v‐for="(item,index) in list" :key="index" v‐if="index % 2==0">{{index}}‐{{item}} 
-</li>
-        <li v‐for ="(value,key) in user">{{key}}‐{{value}}</li>
-        <li v‐for="(item,index) in userlist" :key="item.user.uname">
-            <div v‐if="item.user.uname=='heima'" style="background: chartreuse"><!‐‐名称为heima的 加背景色‐‐>
-                {{index}}‐{{item.user.uname}}‐{{item.user.age}}
-            </div>
-            <div v‐else="">
-                {{index}}‐{{item.user.uname}}‐{{item.user.age}}
-            </div>
-        </li>
-    </ul>
+<div id="app">
+    <ul>
+        <!--:key 主键-->
+        <li v-for="(item,index) in list" :key="index" v-if="index % 2==0">{{index}}--{{item}}</li>
+        <li v-for="(value,key) in user">{{key}}--{{value}}</li>
+        <li v-for="(item,index) in userlist" :key="item.user.uname">
+            <div v-if="item.user.username=='itheima'" style="background:greenyellow">
+                {{index}}--{{item.user.username}}--{{item.user.age}}
+            </div>
+            <div v-else="">
+                {{index}}--{{item.user.username}}--{{item.user.age}}
+            </div>
+        </li>
+    </ul>
 </div>
 </body>
-
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
 <script>
-    new Vue({
-        el:'#app',
-        data:{
-            list:[1,2,3,4,4], 
-            user:{uname:'itcast',age:10}, 
-            userlist:[
-                { user:{uname:'itcast',age:10}}, 
-                { user:{uname:'heima',age:11}}
-            ]
-        }
-    });
+    /*MVVM的VM(View Model)部分*/
+    // 实例化Vue对象
+    //vm :叫做MVVM中的 View Model
+    var VM = new Vue({
+        el: "#app",//表示当前vue对象接管app的div区域
+        data: {
+            list: [1, 2, 3, 4, 5],
+            user: {uname: 'itcast', age: 10},
+            userlist: [
+                {user: {username: 'itcast', age: 10}},
+                {user: {username: 'itheima', age: 11}}
+            ]
+        }
+    });
 </script>
 </html>
 ```
@@ -295,20 +296,27 @@ vue.js是一个MVVM的框架，理解MVVM有利于学习vue.js。
 
 Webpack 是一个前端资源的打包工具，它可以将js、image、css等资源当成一个模块进行打包。
 
-![1569072458919](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569072458919.png)
+![1569072458919](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/03.png)
 
 从图中我们可以看出，Webpack 可以将js、css、png等多种静态资源 进行打包
 
 webpack的好处: 
+
 1、模块化开发
+
 程序员在开发时可以分模块创建不同的js、 css等小文件方便开发，最后使用webpack将这些小文件打包成一个文 件，减少了http的请求次数。
 webpack可以实现按需打包，为了避免出现打包文件过大可以打包成多个文件。
+
 2、 编译typescript、ES6等高级js语法 
+
 随着前端技术的强大，开发中可以使用javascript的很多高级版本，比如：typescript、ES6等，方便开发， webpack可以将打包文件转换成浏览器可识别的js语法。
+
 3、CSS预编译
+
 webpack允许在开发中使用Sass 和 Less等原生CSS的扩展技术，通过sass-loader、less-loader将Sass 和 Less的 语法编译成浏览器可识别的css语法。
 
 webpack的缺点:
+
 1、配置有些繁琐
 2、文档不丰富
 
@@ -336,7 +344,7 @@ Node对一些特殊用例进行优化，提供替代的[API](https://baike.baidu
 1、下载对应你系统的Node.js版本: 
 https://nodejs.org/en/download/
 
-![1569072833062](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569072833062.png)
+![1569072833062](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/04.png)
 
 推荐下载LTS版本
 
@@ -362,21 +370,37 @@ node ‐v
 npm全称Node Package Manager，他是node包管理和分发的工具，使用NPM可以对应用的依赖进行管理，NPM 的功能和服务端项目构建工具maven差不多，我们通过npm 可以很方便地下载js库，打包js文件。
 node.js已经集成了npm工具，在命令提示符输入 npm -v 可查看当前npm版本
 
-![1569072991329](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569072991329.png)
+![1569072991329](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/05.png)
 
-2、设置包路径
+2、查看包路径
 包路径就是npm从远程下载的js包所存放的路径。
 使用 npm conﬁg ls 查询NPM管理包路径（NPM下载的依赖包所存放的路径）
 
-![1569073005295](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569073005295.png)
+```
+npm config ls
+```
 
-NPM默认的管理包路径在C:/用户/[用户名]/AppData/Roming/npm/node_meodules，为了方便对依赖包管理，我 们将管理包的路径设置在单独的地方，本教程将安装目录设置在node.js的目录下，创建npm_modules和 npm_cache，执行下边的命令：
-本教程安装node.js在D:\Program Files\nodejs下所以执行命令如下：
-npm conﬁg set preﬁx "C:\Program Files\nodejs\npm_modules"
-npm conﬁg set cache "c:\Program Files\nodejs\npm_cache"
+![1569073005295](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/06.png)
+
+3、创建目录
+
+NPM默认的管理包路径在C:/用户/[用户名]/AppData/Roming/npm/node_meodules，为了方便对依赖包管理，我 们将管理包的路径设置在单独的地方，本教程将安装目录设置在node.js的目录下，创建npm_modules和 npm_cache.
+
+![1569217870510](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/07.png)
+
+本教程安装node.js在X:\development\js\node下所以执行命令如下：
+
+```
+npm config set preﬁx "X:\development\js\node\npm_modules"
+```
+
+```
+npm config set cache "X:\development\js\node\npm_cache"
+```
+
 此时再使用 npm conﬁg ls 查询NPM管理包路径发现路径已更改
 
-![1569073082557](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569073082557.png)
+![1569218562056](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/08.png)
 
 #### 安装cnpm 
 
@@ -389,20 +413,37 @@ npm默认会去国外的镜像去下载js包，在开发中通常我们使用国
 npm install -g cnpm --registry=https://registry.npm.taobao.org
 ```
 
-安装后，我们可以使用以下命令来查看cnpm的版本 cnpm -v
+安装后，我们可以使用以下命令来查看cnpm的版本 
 
-![1569073159807](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569073159807.png)
+```
+cnpm -v
+```
 
-nrm ls 查看镜像已经指向taobao
+![1569073159807](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/09.png)
 
-![1569073192324](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569073192324.png)
-
-使nrm use XXX切换 镜像 
 如果nrm没有安装则需要进行全局安装：
 
 ```
-cnpm install -g nrm
+npm install -g nrm
 ```
+
+nrm ls 查看镜像指向
+
+```
+nrm ls
+```
+
+![1569220581272](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/10.png)
+
+使nrm use XXX切换 镜像 
+
+```
+nrm use taobao
+```
+
+![1569073192324](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/11.png)
+
+
 
 ##### 2.不连网
 
@@ -434,17 +475,54 @@ webpack安装分为本地安装和全局安装：
 
 只在我的项目中使用webpack，需要进行本地安装，因为项目和项目所用的webpack的版本不一样。本地安装就会 将webpack的js包下载到项目下的npm_modeuls目录下。
 在门户目录下创建webpack测试目录webpacktest01：
-npm install --save-dev webpack 或 cnpm install --save-dev webpack npm install --save-dev webpack-cli (4.0以后的版本需要安装webpack-cli)
+
+```
+npm install --save-dev webpack
+```
+
+```
+cnpm install --save-dev webpack
+```
+
+4.0以后的版本需要安装
+
+```
+npm install --save-dev webpack-cli
+```
 
 2）全局安装加-g： 
 
 全局安装就将webpack的js包下载到npm的包路径下。
-npm install webpack -g 或 cnpm install webpack -g
+
+```
+npm install webpack -g
+```
+
+ 或 
+
+```
+cnpm install webpack -g
+```
 
 3）安装webpack指定的版本：
 本教程使用webpack3.6.0，安装webpack3.6.0：
-进入webpacktest测试目录，运行：cnpm install --save-dev webpack@3.6.0
-全局安装：npm install webpack@3.6.0 -g或 cnpm install webpack@3.6.0 -g
+进入webpacktest测试目录，运行：
+
+```
+cnpm install --save-dev webpack@3.6.0
+```
+
+全局安装：
+
+```
+npm install webpack@3.6.0 -g
+```
+
+或 
+
+```
+cnpm install webpack@3.6.0 -g
+```
 
 ##### 2.非连网
 
@@ -453,7 +531,7 @@ npm install webpack -g 或 cnpm install webpack -g
 测试：
 在cmd状态输入webpack，出现如下提示说明 webpack安装成功
 
-![1569079225427](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569079225427.png)
+![1569079225427](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/11.png)
 
 #### webpack入门程序
 
@@ -464,7 +542,7 @@ npm install webpack -g 或 cnpm install webpack -g
 通过入门程序实现对js文件的打包，体会webpack是如何对应用进行模块化管理。 
 对上边1+1=2的例子使用webpack进行模块化管理
 
-![1569080294183](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569080294183.png)
+![1569080294183](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/13.png)
 
 ##### 2.定义模块
 
@@ -475,18 +553,15 @@ npm install webpack -g 或 cnpm install webpack -g
 将本程序使用的加法运算的js方法抽取到一个js文件，此文件就是一个模块
 
 ```
-// 定义add函数 
-function add(x, y) { 
-    return x + y
+var add = function (x, y) {
+    return x + y;
 }
-// function add2(x, y) { 
-//     return x + y+1
-// }
-// 导出add方法
-
-module.exports.add = add;
-// module.exports ={add,add2};//如果有多个方法这样导出
-// module.exports.add2 = add2//如果有多个方法也可以这样导出
+var add2 = function (x, y) {
+    return x + y + 2;
+}
+module.exports.add = add;
+// module.exports ={add,add2};//如果有多个方法这样导出
+// module.exports.add2 = add2//如果有多个方法也可以这样导出
 ```
 
 2、定义main.js 
@@ -498,57 +573,251 @@ module.exports.add = add;
 main.js的代码如下:
 
 ```
-var {add} = require('./model01.js');
-var Vue = require('./vue.min');
-var VM = new Vue({
-    el:"#app",//表示当前vue对象接管app的div区域
-    data:{
-        name:'黑马程序员',// 相当于是MVVM中的Model这个角色
-        num1:0,
-        num2:0,
-        result:0,
-        url:'http://www.itcast.cn'
-    },
-    methods:{
-        change:function(){
-            //这里使用了导入的model01.js文件中的add方法
-            this.result = add(Number.parseInt(this.num1),Number.parseInt(this.num2))             alert(this.result)
-        }
-    }
+//导入model01.js
+var {add} = require("./model01")
+var Vue = require("./vue.min")
+var VM = new Vue({
+    el: '#app',//vm接管了app区域的管理
+    data: {//model数据
+        name: '黑马程序员',
+        num1: 0,
+        num2: 0,
+        result: 0,
+        url: 'http://www.itcast.cn',
+        size: 11
+    },
+    methods: {
+        change: function () {
+            this.result = add(Number.parseInt(this.num1), Number.parseInt(this.num2))
+            // this.result = Number.parseInt(this.num1)+Number.parseInt(this.num2)
+            //alert("计算结果："+this.result)
+        }
+    }
 });
 ```
 
 ##### 3.打包测试
 
 上边将mode01.js模块及main.js主文件编写完成，下边使用webpack对这些js文件进行打包 
-1、进入程序目录，执行webpack main.js build.js ，这段指令表示将main.js打包输出为 build.js文件 
+1、进入程序目录，执行
+
+```
+webpack main.js build.js
+```
+
+ 这段指令表示将main.js打包输出为 build.js文件 
 执行完成，观察程序目录是否出现build.js。
 2、在html中引用build.js
 
 ```
-<!DOCTYPE html>
-<html lang="en" xmlns:v‐on="http://www.w3.org/1999/xhtml"> <head>
-    <meta charset="UTF‐8"> 
-    <title>vue.js入门程序</title>
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>vue.js常用指令的测试</title>
 </head>
 <body>
-<div id="app">
-    <!‐‐{{name}}解决闪烁问题使用v‐text‐‐>
-<a v‐bind:href="url"><span v‐text="name"></span></a>
-<input type="text" v‐model="num1">+
-<input type="text" v‐model="num2">=
-<span v‐text="result"></span>
-    <!‐‐{{num1+num2}}‐‐>
-<!‐‐<input type="text" v‐model="result">‐‐>
-    <button v‐on:click="change">计算</button>
-    <!‐‐ 在Vue接管区域中使用Vue的系统指令呈现数据 
-    这些指令就相当于是MVVM中的View这个角色 ‐‐>
+<!--实现在body区域显示一个传智播客名称-->
+<div id="app">
+    <!--相当于MVVM的view视图-->
+    <!--{{name}}-->
+    <a v-bind:href="url">
+        <span v-text="name"></span>
+    </a>
+    <input type="text" v-model="num1"/> +
+    <input type="text" v-model="num2"/>=
+    <!-- <span v-text="Number.parseInt(num1)+Number.parseInt(num2)"></span>-->
+    <span v-text="result"></span>
+    <!--{{Number.parseInt(num1)+Number.parseInt(num2)}}-->
+    <button v-on:click="change">计算</button>
 </div>
 </body>
-<script src="build.js"></script>
+<!--<script src="vue.min.js"></script>-->
+<script src="build.js"></script>
 <script>
+    //编写MVVM中的model部分及VM（ViewModel）部分
 
-</script> 
+</script>
 </html>
 ```
 
+### webpack-dev-server
+
+webpack-dev-server开发服务器，它的功能可以实现热加载 并且自动刷新浏览器。 
+创建一个新的程序目录，这里我们创建webpacktest02目录，将webpack入门程序的代码拷贝进来，并在目录下创 建src目录、dist目录。
+将main.js和model01.js拷贝到src目录。
+
+#### 安装配置
+
+##### 1.安装webpack-dev-server
+
+进入到webpacktest02的目录下
+
+使用 webpack-dev-server需要安装webpack、 webpack-dev-server和 html-webpack-plugin三个包。
+
+```
+cnpm install webpack@3.6.0 webpack-dev-server@2.9.1 html-webpack-plugin@2.30.1 --save-dev
+```
+
+安装完成，会发现程序目录出现一个package.json文件，此文件中记录了程序的依赖。 相当于java的pom.xml
+
+安装完成，会发现程序目录出现一个node_modules目录,存放了本程序所依赖的包
+
+没有联网的提供的node_modules.zip到webpacktest02目录下，解压到node_modules目录下
+
+##### 2.配置webpack-dev-server
+
+在package.json中配置script
+
+```
+"scripts": {
+    "dev": "webpack-dev-server --inline --hot --open --port 5008"
+  },
+```
+
+- inline：自动刷新
+
+- hot：热加载
+
+- port：指定端口
+
+- open：自动在默认浏览器打开
+
+- host：可以指定服务器的 ip，不指定则为127.0.0.1，如果对外发布则填写公网ip地址
+
+此时package.json的文件内容如下：
+
+```
+{
+  "scripts": {
+    "dev": "webpack-dev-server --inline --hot --open --port 5008"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
+  }
+}
+```
+
+devDependencies：开发人员在开发过程中所需要的依赖。 
+
+scripts：可执行的命令
+
+#### 配置webpack.conﬁg.js
+
+在webpacktest02目录下创建 webpack.conﬁg.js， webpack.conﬁg.js是webpack的配置文件。在此文件中可以配 置应用的入口文件、输出配置、插件等，其中要实现热加载自动刷新功能需要配置html-webpack-plugin插件。 html-webpack-plugin的作用是根据html模板在内存生成html文件，它的工作原理是根据模板文件在内存中生成一 个index.html文件。
+
+##### 1.配置模板文件 
+
+将原来的vue_02.html作为模板文件，为了和内存中的index.html文件名区别，注意将vue_02.html中的script标签 去掉，内容如下：
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue.js常用指令的测试</title>
+</head>
+<body>
+<!--实现在body区域显示一个传智播客名称-->
+<div id="app">
+    <!--相当于MVVM的view视图-->
+    <!--{{name}}-->
+    <a v-bind:href="url">
+        <span v-text="name"></span>
+    </a>
+    <input type="text" v-model="num1"/> +
+    <input type="text" v-model="num2"/>=
+    <!-- <span v-text="Number.parseInt(num1)+Number.parseInt(num2)"></span>-->
+    <span v-text="result"></span>
+    <!--{{Number.parseInt(num1)+Number.parseInt(num2)}}-->
+    <button v-on:click="change">计算</button>
+</div>
+</body>
+<script>
+    //编写MVVM中的model部分及VM（ViewModel）部分
+
+</script>
+</html>
+```
+
+##### 2.配置 html-webpack-plugin 
+
+在webpack.conﬁg.js中配置html-webpack-plugin插件
+
+```
+//引用html-webpack-plugin插件，作用是根据html模板在内存生成html文件，它的工作原理是根据模板文件在内存中生成一个index.html文件。
+var htmlwp = require('html-webpack-plugin');
+module.exports = {
+    entry: './src/main.js',  //指定打包的入口文件
+    output: {
+        path: __dirname + '/dist',  // 注意：__dirname表示webpack.config.js所在目录的绝对路径
+        filename: 'build.js'		   //输出文件
+    },
+    devtool: 'eval-source-map',
+    plugins: [
+        new htmlwp({
+            title: '首页',  //生成的页面标题<head><title>首页</title></head>
+            filename: 'index.html', //webpack-dev-server在内存中生成的文件名称，自动将build注入到这个页面底部，才能实现自动刷新功能
+            template: 'vue_02.html' //根据vue_02.html这个模板来生成(这个文件请程序员自己生成)
+        })
+    ]
+}
+```
+
+#### 启动
+
+两种方式:
+
+1、进入 webpacktest02目录，执行npm run dev 
+2、使用webstorm，右键package.json文件，选择“Show npm Scripts” 
+打开窗口：
+
+![1569225381399](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/14.png)
+
+双击 dev。
+注意：dev就是在package.json中配置的webpack-dev-server --inline --hot --open --port 5008命令。 发现启动成功自动打开浏览器。 
+修改src中的任意文件内容，自动加载并刷新浏览器。
+
+#### debug调试
+
+使用了webpack之后就不能采用传统js的调试方法在chrome中打断点。
+
+webpack将多个源文件打包成一个文件，并且文件的内容产生了很大的变化，webpack提供devtool进行调试， devtool是基于sourcemap的方式，在调试时会生成一个map文件，其内容记录生成文件和源文件的内容映射，即 生成文件中的哪个位置对应源文件中的哪个位置，有了sourcemap就可以在调试时看到源代码。
+
+配置如下： 
+1、在webpack.conﬁg.js中配置：
+
+```
+devtool: 'eval-source-map'
+```
+
+webpack.conﬁg.js部分内容如下：
+
+```
+var htmlwp = require('html‐webpack‐plugin');
+module.exports={
+    entry:'./src/main.js',  //指定打包的入口文件
+    output:{
+        path : __dirname+'/dist',  // 注意：__dirname表示webpack.config.js所在目录的绝对路径         filename:'build.js'          //输出文件
+    },
+    devtool: 'eval‐source‐map', //添加的断点配置
+    ......
+```
+
+2、在js中跟踪代码的位置上添加debugger 一个例子：
+在add方法中添加debugger
+
+```
+// 定义add函数 
+var add = function (x, y) {
+    debugger
+    return x+y;
+}
+```
+
+启动应用，刷新页面跟踪代码：
+点击“计算” 即进入debugger代码位置，此时可以使用chrome进行调试了。
+
+![1569225504567](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02/15.png)
