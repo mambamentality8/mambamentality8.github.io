@@ -19,13 +19,13 @@ https://github.com/vuejs/vue-cli（有兴趣的同学可以参考官方指导使
 - static                           存放一些静态资源
 - test                              用于测试
 
-![1569060308438](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569060308438.png)
+![1569060308438](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02_02/01.png)
 
 #### 1.package.json(类似maven的pom.xml)
 
 package.json记录了工程所有依赖，及脚本命令：
 
-![1569060383074](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569060383074.png)
+![1569060383074](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02_02/02.png)
 
 开发使用：
 
@@ -54,7 +54,7 @@ index.html是模板文件。
 
 src目录下存放页面及js代码。
 
-![1569060456923](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569060456923.png)
+![1569060456923](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02_02/03.png)
 
 assets：存放一些静态文件，如图片
 base：存放基础组件
@@ -67,7 +67,7 @@ mock：存放前端单元测试方法
 module：存放各业务模块的页面和api方法
 下级目录以模块名命名，下边以cms举例： 
 cms/api：cms模块的api接口 
-cms/component：cms模块的组件
+cms/components：cms模块的组件
 cms/page： cms模块的页面
 cms/router：cms模块的路由配置
 statics：存放第三方组件的静态资源
@@ -116,7 +116,7 @@ SEO（Search Engine Optimization）为搜索引擎优化。它是一种利用搜
 
 在model目录创建cms模块的目录结构
 
-![1569062323632](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569062323632.png)
+![1569062323632](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02_02/04.png)
 
 在page目录新建page_list.vue，扩展名为.vue。 .vue文件的结构如下：
 
@@ -160,7 +160,7 @@ SEO（Search Engine Optimization）为搜索引擎优化。它是一种利用搜
 ```
 
 这样左侧就能出现我们的菜单栏了
-![1569307855159](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569307855159.png)
+![1569307855159](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02_02/05.png)
 
 ### 页面路由
 
@@ -267,7 +267,7 @@ Element-UI官方站点：http://element.eleme.io/#/zh-CN/component/installation
 
 测试：
 
-![1569311597796](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569311597796.png)
+![1569311597796](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02_02/06.png)
 
 通过查看代码发现： 
 el-table组件绑定了tableData模型数据。
@@ -283,7 +283,7 @@ tableData模型数据在script标签中定义。
 <template>
   <div>
     <!--按钮组件-->
-    <el-button type="primary" v-on:click="query" size="small">查询</el-button>
+    <el-button type="primary" @click="query" size="small">查询</el-button>
 
     <!--表格组件-->
     <el-table
@@ -309,35 +309,76 @@ tableData模型数据在script标签中定义。
     <!--分页组件-->
     <el-pagination
       layout="prev, pager, next"
-      :page-size="this.params.size"
-      :current-change="changePage"
-      :total="total" :current-page="this.params.page" style="float:right;">
+      :total="total"
+      :page-size="params.size"
+      :current-page="params.page"
+      @current-change="changePage"
+      style="float:right;">
     </el-pagination>
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   export default {
     data() {
       return {
-        list: [],
+        list: [
+          {
+            "siteId": "5a751fab6abb5044e0d19ea1",
+            "pageId": "5a754adf6abb500ad05688d9",
+            "pageName": "index.html",
+            "pageAliase": "首页",
+            "pageWebPath": "/index.html",
+            "pageParameter": null,
+            "pagePhysicalPath": "F:\\develop\\xc_portal_static\\",
+            "pageType": "0",
+            "pageTemplate": null,
+            "pageHtml": null,
+            "pageStatus": null,
+            "pageCreateTime": "2018-02-03T05:37:53.256+0000",
+            "templateId": "5a962b52b00ffc514038faf7",
+            "pageParams": null,
+            "htmlFileId": "5a7c1c54d019f14d90a1fb23",
+            "dataUrl": null
+          },
+          {
+            "siteId": "5a751fab6abb5044e0d19ea1",
+            "pageId": "5a795ac7dd573c04508f3a56",
+            "pageName": "index_banner.html",
+            "pageAliase": "轮播图",
+            "pageWebPath": "/include/index_banner.html",
+            "pageParameter": null,
+            "pagePhysicalPath": "F:\\develop\\xc_portal_static\\include\\",
+            "pageType": "0",
+            "pageTemplate": null,
+            "pageHtml": null,
+            "pageStatus": null,
+            "pageCreateTime": "2018-02-06T07:34:21.255+0000",
+            "templateId": "5a962bf8b00ffc514038fafa",
+            "pageParams": null,
+            "htmlFileId": "5a795bbcdd573c04508f3a59",
+            "dataUrl": null
+          }],
+        //数据总条数
         total: 50,
         params: {
-          page: 1,//页码
-          size: 2//每页显示个数
+          //当前页
+          page: 2,
+          //每页显示条数
+          size: 10
         }
       }
-    }
-  },
-  methods:{
-    //分页查询
-    changePage:function (){
-      this.query()
-    }
-    //查询
-    query:function (){
-      alert("查询")
-    }
+    },
+    methods: {
+      query: function () {
+        alert('查询')
+        //调用服务端的接口
+      },
+      changePage: function () {//形参就是当前页码
+        //调用query方法
+        this.query()
+      }
+    },
   }
 </script>
 <style>
@@ -345,5 +386,182 @@ tableData模型数据在script标签中定义。
 </style>
 ```
 
+测试:
 
+![1569341095616](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02_02/07.png)
+
+### Api调用
+
+#### 1.Api方法定义
+
+在cms模块的api目录定义cms.js，
+在cms.js中定义如下js方法，此方法实现http请求服务端页面查询接口。
+
+```
+//public是对axios的工具类封装，定义了http请求方法
+import http from './../../../base/api/public'
+
+//页面查询
+export const page_list = (page,size,params) =>{
+  //请求服务端的页面查询接口
+  return http.requestQuickGet(apiUrl+'/cms/page/list/'+page+'/'+size);
+}
+```
+
+axios实现了http方法的封装，vue.js官方不再继续维护vue-resource,推荐使用 axios。
+
+#### 2.Api调用
+
+前端页面导入cms.js，调用js方法请求服务端页面查询接口。
+1）在script标签最上面导入cms.js
+
+```
+import * as cmsApi from '../api/cms'
+```
+
+在query方法中调用 page_list方法
+
+```
+//查询
+query:function () {
+  cmsApi.page_list(this.params.page,this.params.size).then((res)=>{
+    console.log(res)
+    this.total = res.queryResult.total
+    this.list = res.queryResult.list
+  })
+}
+```
+
+### 跨域问题解决
+
+测试上边的代理 ，结果报错如下 ：
+No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 
+'http://localhost:11000' is therefore not allowed access.
+
+
+
+原因：浏览器的同源策略不允许跨域访问，所谓同源策略是指协议、域名、端口相同。 
+
+
+
+解决：采用proxyTable解决。
+proxyTable是什么？
+vue-cli提供的解决vue开发环境下跨域问题的方法，proxyTable的底层使用了http-proxy-middleware（https://github.com/chimurai/http-proxy-middleware），它是http代理中间件，它依赖node.js， 基本原理是用服务端代理解决浏览器跨域：
+
+![1569411024707](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx02_02/08.png)
+
+cms跨域解决原理： 
+1、访问页面http://localhost:11000/ 
+
+2、页面请求http://localhost:11000/cms
+由于url由http://localhost:31001/cms...改为“http://localhost:11000/cms."，所以不存在跨域 
+
+3、通过proxyTable由node服务器代理请求 http://localhost:31001/cms. 
+	  服务端请求服务端就不存在跨域问题
+
+
+
+具体的配置如下：
+1）修改api方法中url的定义
+
+请求前加/api前缀
+
+```
+//public是对axios的工具类封装，定义了http请求方法
+import http from './../../../base/api/public'
+//@相当于src目录
+let sysConfig = require('@/../config/sysConfig')
+
+let apiUrl = sysConfig.xcApiUrlPre;
+//页面查询
+export const page_list = (page, size, params) => {
+  //请求服务端的页面查询接口
+  return http.requestQuickGet(apiUrl + '/cms/page/list/' + page + '/' + size);
+}
+```
+
+2）在conﬁg/index.js下配置proxyTable。 
+以/api/cms开头的请求，代理请求http://localhost:31001
+
+```
+var sysConfig = {
+  xcApiUrlPre: '/api',
+  xcApiUrl: 'http://api.xuecheng.com/',
+  imgUrl: 'http://img.xuecheng.com/',
+  videoUrl: 'http://video.xuecheng.com/',
+  openAuthenticate: true,
+  openAuthorize: true
+}
+
+module.exports = sysConfig
+```
+
+### 分页查询测试
+
+#### 1.定义分页视图 
+
+使用v-on监听更改分页事件
+
+```
+<el-pagination
+      layout="prev, pager, next"
+      :total="total"
+      :page-size="params.size"
+      :current-page="params.page"
+      @current-change="changePage"
+      style="float:right;">
+    </el-pagination>
+```
+
+#### 2.定义数据模型对象
+
+```
+data() {
+      return {
+        list: [],
+        //数据总条数
+        total: 0,
+        params: {
+          //当前页
+          page: 1,
+          //每页显示条数
+          size: 10
+        }
+      }
+    }
+```
+
+#### 3.定义分页方法，接收页码参数
+
+```
+ changePage: function (currentPage) { //形参就是当前页码
+        //调用query方法
+        //alert(currentPage)
+        this.params.page = currentPage
+        this.query()
+      }
+```
+
+测试分页效果
+
+### 进入页面立即查询
+
+目前实现的功能是进入页面点击查询按钮向服务端表求查询，实际的需求是进入页面立即查询。
+如何实现？
+
+这要用到vue的钩子函数，每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置数据监听、 编译模板、将实例挂载到 DOM 并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做生命周期钩子的函数，这给了用户在不同阶段添加自己的代码的机会。
+
+通常使用最多的是created和mounted两个钩子： 
+created：vue实例已创建但是DOM元素还没有渲染生成。 
+mounted：DOM元素渲染生成完成后调用。
+
+本例子在两个方法的任意一个都满足需求： 
+在script标签中methods方法外
+添加如下代码：
+
+```
+mounted(){
+      this.query()
+    }
+```
 
