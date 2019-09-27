@@ -687,3 +687,358 @@ export const page_add = params => {
 }
 ```
 
+##### 2.page_add页面定义一个请求
+
+```
+addSubmit:function(){
+        this.$refs['pageForm'].validate((valid) => {
+          if (valid) {//表单校验成功
+            //确认提示
+            this.$confirm('您确认提交吗?', '提示', { }).then(() => {
+              //调用page_add方法请求服务端的新增页面接口
+              cmsApi.page_add(this.pageForm).then(res=>{
+                //解析服务端响应内容
+                if(res.success){
+                  /*this.$message({
+                    message: '提交成功',
+                    type: 'success'
+                  })*/
+                  this.$message.success("提交成功")
+                  //将表单清空
+                  this.$refs['pageForm'].resetFields();
+                }else if(res.message){
+                  this.$message.error(res.message)
+                }else{
+                  this.$message.error("提交失败")
+                }
+              });
+            })
+          }
+        });
+      },
+```
+
+##### 3.测试
+
+观察CmsPageController
+
+# 修改页面
+
+### 1.修改页面接口定义
+
+在api工程中添加修改接口
+
+```
+    @ApiOperation("通过ID查询页面")
+    public CmsPage findById(String id);
+
+    @ApiOperation("修改页面")
+    public CmsPageResult edit(String id, CmsPage cmsPage);
+```
+
+### 2.修改页面服务端开发
+
+#### 1.Dao
+
+使用 Spring Data Mongo提供的ﬁndById方法完成根据主键查询 。
+
+使用 Spring Data Mongo提供的save方法完成数据保存 。
+
+#### 2.Service
+
+##### 1.根据id查询页面
+
+```
+    //根据页面id查询页面
+    public CmsPage getById(String id){
+        Optional<CmsPage> optional = cmsPageRepository.findById(id);
+        if(optional.isPresent()){
+            CmsPage cmsPage = optional.get();
+            return cmsPage;
+        }
+        return null;
+    }
+```
+
+##### 2.根据id修改页面
+
+```
+    //根据页面id查询页面
+    public CmsPage getById(String id){
+        Optional<CmsPage> optional = cmsPageRepository.findById(id);
+        if(optional.isPresent()){
+            CmsPage cmsPage = optional.get();
+            return cmsPage;
+        }
+        return null;
+    }
+```
+
+#### 3.Controller
+
+##### 1.根据id查询页面
+
+```
+    @Override
+    @GetMapping("/get/{id}")
+    public CmsPage findById(@PathVariable("id") String id) {
+        CmsPage byId = pageService.getById(id);
+        return byId;
+    }
+```
+
+##### 2.保存页面信息
+
+```
+    @PutMapping("/edit/{id}")//这里使用put方法，http 方法中put表示更新
+    public CmsPageResult edit(@PathVariable("id")String id, @RequestBody CmsPage cmsPage) {
+        return pageService.update(id,cmsPage);
+    }
+```
+
+### 3.修改页面前端开发
+
+#### 1.编写page_edit页面
+
+```
+<template>
+  <div>
+    <el-form   :model="pageForm" label-width="80px" :rules="pageFormRules" ref="pageForm" >
+      <el-form-item label="所属站点" prop="siteId">
+        <el-select v-model="pageForm.siteId" placeholder="请选择站点">
+          <el-option
+            v-for="item in siteList"
+            :key="item.siteId"
+            :label="item.siteName"
+            :value="item.siteId">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="选择模版" prop="templateId">
+        <el-select v-model="pageForm.templateId" placeholder="请选择">
+          <el-option
+            v-for="item in templateList"
+            :key="item.templateId"
+            :label="item.templateName"
+            :value="item.templateId">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="页面名称" prop="pageName">
+        <el-input v-model="pageForm.pageName" auto-complete="off" ></el-input>
+      </el-form-item>
+
+      <el-form-item label="别名" prop="pageAliase">
+        <el-input v-model="pageForm.pageAliase" auto-complete="off" ></el-input>
+      </el-form-item>
+      <el-form-item label="访问路径" prop="pageWebPath">
+        <el-input v-model="pageForm.pageWebPath" auto-complete="off" ></el-input>
+      </el-form-item>
+
+      <el-form-item label="物理路径" prop="pagePhysicalPath">
+        <el-input v-model="pageForm.pagePhysicalPath" auto-complete="off" ></el-input>
+      </el-form-item>
+      <el-form-item label="数据Url" prop="dataUrl">
+        <el-input v-model="pageForm.dataUrl" auto-complete="off" ></el-input>
+      </el-form-item>
+      <el-form-item label="类型">
+        <el-radio-group v-model="pageForm.pageType">
+          <el-radio class="radio" label="0">静态</el-radio>
+          <el-radio class="radio" label="1">动态</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="创建时间">
+        <el-date-picker type="datetime" placeholder="创建时间" v-model="pageForm.pageCreateTime"></el-date-picker>
+      </el-form-item>
+
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="go_back">返回</el-button>
+      <el-button type="primary" @click.native="editSubmit" :loading="addLoading">提交</el-button>
+    </div>
+  </div>
+</template>
+<script>
+  import * as cmsApi from '../api/cms'
+  export default{
+    data(){
+      return {
+        //页面id
+        pageId:'',
+        //模版列表
+        templateList:[],
+        addLoading: false,//加载效果标记
+        //新增界面数据
+        pageForm: {
+          siteId:'',
+          templateId:'',
+          pageName: '',
+          pageAliase: '',
+          pageWebPath: '',
+          dataUrl:'',
+          pageParameter:'',
+          pagePhysicalPath:'',
+          pageType:'',
+          pageCreateTime: new Date()
+        },
+        pageFormRules: {
+          siteId:[
+            {required: true, message: '请选择站点', trigger: 'blur'}
+          ],
+          templateId:[
+            {required: true, message: '请选择模版', trigger: 'blur'}
+          ],
+          pageName: [
+            {required: true, message: '请输入页面名称', trigger: 'blur'}
+          ],
+          pageWebPath: [
+            {required: true, message: '请输入访问路径', trigger: 'blur'}
+          ],
+          pagePhysicalPath: [
+            {required: true, message: '请输入物理路径', trigger: 'blur'}
+          ]
+        },
+        siteList:[]
+      }
+    },
+    methods:{
+      go_back(){
+        this.$router.push({
+          path: '/cms/page/list', query: {
+            page: this.$route.query.page,
+            siteId:this.$route.query.siteId
+          }
+        })
+      },
+      editSubmit(){
+        this.$refs.pageForm.validate((valid) => {//表单校验
+          if (valid) {//表单校验通过
+            this.$confirm('确认提交吗？', '提示', {}).then(() => {
+              this.addLoading = true;
+              //修改提交请求服务端的接口
+              cmsApi.page_edit(this.pageId,this.pageForm).then((res) => {
+                  console.log(res);
+                if(res.success){
+                  this.addLoading = false;
+                  this.$message({
+                    message: '提交成功',
+                    type: 'success'
+                  });
+                  //返回
+                  this.go_back();
+
+                }else{
+                  this.addLoading = false;
+                  this.$message.error('提交失败');
+                }
+              });
+            });
+          }
+        });
+      }
+
+    },
+    created: function () {
+      this.pageId=this.$route.params.pageId;
+      //根据主键查询页面信息
+      cmsApi.page_get(this.pageId).then((res) => {
+        console.log(res);
+        if(res){
+          this.pageForm = res;
+        }
+      });
+    },
+    mounted:function(){
+
+      //初始化站点列表
+      this.siteList = [
+        {
+          siteId:'5a751fab6abb5044e0d19ea1',
+          siteName:'门户主站'
+        },
+        {
+          siteId:'102',
+          siteName:'测试站'
+        }
+      ]
+      //模板列表
+      this.templateList = [
+        {
+          templateId:'5a962b52b00ffc514038faf7',
+          templateName:'首页'
+        },
+        {
+          templateId:'5a962bf8b00ffc514038fafa',
+          templateName:'轮播图'
+        }
+      ]
+    }
+  }
+</script>
+<style>
+
+</style>
+```
+
+##### 1.编写请求服务端的接口
+
+```
+      editSubmit(){
+        this.$refs.pageForm.validate((valid) => {//表单校验
+          if (valid) {//表单校验通过
+            this.$confirm('确认提交吗？', '提示', {}).then(() => {
+              this.addLoading = true;
+              //修改提交请求服务端的接口
+              cmsApi.page_edit(this.pageId,this.pageForm).then((res) => {
+                  console.log(res);
+                if(res.success){
+                  this.addLoading = false;
+                  this.$message({
+                    message: '提交成功',
+                    type: 'success'
+                  });
+                  //返回
+                  this.go_back();
+
+                }else{
+                  this.addLoading = false;
+                  this.$message.error('提交失败');
+                }
+              });
+            });
+          }
+        });
+      }
+```
+
+##### 2.进入修改页面应该默认去查询页面信息
+
+```
+created: function () {
+      this.pageId=this.$route.params.pageId;
+      //根据主键查询页面信息
+      cmsApi.page_get(this.pageId).then((res) => {
+        console.log(res);
+        if(res){
+          this.pageForm = res;
+        }
+      });
+    },
+```
+
+#### 2.配置路由
+
+#### 1.在页面列表添加“编辑”链接
+
+```
+<el-table-column label="操作" width="80">
+        <template slot-scope="page">
+          <el-button
+            size="small"type="text"
+            @click="edit(page.row.pageId)">编辑
+          </el-button>
+        </template>
+      </el-table-column>
+```
+
+slot-scope插槽page就相当于整个列表的数据
