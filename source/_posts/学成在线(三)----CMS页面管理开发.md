@@ -798,7 +798,42 @@ addSubmit:function(){
 
 ### 3.修改页面前端开发
 
-#### 1.编写page_edit页面
+#### 1.在页面列表添加“编辑”链接
+
+```
+<el-table-column label="操作" width="80">
+        <template slot-scope="page">
+          <el-button
+            size="small"type="text"
+            @click="edit(page.row.pageId)">编辑
+          </el-button>
+        </template>
+      </el-table-column>
+```
+
+slot-scope插槽page就相当于整个列表的数据
+
+#### 2.编写edit方法
+
+```
+      edit:function(pageId){
+        //打开修改页面
+        this.$router.push({
+          path:'/cms/page/edit/'+pageId
+        })
+      },
+```
+
+#### 3.配置路由
+
+进入修改页面传入pageId
+
+```
+import page_edit from '@/module/cms/page/page_edit.vue';
+{path: '/cms/page/edit/:pageId', name: '修改页面', component: page_edit, hidden: true},
+```
+
+#### 4.编写page_edit页面
 
 ```
 <template>
@@ -980,7 +1015,7 @@ addSubmit:function(){
 </style>
 ```
 
-##### 1.编写请求服务端的接口
+#### 5.page_edit页面请求服务端的接口
 
 ```
       editSubmit(){
@@ -1011,7 +1046,16 @@ addSubmit:function(){
       }
 ```
 
-##### 2.进入修改页面应该默认去查询页面信息
+#### 6.在cms.js文件中定义根据id查询页面
+
+```
+//根据id查询页面
+export const page_get = id =>{
+  return http.requestQuickGet(apiUrl+'/cms/page/get/'+id)
+}
+```
+
+#### 7.进入修改页面应该默认去查询页面信息
 
 ```
 created: function () {
@@ -1026,9 +1070,70 @@ created: function () {
     },
 ```
 
-#### 2.配置路由
+$route.params.pageId : 当URL是以/a/b/c的方式传参的时候采用此api
 
-#### 1.在页面列表添加“编辑”链接
+$route.query.pageId : 当URL是以?k=v的方式传参的时候采用此api
+
+#### 8.在cms.js文件中添加定义修改页面提交
+
+```
+//修改页面提交
+export const page_edit = (id,params) =>{
+ return http.requestPut(apiUrl+'/cms/page/edit/'+id,params)
+}
+```
+
+# 删除页面
+
+### 1.删除页面接口定义
+
+```
+    //删除页面
+    @ApiOperation("删除页面")
+    public ResponseResult delete(String id);
+```
+
+### 2.删除页面服务端开发
+
+#### 1.Dao
+
+使用 Spring Data提供的deleteById方法完成删除操作 。
+
+#### 2.Service
+
+```
+    //根据id删除页面
+    public ResponseResult delete(String id){
+        //先查询一下
+        Optional<CmsPage> optional = cmsPageRepository.findById(id);
+        if(optional.isPresent()){
+            cmsPageRepository.deleteById(id);
+            return new ResponseResult(CommonCode.SUCCESS);
+        }
+        return new ResponseResult(CommonCode.FAIL);
+    }
+```
+
+#### 3.controller
+
+```
+    @DeleteMapping("/del/{id}")
+    public ResponseResult delete(@PathVariable("id") String id) {
+        return pageService.delete(id);
+    }
+```
+
+#### 4.接口测试 
+
+使用SwaggerUI
+
+```
+http://localhost:31001/swagger-ui.html#!
+```
+
+### 3.删除页面前端开发
+
+#### 1.页面添加删除按钮
 
 ```
 <el-table-column label="操作" width="80">
@@ -1037,8 +1142,45 @@ created: function () {
             size="small"type="text"
             @click="edit(page.row.pageId)">编辑
           </el-button>
+          <el-button
+            size="small"type="text"
+            @click="del(page.row.pageId)">删除
+          </el-button>
         </template>
       </el-table-column>
 ```
 
-slot-scope插槽page就相当于整个列表的数据
+#### 2.编写del方法
+
+```
+      del:function (pageId) {
+        this.$confirm('您确认删除吗?', '提示', { }).then(() => {
+
+          //调用服务端接口
+          cmsApi.page_del(pageId).then(res=>{
+
+            if(res.success){
+              this.$message.success("删除成功")
+              //刷新页面
+              this.query()
+            }else{
+              this.$message.error("删除失败")
+            }
+          })
+        })
+      },
+```
+
+#### 3.在cms.js文件中添加定义删除页面
+
+```
+//删除页面
+export const page_del= (id) =>{
+  return http.requestDelete(apiUrl+'/cms/page/del/'+id)
+}
+```
+
+# 异常处理
+
+
+
