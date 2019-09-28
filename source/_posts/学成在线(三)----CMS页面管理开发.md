@@ -1182,5 +1182,123 @@ export const page_del= (id) =>{
 
 # 异常处理
 
+问题:
 
+1、上边的代码只要操作不成功仅向用户返回“错误代码：11111，失败信息：操作失败”，无法区别具体的错误信 息。 
+2、service方法在执行过程出现异常在哪捕获？在service中需要都加try/catch，如果在controller也需要添加 
+try/catch，代码冗余严重且不易维护。
+
+解决方案： 
+1、在Service方法中的编码顺序是先校验判断，有问题则抛出具体的异常信息，最后执行具体的业务操作，返回成功信息。
+2、在统一异常处理类中去捕获异常，无需controller捕获异常，向用户返回统一规范的响应信息。 
+
+### 修改PageService类的添加页面方法
+
+```
+	//新增页面
+    public CmsPageResult add(CmsPage cmsPage) {
+        if(cmsPage == null){
+            //抛出空指针异常，非法参数异常..指定异常信息的内容
+
+        }
+        //校验页面名称、站点Id、页面webpath的唯一性
+        //根据页面名称、站点Id、页面webpath去cms_page集合，如果查到说明此页面已经存在，如果查询不到再继续添加
+        CmsPage cmsPage1 = cmsPageRepository.findByPageNameAndSiteIdAndPageWebPath(cmsPage.getPageName(), cmsPage.getSiteId(), cmsPage.getPageWebPath());
+        if(cmsPage1!=null){
+            //页面已经存在
+            //抛出异常，异常内容就是页面已经存在
+            /*  ExceptionCast.cast(CmsCode.CMS_ADDPAGE_EXISTSNAME);*/
+        }
+		
+        //页面不存在,调用dao新增页面
+        cmsPage.setPageId(null);
+        cmsPageRepository.save(cmsPage);
+        return new CmsPageResult(CommonCode.SUCCESS,cmsPage);
+
+    }
+```
+
+### 异常处理流程
+
+#### 可预知的异常:
+
+```
+1、自定义异常类型。
+2、自定义错误代码及错误信息。
+3、对于可预知的异常由程序员在代码中主动抛出，由SpringMVC统一捕获。 
+ 可预知异常是程序员在代码中手动抛出本系统定义的特定异常类型，由于是程序员抛出的异常，通常异常信息比较 齐全，程序员在抛出时会指定错误代码及错误信息，获取异常信息也比较方便。
+```
+
+#### 不可预知的异常:
+
+```
+1、对于不可预知的异常（运行时异常）由SpringMVC统一捕获Exception类型的异常。 
+ 不可预知异常通常是由于系统出现bug、或一些不要抗拒的错误（比如网络中断、服务器宕机等），异常类型为 RuntimeException类型（运行时异常）,然后跳到系统异常请联系管理员。
+2、对于这些不可预知的异常,有一些我们可以通过经验知道他的error_code和error_info,然后跳入我们提前设计好的一个Map。
+```
+
+
+
+系统对异常的处理使用统一的异常处理流程：
+
+4、
+5、可预知的异常及不可预知的运行时异常最终会采用统一的信息格式（错误代码+错误信息）来表示，最终也会随 请求响应给客户端。
+
+![1569642210654](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569642210654.png)
+
+### 可预知的异常的处理:
+
+#### 1.自定义异常类
+
+在common工程自定义异常类型
+
+```
+public class CustomException extends RuntimeException {
+    //错误代码
+    ResultCode resultCode;
+
+    public CustomException(ResultCode resultCode) {
+        //异常信息为错误代码+异常信息
+        super("错误代码：" + resultCode.code() + "错误信息：" + resultCode.message());
+        this.resultCode = resultCode;
+    }
+
+    public ResultCode getResultCode() {
+        return resultCode;
+    }
+}
+```
+
+throw new Exception();  对代码没有入侵
+
+#### 2.在cms工程封装异常抛出工具类
+
+```
+public class ExceptionCast {
+    public static void cast(ResultCode resultCode){
+        throw new CustomException(resultCode);
+    }
+}
+```
+
+#### 3.定义异常捕获类
+
+使用 @ControllerAdvice和@ExceptionHandler注解来捕获指定类型的异常
+
+```
+@ControllerAdvice//控制器增强
+public class ExceptionCatch {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionCatch.class);
+
+    //捕获CustomException此类异常
+    @ExceptionHandler(CustomException.class)
+    public ResponseResult customException(CustomException customException) {
+        //记录日志
+        LOGGER.error("catch exception:{}", customException.getMessage());
+        ResultCode resultCode = customException.getResultCode();
+        return new ResponseResult(resultCode);
+    }
+}
+```
 
