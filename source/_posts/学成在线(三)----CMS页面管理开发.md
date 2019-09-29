@@ -1302,3 +1302,95 @@ public class ExceptionCatch {
 }
 ```
 
+#### 4.异常处理测试
+
+##### 1.修改pageService新增页面的方法,添加抛出异常代码
+
+```
+    //新增页面
+    public CmsPageResult add(CmsPage cmsPage) {
+        if(cmsPage == null){
+            //抛出异常，非法参数异常..指定异常信息的内容
+
+        }
+        //校验页面名称、站点Id、页面webpath的唯一性
+        //根据页面名称、站点Id、页面webpath去cms_page集合，如果查到说明此页面已经存在，如果查询不到再继续添加
+        CmsPage cmsPage1 = cmsPageRepository.findByPageNameAndSiteIdAndPageWebPath(cmsPage.getPageName(), cmsPage.getSiteId(), cmsPage.getPageWebPath());
+        if(cmsPage1!=null){
+            //页面已经存在
+            //抛出异常，异常内容就是页面已经存在
+            ExceptionCast.cast(CmsCode.CMS_ADDPAGE_EXISTSNAME);
+        }
+
+        //调用dao新增页面
+        cmsPage.setPageId(null);
+        cmsPageRepository.save(cmsPage);
+        return new CmsPageResult(CommonCode.SUCCESS,cmsPage);
+
+    }
+```
+
+##### 2.添加包扫描
+
+```
+@ComponentScan(basePackages = "com.xuecheng.framework")//扫描common工程下的类
+```
+
+##### 3.在ExceptionCatch类上添加注解
+
+```
+@ResponseBody
+```
+
+##### 4.使用SwaggerUI测试
+
+```
+http://localhost:31001/swagger-ui.html#!
+```
+
+##### 5.在page_add页面判断回调的值
+
+```
+addSubmit:function(){
+        this.$refs['pageForm'].validate((valid) => {
+          if (valid) {//表单校验成功
+            //确认提示
+            this.$confirm('您确认提交吗?', '提示', { }).then(() => {
+              //调用page_add方法请求服务端的新增页面接口
+              cmsApi.page_add(this.pageForm).then(res=>{
+                //解析服务端响应内容
+                if(res.success){
+                  /*this.$message({
+                    message: '提交成功',
+                    type: 'success'
+                  })*/
+                  this.$message.success("提交成功")
+                  //将表单清空
+                  this.$refs['pageForm'].resetFields();
+                }else if(res.message){
+                  this.$message.error(res.message)
+                }else{
+                  this.$message.error("提交失败")
+                }
+              });
+            })
+          }
+        });
+      },
+```
+
+### 不可预知异常(框架抛出来的)
+
+在ExceptionCatch中
+
+```
+    //捕获Exception此类异常
+    @ExceptionHandler(Exception.class)
+    public ResponseResult customException(Exception exception) {
+        //记录日志
+        LOGGER.error("catch exception:{}", exception.getMessage());
+
+        return null;
+    }
+```
+
