@@ -1381,7 +1381,7 @@ addSubmit:function(){
 
 ### 不可预知异常(框架抛出来的)
 
-在ExceptionCatch中
+#### 1.在ExceptionCatch中
 
 ```
     //捕获Exception此类异常
@@ -1390,7 +1390,87 @@ addSubmit:function(){
         //记录日志
         LOGGER.error("catch exception:{}", exception.getMessage());
 
-        return null;
+        return new ResponseResult(CommonCode.SERVER_ERROR);
     }
+```
+
+#### 2.异常抛出测试
+
+使用postman测试添加页面，不输入cmsPost信息，提交，报错信息如下：
+
+```
+org.springframework.http.converter.HttpMessageNotReadableException 此异常是springMVC在进行参数转换时报的错误。
+```
+
+具体的响应的信息为：
+
+```
+{
+    "timestamp": 1528712906727,
+    "status": 400,
+    "error": "Bad Request",
+    "exception": "org.springframework.http.converter.HttpMessageNotReadableException", 
+    "message": "Required request body is missing: public 
+com.xuecheng.framework.domain.cms.response.CmsPageResult 
+com.xuecheng.manage_cms.web.controller.CmsPageController.add(com.xuecheng.framework.domain.cms.C msPage)",
+    "path": "/cms/page/add"
+}
+```
+
+#### 3.自定义错误码
+
+在CommonCode类中添加一个错误码
+
+```
+INVALID_PARAM(false,10003,"非法参数！"),
+```
+
+#### 4.构造返回map
+
+```
+@ControllerAdvice//控制器增强
+@ResponseBody
+public class ExceptionCatch {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionCatch.class);
+
+    //使用EXCEPTIONS存放异常类型和错误代码的映射，ImmutableMap的特点的一旦创建不可改变，并且线程安全     
+    private static ImmutableMap<Class<? extends Throwable>, ResultCode> EXCEPTIONS;
+
+    //使用builder来构建一个异常类型和错误代码的异常
+    protected static ImmutableMap.Builder<Class<? extends Throwable>, ResultCode> builder = ImmutableMap.builder();
+
+    static{
+        //在这里加入一些基础的异常类型判断
+        builder.put(HttpMessageNotReadableException.class,CommonCode.INVALID_PARAM);
+    }
+
+    //捕获CustomException此类异常
+    @ExceptionHandler(CustomException.class)
+    public ResponseResult customException(CustomException customException) {
+        //记录日志
+        LOGGER.error("catch exception:{}", customException.getMessage());
+        ResultCode resultCode = customException.getResultCode();
+        return new ResponseResult(resultCode);
+    }
+
+    //捕获Exception此类异常
+    @ExceptionHandler(Exception.class)
+    public ResponseResult customException(Exception exception) {
+        //记录日志
+        LOGGER.error("catch exception:{}", exception.getMessage());
+        if(EXCEPTIONS == null){
+            EXCEPTIONS = builder.build();//EXCEPTIONS构建成功
+        }
+        //从EXCEPTIONS中找异常类型所对应的错误代码，如果找到了将错误代码响应给用户，如果找不到给用户响应99999异常
+        ResultCode resultCode = EXCEPTIONS.get(exception.getClass());
+        if(resultCode !=null){
+            return new ResponseResult(resultCode);
+        }else{
+            //返回99999异常
+            return new ResponseResult(CommonCode.SERVER_ERROR);
+        }
+    }
+}
 ```
 
