@@ -142,5 +142,289 @@ tracker根据请求的文件路径即文件ID 来快速定义文件。 比如请
 
 #### 1.fastDFS安装与配置
 
+##### 导入虚拟机
 
+1、使用Vmware打开虚拟机配置文件“Redis2.0.vmx”，提示如下图：
+
+![1570891688521](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1570891688521.png)
+
+2、选择“我已移动该虚拟机” 
+
+3、启动虚拟机之前启动VMware的服务：
+
+![1570891703966](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1570891703966.png)
+
+4、
+
+![1570936563674](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1570936563674.png)
+
+
+
+启动虚拟机 
+
+```
+用户名：root 密码：itcast
+```
+
+直接启动fastDSF即可使用。
+
+##### fastDFS安装
+
+ 如果想自己尝试安装fastDSF也可以按照文档一步一步安装。 
+ tracker和storage使用相同的安装包，fastDFS的下载地址在：https://github.com/happyﬁsh100/FastDFS 
+本教程下载安装包：FastDFS_v5.05.tar.gz 
+FastDFS是C语言开发，建议在linux上运行，本教程使用CentOS7作为安装环境。
+安装细节请参考 “fastDFS安装教程”。
+
+##### Tracker配置
+
+本小节介绍Tracker的配置文件内容。
+fastDFS的配置文件目录 ：/etc/fdfs
+主要的配置文件：/etc/fdfs/tracker.conf （tracker配置文件 ）；storage.conf（storage配置文件）
+
+![1570891937980](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1570891937980.png)
+
+tracker.conf配置内容如下：
+端口：port=22122
+存储策略：store_lookup= 
+ 取值范围：0（轮询向storage存储文件）、1（指定具体的group）、2负载均衡，选择空闲的storage存储 指定具体的group：store_group= 如果store_lookup设置为1则这里必须指定一个具体的group。
+tracker 基础目录：base_path=/home/fastdfs，tracker在运行时会向此目录存储storage的管理数据。
+
+##### storage配置
+
+本小节介绍storage的配置文件内容。 
+storage.conf配置 内容如下： 
+组名：group_name=group1 
+端口：port=23000
+向tracker心跳间隔（秒）：heart_beat_interval=30
+storage基础目录：base_path=/home/fastdfs
+磁盘存储目录，可定义多个store_path：
+store_path0=/home/fastdfs/fdfs_storage 此目录下存储上传的文件，在/home/fastdfs/fdfs_storage/data下 store_path1=...
+...
+上报tracker的地址：tracker_server=192.168.101.64:22122 
+如果有多个tracker则配置多个tracker，比如： 
+tracker_server=192.168.101.64:22122 
+tracker_server=192.168.101.65:22122
+
+##### 启动停止
+
+fastDFS启动/停止脚本目录：
+
+![1570892077694](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1570892077694.png)
+
+fdfs_trackerd：tracker脚本，通过此脚本对 tracker进行启动和停止 
+
+```
+/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf restart
+```
+
+fdfs_storaged：storage脚本，通过此脚本对 storage进行启动和停止 
+
+```
+/usr/bin/fdfs_storaged /etc/fdfs/storage.conf restart
+```
+
+#### 2.文件上传下载测试
+
+##### 1.搭建环境
+
+这里我们使用javaApi测试文件的上传，java版本的fastdfs-client地址在： 
+https://github.com/happyﬁsh100/fastdfs-client-java，参考此工程编写测试用例。
+
+创建maven工程继承父工程
+
+ pom.xml
+
+```
+ <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.oschina.zcx7878/fastdfs-client-java -->
+        <dependency>
+            <groupId>net.oschina.zcx7878</groupId>
+            <artifactId>fastdfs-client-java</artifactId>
+            <version>1.27.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+    </dependencies>
+```
+
+##### 2.配置文件
+
+ 在classpath:conﬁg下创建fastdfs-client.properties文件
+
+```
+# http连接超时时间
+fastdfs.connect_timeout_in_seconds = 5
+# tracker与storage网络通信超时时间
+fastdfs.network_timeout_in_seconds = 30
+# 字符编码
+fastdfs.charset = UTF-8
+# 服务器地址,多个地址中间用英文逗号分隔192.168.101.65:22122,192.168.101.66:22122
+fastdfs.tracker_servers = 192.168.25.133:22122  
+```
+
+##### 3.创建启动类
+
+```
+@SpringBootApplication
+public class TestFastDFSApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(TestFastDFSApplication.class,args);
+
+    }
+}
+```
+
+##### 4.文件上传
+
+```
+    //上传文件
+    @Test
+    public void testUpload(){
+
+        try {
+            //加载fastdfs-client.properties配置文件
+            ClientGlobal.initByProperties("config/fastdfs-client.properties");
+            //定义TrackerClient，用于请求TrackerServer
+            TrackerClient trackerClient = new TrackerClient();
+            //连接tracker
+            TrackerServer trackerServer = trackerClient.getConnection();
+            //获取Stroage
+            StorageServer storeStorage = trackerClient.getStoreStorage(trackerServer);
+            //创建stroageClient
+            StorageClient1 storageClient1 = new StorageClient1(trackerServer,storeStorage);
+            //向stroage服务器上传文件
+            //本地文件的路径
+            String filePath = "e:/logo.png";
+            //上传成功后拿到文件Id
+            String fileId = storageClient1.upload_file1(filePath, "png", null);
+            System.out.println(fileId);
+            //group1/M00/00/01/wKhlQVuhU3eADb4pAAAawU0ID2Q159.png
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+```
+
+文件上传到哪里了呢?
+
+打开storage的配置文件
+
+```
+vi /etc/fdfs/storage.conf
+```
+
+查看服务器存储图片的路径
+
+```
+/store_path0
+```
+
+store_path0=/home/fastdfs/store_path0
+
+此时另起一个会话
+
+```
+cd /home/fastdfs/store_path0
+```
+
+里面有一个data的目录
+
+控制台打印返回的路径
+
+```
+group1/M00/00/00/wKgZhV2itneAd2waAAF_POAPDhk891.png
+```
+
+从M00往后开始
+
+```
+ls 00/00/wKgZhV2itneAd2waAAF_POAPDhk891.png
+```
+
+就能找到上传的图片文件了
+
+##### 5.文件下载
+
+```
+    //下载文件
+    @Test
+    public void testDownload(){
+        try {
+            //加载fastdfs-client.properties配置文件
+            ClientGlobal.initByProperties("config/fastdfs-client.properties");
+            //定义TrackerClient，用于请求TrackerServer
+            TrackerClient trackerClient = new TrackerClient();
+            //连接tracker
+            TrackerServer trackerServer = trackerClient.getConnection();
+            //获取Stroage
+            StorageServer storeStorage = trackerClient.getStoreStorage(trackerServer);
+            //创建stroageClient
+            StorageClient1 storageClient1 = new StorageClient1(trackerServer,storeStorage);
+            //下载文件
+            //文件id
+            String fileId = "group1/M00/00/00/wKgZhV2itneAd2waAAF_POAPDhk891.png";
+            byte[] bytes = storageClient1.download_file1(fileId);
+            //使用输出流保存文件
+            FileOutputStream fileOutputStream = new FileOutputStream(new File("x:/logo.png"));
+            fileOutputStream.write(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (MyException e) {
+            e.printStackTrace();
+        }
+    }
+```
+
+#### 4.fastDFS上的nginx
+
+在 storage server 上安装 nginx 的目的是对外通过 http 访问 storage server上的文件。
+
+使用 nginx 的模块 FastDFS-nginx-module 的作用是通过 http 方式访问 storage 中的文件，当访问到storage中还没有来得及复制的宿主机,就会重定向到本组的另一个副本。
+
+在storage上安装nginx（安装FastDFS-nginx-module模块） 
+参考：FastDFS安装教程.pdf 进行安装 
+安装完成启动storage上的nginx：
+
+```
+/usr/local/nginx/sbin/nginx ‐c /usr/local/nginx/conf/nginx‐fdfs.conf
+```
+
+<font color="red">有误</font>
+
+<font color="green">直接启动nginx</font>
+
+```
+/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+```
+
+去请求fastDFS服务器上的storage的图片
+
+```
+http://192.168.25.133/group1/M00/00/00/wKgZhV2itneAd2waAAF_POAPDhk891.png
+```
+
+将ip地址和虚拟路径替换成自己的即可访问到图片
+
+#### 5.本机nginx
+
+图片服务虚拟主机的作用是负载均衡，将图片请求转发到storage server上。
+
+ 1、通过图片服务虚拟主机请求图片流程图
+
+![1570954456415](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1570954456415.png)
 
