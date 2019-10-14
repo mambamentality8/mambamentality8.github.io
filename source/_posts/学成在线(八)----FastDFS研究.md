@@ -272,7 +272,7 @@ fastdfs.network_timeout_in_seconds = 30
 # 字符编码
 fastdfs.charset = UTF-8
 # 服务器地址,多个地址中间用英文逗号分隔192.168.101.65:22122,192.168.101.66:22122
-fastdfs.tracker_servers = 192.168.25.133:22122  
+fastdfs.tracker_servers = 192.168.25.133:22122
 ```
 
 ##### 3.创建启动类
@@ -422,9 +422,41 @@ http://192.168.25.133/group1/M00/00/00/wKgZhV2itneAd2waAAF_POAPDhk891.png
 
 #### 5.本机nginx
 
-图片服务虚拟主机的作用是负载均衡，将图片请求转发到storage server上。
+网关服务虚拟主机的作用是负载均衡，将图片请求转发到storage server上。
 
- 1、通过图片服务虚拟主机请求图片流程图
+ 1、通过网关图片服务虚拟主机请求图片流程图
 
 ![1570954456415](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1570954456415.png)
+
+2、在网关服务器上配置图片服务器虚拟主机
+
+```
+	#图片服务
+	upstream img_server_pool{
+		#server 192.168.25.134:80 weight=10; 
+		 server 192.168.25.133:80 weight=10;
+    }
+	#学成网图片服务
+	server {
+	    listen       80;
+	    server_name img.xuecheng.com;
+
+	    #个人中心
+	    location /group1 {
+	        proxy_pass http://img_server_pool;
+	    }
+	}
+```
+
+3、修改host文件保证走本地的NDS
+
+```
+127.0.0.1 img.xuecheng.com
+```
+
+4、请求网关nginx
+
+```
+http://img.xuecheng.com/group1/M00/00/00/wKgZhV2itneAd2waAAF_POAPDhk891.png
+```
 
