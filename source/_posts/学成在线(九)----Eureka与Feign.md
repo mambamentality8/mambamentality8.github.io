@@ -497,4 +497,313 @@ public class TestRibbon {
 
 ![1529913868296](file:///E:/%E4%BC%A0%E6%99%BA%E5%B7%A5%E4%BD%9C/%E5%A4%87%E8%AF%BE%E8%B5%84%E6%96%99/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/HTML%E7%89%88%E6%9C%AC%E5%AD%A6%E6%88%90%E8%AE%B2%E4%B9%89/day09-%E8%AF%BE%E7%A8%8B%E9%A2%84%E8%A7%88%20Eureka%20Feign/images/1529913868296.png)
 
-两次shift搜索类RibbonLoadBalancerClient并且在57行打上断点
+两次shift搜索类RibbonLoadBalancerClient并且在57行打上断点,可以看到每次请求的端口都不一样.
+
+#### Feign
+
+Feign是Netflix公司开源的轻量级rest客户端，使用Feign可以非常方便的实现Http 客户端。Spring Cloud引入Feign并且集成了Ribbon实现客户端负载均衡调用。
+
+#### Feign使用 
+
+##### 1.在客户端添加依赖
+
+在课程管理服务添加下边的依赖：
+
+```
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.feign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+        </dependency>
+```
+
+ <font size="3" color="red">spring-cloud-starter-openfeign可以把feign和ribbon都引进来,所以可以吧ribbon的依赖给去掉</font>
+
+##### 2.定义FeignClient接口
+
+参考Swagger文档定义FeignClient，注意接口的Url、请求参数类型、返回值类型与Swagger接口一致。
+
+在xc-service-manage-course创建client包，定义查询cms页面的客户端接口，
+
+```
+import com.xuecheng.framework.domain.cms.CmsPage;
+import com.xuecheng.framework.domain.cms.response.CmsPageResult;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+/**
+ * Created by Administrator.
+ */
+@FeignClient(value = "XC-SERVICE-MANAGE-CMS") //指定在注册中心的远程调用的服务名
+public interface CmsPageClient {
+    //根据页面id查询页面信息，远程调用cms请求数据
+    @GetMapping("/cms/page/get/{id}")//用GetMapping标识远程调用的http的方法类型
+    public CmsPage findCmsPageById(@PathVariable("id") String id);
+
+    //添加页面，用于课程预览
+    @PostMapping("/cms/page/save")
+    public CmsPageResult saveCmsPage(@RequestBody CmsPage cmsPage);
+}
+```
+
+##### 3.启动类添加@EnableFeignClients注解
+
+```
+@EnableFeignClients //开始feignClient
+```
+
+##### 4.测试
+
+在xc-service-manage-course模块中添加测试类
+
+```
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class TestFeign {
+    @Autowired
+    CmsPageClient cmsPageClient; //接口代理对象，由Feign生成代理对象
+
+    @Test
+    public void testRibbon() {
+        //发起远程调用
+        CmsPage cmsPage = cmsPageClient.findCmsPageById("5a754adf6abb500ad05688d9");
+        System.out.println(cmsPage);
+
+    }
+}
+```
+
+##### 5.工作原理
+
+1、 启动类添加@EnableFeignClients注解，Spring会扫描标记了@FeignClient注解的接口，并生成此接口的代理对象
+
+2、 @FeignClient(value = "XC-SERVICE-MANAGE-CMS")即指定了cms的服务名称，Feign会从注册中心获取cms服务列表，并通过负载均衡算法进行服务调用。
+
+3、在接口方法 中使用注解@GetMapping("/cms/page/get/{id}")，指定调用的url，Feign将根据url进行远程调用。
+
+##### 6.Feign注意点
+
+SpringCloud对Feign进行了增强兼容了SpringMVC的注解 ，我们在使用SpringMVC的注解时需要注意：
+
+1、feignClient接口 有参数在参数必须加@PathVariable("XXX")和@RequestParam("XXX")
+
+2、feignClient返回值为复杂对象时其类型必须有无参构造函数。
+
+### 课程预览
+
+#### 需求分析
+
+​	课程预览是为了保证课程发布后的正确性，通过课程预览可以直观的通过课程详情页面看到课程的信息是否正确，通过课程预览看到的页面内容和课程发布后的页面内容是一致的。
+
+下图是课程详情页面的预览图：
+
+![1525416955328](file:///E:/%E4%BC%A0%E6%99%BA%E5%B7%A5%E4%BD%9C/%E5%A4%87%E8%AF%BE%E8%B5%84%E6%96%99/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/HTML%E7%89%88%E6%9C%AC%E5%AD%A6%E6%88%90%E8%AE%B2%E4%B9%89/day09-%E8%AF%BE%E7%A8%8B%E9%A2%84%E8%A7%88%20Eureka%20Feign/images/1525416955328.png)
+
+课程预览所浏览到的页面就是课程详情页面，需要先确定课程详情页面的技术方案后方可确定课程预览的技术方案。
+
+#### 技术需求
+
+​	课程详情页面是向用户展示课程信息的窗口，课程相当于网站的商品，本页面的访问量会非常大。此页面的内容设计不仅要展示出课程核心重要的内容而且用户访问页面的速度要有保证，有统计显示打开一个页面超过4秒用户就走掉了，所以本页面的性能要求是本页面的重要需求。
+
+​	本页面另一个需求就是SEO，要非常有利于爬虫抓取页面上信息，并且生成页面快照，利于用户通过搜索引擎搜索课程信息。
+
+#### 解决方案
+
+如何在保证SEO的前提下提高页面的访问速度 ：
+
+方案1：
+
+​	对于信息获取类的需求，要想提高页面速度就要使用缓存来减少或避免对数据库的访问，从而提高页面的访问速度。下图是使用缓存与不使用缓存的区别
+
+![1525419286559](file:///E:/%E4%BC%A0%E6%99%BA%E5%B7%A5%E4%BD%9C/%E5%A4%87%E8%AF%BE%E8%B5%84%E6%96%99/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/HTML%E7%89%88%E6%9C%AC%E5%AD%A6%E6%88%90%E8%AE%B2%E4%B9%89/day09-%E8%AF%BE%E7%A8%8B%E9%A2%84%E8%A7%88%20Eureka%20Feign/images/1525419286559.png)
+
+此页面为动态页面，会根据课程的不同而不同，方案一采用传统的JavaEE Servlet/jsp的方式在Tomcat完成页面渲染，相比不加缓存速度会有提升。
+
+优点：使用redis作为缓存，速度有提升。
+
+缺点：采用Servlet/jsp动态页面渲染技术，服务器使用Tomcat，面对高并发量的访问存在性能瓶颈。
+
+ 
+
+方案2：
+
+​	对于不会频繁改变的信息可以采用页面静态化的技术，提前让页面生成html静态页面存储在nginx服务器，用户直接访问nginx即可，对于一些动态信息可以访问服务端获取json数据在页面渲染。
+
+![1525419817614](file:///E:/%E4%BC%A0%E6%99%BA%E5%B7%A5%E4%BD%9C/%E5%A4%87%E8%AF%BE%E8%B5%84%E6%96%99/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/HTML%E7%89%88%E6%9C%AC%E5%AD%A6%E6%88%90%E8%AE%B2%E4%B9%89/day09-%E8%AF%BE%E7%A8%8B%E9%A2%84%E8%A7%88%20Eureka%20Feign/images/1525419817614.png)
+
+优点：使用Nginx作为web服务器，并且直接访问html页面，性能出色。
+
+缺点：需要维护大量的静态页面，增加了维护的难度。
+
+ 
+
+选择方案2作为课程详情页面的技术解决方案，将课程详情页面生成Html静态化页面，并发布到Nginx上。
+
+ #### 技术方案
+
+​	根据要求：课程详情页面采用静态化技术生成Html页面，课程预览的效果要与最终静态化的Html页面内容一致。
+
+​	所以，课程预览功能也采用静态化技术生成Html页面，课程预览使用的模板与课程详情页面模板一致，这样就可以保证课程预览的效果与最终课程详情页面的效果一致。
+
+操作流程：
+
+1、制作课程详情页面模板
+
+2、开发课程详情页面数据模型的查询接口（为静态化提供数据）
+
+3、调用cms课程预览接口通过浏览器浏览静态文件
+
+![1530743308488](file:///E:/%E4%BC%A0%E6%99%BA%E5%B7%A5%E4%BD%9C/%E5%A4%87%E8%AF%BE%E8%B5%84%E6%96%99/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/HTML%E7%89%88%E6%9C%AC%E5%AD%A6%E6%88%90%E8%AE%B2%E4%B9%89/day09-%E8%AF%BE%E7%A8%8B%E9%A2%84%E8%A7%88%20Eureka%20Feign/images/1530743308488.png)
+
+### 课程详情页面静态化
+
+#### 页面内容组成
+
+我们在编写一个页面时需要知道哪些信息是静态信息，哪些信息为动态信息，下图是页面的设计图：
+
+![1525423148437](file:///E:/%E4%BC%A0%E6%99%BA%E5%B7%A5%E4%BD%9C/%E5%A4%87%E8%AF%BE%E8%B5%84%E6%96%99/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/HTML%E7%89%88%E6%9C%AC%E5%AD%A6%E6%88%90%E8%AE%B2%E4%B9%89/day09-%E8%AF%BE%E7%A8%8B%E9%A2%84%E8%A7%88%20Eureka%20Feign/images/1525423148437.png)
+
+打开静态页面，观察每部分的内容。
+
+红色表示动态信息，红色以外表示静态信息。
+
+红色动态信息：表示一个按钮，根据用户的登录状态、课程的购买状态显示按钮的名称及按钮的事件。
+
+包括以下信息内容：
+
+1、课程信息
+
+​	课程标题、价格、课程等级、授课模式、课程图片、课程介绍、课程目录。
+
+2、课程统计信息
+
+​	课程时长、评分、收藏人数
+
+3、教育机构信息
+
+​	公司名称、公司简介
+
+4、教育机构统计信息
+
+​	好评数、课程数、学生人数
+
+5、教师信息
+
+​	老师名称、老师介绍
+
+#### 页面拆分
+
+将页面拆分成如下页面：
+
+1、页头
+
+本页头文件和门户使用的页头为同一个文件。
+
+参考：代码\页面与模板\include\header.html
+
+2、页面尾
+
+本页尾文件和门户使用的页尾为同一个文件。
+
+参考：代码\页面与模板\include\footer.html
+
+3、课程详情主页面
+
+每个课程对应一个文件，命名规则为：课程id.html（课程id动态变化）
+
+模板页面参考：\代码\页面与模板\course\detail\course_main_template.html
+
+4、教育机构页面
+
+每个教育机构对应一个文件，文件的命名规则为：company_info_公司id.html（公司id动态变化）
+
+参考：代码\页面与模板\company\company_info_template.html
+
+5、老师信息页面
+
+每个教师信息对应一个文件，文件的命名规则为：teacher_info_教师id.html（教师id动态变化）
+
+参考：代码\页面与模板\teacher\teacher_info_template01.html
+
+6、课程统计页面
+
+每个课程对应一个文件，文件的命名规则为：course_stat_课程id.json（课程id动态变化）
+
+参考：\代码\页面与模板\stat\course\course_stat_template.json
+
+7、教育机构统计页面
+
+每个教育机构对应一个文件，文件的命名规则为：company_stat_公司id.json（公司id动态变化）
+
+参考：\代码\页面与模板\stat\company\company_stat_template.json
+
+#### 静态页面测试
+
+##### 页面加载思路
+
+打开课程资料中的“静态页面目录”中的课程详情模板页面，研究页面加载的思路。
+
+模板页面路径如下：
+
+```
+静态页面目录\static\course\detail\course_main_template.html
+```
+
+1、主页面
+
+我们需要在主页面中通过SSI加载：页头、页尾、教育机构、教师信息
+
+2、异步加载课程统计与教育机构统计信息
+
+​	课程统计信息（json）、教育机构统计信息（json）
+
+3、马上学习按钮事件
+
+​      用户点击“马上学习”会根据课程收费情况、课程购买情况执行下一步操作。
+
+##### 静态资源虚拟主机
+
+1、配置静态资源虚拟主机
+
+静态资源虚拟主机负责处理课程详情、公司信息、老师信息、统计信息等页面的请求：
+
+将课程资料中的“静态页面目录”中的目录拷贝到F:/develop/xuecheng/static下
+
+在nginx中配置静态虚拟主机如下：
+
+```
+#学成网静态资源
+server {
+    listen       91;
+    server_name localhost;
+    
+    #公司信息
+    location /static/company/ {  
+        alias   F:/develop/xuecheng/static/company/;
+    } 
+    #老师信息
+    location /static/teacher/ {  
+        alias   F:/develop/xuecheng/static/teacher/;
+    } 
+    #统计信息
+    location /static/stat/ {  
+        alias   F:/develop/xuecheng/static/stat/;
+    } 
+    location /course/detail/ {  
+        alias  F:/develop/xuecheng/static/course/detail/;
+    } 
+
+}
+```
+
+2、通过[www.xuecheng.com](www.xuecheng.com)虚拟主机转发到静态资源
+
+由于课程页面需要通过SSI加载页头和页尾所以需要通过[www.xuecheng.com](www.xuecheng.com)虚拟主机转发到静态资源
+
+在[www.xuecheng.com](www.xuecheng.com)虚拟主机加入如下配置：
