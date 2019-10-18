@@ -778,32 +778,288 @@ SpringCloud对Feign进行了增强兼容了SpringMVC的注解 ，我们在使用
 在nginx中配置静态虚拟主机如下：
 
 ```
-#学成网静态资源
-server {
-    listen       91;
-    server_name localhost;
-    
-    #公司信息
-    location /static/company/ {  
-        alias   F:/develop/xuecheng/static/company/;
-    } 
-    #老师信息
-    location /static/teacher/ {  
-        alias   F:/develop/xuecheng/static/teacher/;
-    } 
-    #统计信息
-    location /static/stat/ {  
-        alias   F:/develop/xuecheng/static/stat/;
-    } 
-    location /course/detail/ {  
-        alias  F:/develop/xuecheng/static/course/detail/;
-    } 
-
-}
+	#学成网静态资源
+	server {
+		listen       91;
+		server_name localhost;
+		
+		#公司信息
+		location /static/company/ {  
+			alias   X:/workspace/java/xczx/static/company/;
+		} 
+		#老师信息
+		location /static/teacher/ {  
+			alias   X:/workspace/java/xczx/static/teacher/;
+		} 
+		#统计信息
+		location /static/stat/ {  
+			alias   X:/workspace/java/xczx/static/stat/;
+		} 
+		location /course/detail/ {  
+			alias   X:/workspace/java/xczx/static/detail/;
+		}
+	
+	}
 ```
 
 2、通过[www.xuecheng.com](www.xuecheng.com)虚拟主机转发到静态资源
 
 由于课程页面需要通过SSI加载页头和页尾所以需要通过[www.xuecheng.com](www.xuecheng.com)虚拟主机转发到静态资源
 
+配置upstream实现请求转发到资源服务虚拟主机：
+
+```
+ 
+#静态资源服务
+ upstream static_server_pool{
+server 127.0.0.1:91 weight=10;
+ } 
+```
+
 在[www.xuecheng.com](www.xuecheng.com)虚拟主机加入如下配置：
+
+```
+ 
+location /static/company/ {  
+        proxy_pass http://static_server_pool;
+    } 
+    location /static/teacher/ {  
+        proxy_pass http://static_server_pool;
+    } 
+    location /static/stat/ {  
+        proxy_pass http://static_server_pool;
+    } 
+    location /course/detail/ {  
+        proxy_pass http://static_server_pool;
+    } 
+```
+
+最终nginx的配置为
+
+```
+
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+	
+	#图片服务
+	upstream img_server_pool{
+		#server 192.168.101.64:80 weight=10; 
+		 server 192.168.25.133:80 weight=10;
+    }
+	
+	#cms页面预览
+	upstream aaa_pool{
+        server 127.0.0.1:31001 weight=10;
+    }
+	
+	#静态资源服务
+	upstream static_server_pool{
+		server 127.0.0.1:91 weight=10;
+	} 
+	
+    server{
+		listen       80;
+		server_name  www.xuecheng.com;
+		ssi on;
+		ssi_silent_errors on;
+		location / {
+			alias   X:/workspace/java/xczx/static/portal/;
+			index  index.html;
+		}
+		
+		#页面预览
+		location /cms/preview/ {
+				 proxy_pass http://aaa_pool/cms/preview/;
+		}
+		
+		
+		location /static/company/ {  
+			proxy_pass http://static_server_pool;
+		} 
+		location /static/teacher/ {  
+			proxy_pass http://static_server_pool;
+		} 
+		location /static/stat/ {  
+			proxy_pass http://static_server_pool;
+		} 
+		location /course/detail/ {  
+			proxy_pass http://static_server_pool;
+		} 
+	}
+	
+	#学成网图片服务
+	server {
+	    listen       80;
+	    server_name img.xuecheng.com;
+
+	    #个人中心
+	    location /group1 {
+	        proxy_pass http://img_server_pool;
+	    }
+	}
+	 
+	#学成网静态资源
+	server {
+		listen       91;
+		server_name localhost;
+		
+		#公司信息
+		location /static/company/ {  
+			alias   X:/workspace/java/xczx/static/company/;
+		} 
+		#老师信息
+		location /static/teacher/ {  
+			alias   X:/workspace/java/xczx/static/teacher/;
+		} 
+		#统计信息
+		location /static/stat/ {  
+			alias   X:/workspace/java/xczx/static/stat/;
+		} 
+		location /course/detail/ {  
+			alias   X:/workspace/java/xczx/static/detail/;
+		}
+	
+	}
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+}
+```
+
+##### 门户静态资源路径
+
+门户中的一些图片、样式等静态资源统一通过/static路径对外提供服务，在[www.xuecheng.com](www.xuecheng.com)虚拟主机中配置如下：
+
+```
+		#静态资源，包括系统所需要的图片，js、css等静态资源
+		location /static/img/ {  
+			alias   X:/workspace/java/xczx/static/portal/img/;
+		} 
+		location /static/css/ {  
+			alias   X:/workspace/java/xczx/static/portal/css/;
+		} 
+		location /static/js/ {  
+			alias   X:/workspace/java/xczx/static/portal/js/;
+		} 
+		location /static/plugins/ {  
+			alias   X:/workspace/java/xczx/static/portal/plugins/;
+			add_header Access-Control-Allow-Origin http://ucenter.xuecheng.com;  
+			add_header Access-Control-Allow-Credentials true;  
+			add_header Access-Control-Allow-Methods GET;
+		} 
+```
+
+cors跨域参数：
+
+Access-Control-Allow-Origin：允许跨域访问的外域地址
+
+​	如果允许任何站点跨域访问则设置为*，通常这是不建议的。
+
+Access-Control-Allow-Credentials： 允许客户端携带证书访问
+
+Access-Control-Allow-Methods：允许客户端跨域访问的方法
+
+##### 页面测试
+
+请求：http://www.xuecheng.com/course/detail/course_main_template.html测试课程详情页面模板是否可以正常浏览。
+
+#### 课程预览数据模型查询接口
+
+​	静态化操作需要模型数据方可进行静态化，课程数据模型由课程管理服务提供，仅供课程静态化程序调用使用。
+
+##### 1.接口定义
+
+1、响应结果类型
+
+在xc-framework-model模块com.xuecheng.framework.domain.course.ext包下创建
+
+```
+@Data
+@ToString
+@NoArgsConstructor
+public class CourseView  implements Serializable  {
+    CourseBase courseBase;//基础信息
+    CourseMarket courseMarket;//课程营销
+    CoursePic coursePic;//课程图片
+    TeachplanNode TeachplanNode;//教学计划
+
+}
+```
+
+2、请求类型
+
+String：课程id
+
+
+
+3、接口定义如下
+
+```
+    @ApiOperation("课程预览数据查询")
+    public CourseView courseview(String id);
+```
+
