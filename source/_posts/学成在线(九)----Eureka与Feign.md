@@ -2286,14 +2286,15 @@ public interface CourseMarketRepository extends JpaRepository<CourseMarket, Stri
 将course.ftl拷贝到test-freemarker工程的resources/templates下，并在test-freemarker工程的controller中添加测试方法
 
 ```
-//课程详情页面测试
-@RequestMapping("/course")
-public String course(Map<String,Object> map){
-    ResponseEntity<Map> forEntity = restTemplate.getForEntity("http://localhost:31200/course/courseview/4028e581617f945f01617f9dabc40000", Map.class);
-    Map body = forEntity.getBody();
-    map.put("model",body);
-    return "course";
-}
+    @RequestMapping("/course")
+    public String course(Map<String, Object> map){
+        //使用restTemplate请求轮播图的模型数据
+        ResponseEntity<Map> forEntity = restTemplate.getForEntity("http://localhost:31200/course/courseview/4028e581617f945f01617f9dabc40000", Map.class);
+        Map body = forEntity.getBody();
+        //设置模型数据
+        map.putAll(body);
+        return "course";
+    }
 ```
 
 注意：上边的测试页面不显示样式，原因是页面通过SSI包含了页面头，而使用test-freemarker工程无法加载页头，测试模板主要查看html页面内容是否正确，待课程预览时解决样式不显示问题。
@@ -2311,3 +2312,194 @@ public String course(Map<String,Object> map){
 第一步：将模板文件上传到GridFS中
 
 由于本教学项目中模板管理模块没有开发，所以我们使用Junit代码向GridFS中保存：
+
+```
+//文件存储2
+@Test
+public void testStore2() throws FileNotFoundException {
+    File file = new File("C:\\Users\\admin\\Desktop\\course.ftl");
+    FileInputStream inputStream = new FileInputStream(file);
+    //保存模版文件内容
+    GridFSFile gridFSFile = gridFsTemplate.store(inputStream, "课程详情模板文件","");
+    String fileId = gridFSFile.getId().toString();
+    System.out.println(fileId);
+}
+```
+
+保存成功需要记录模板文件的id，即上边代码中的fileId。
+
+第二步：向cms_template表添加模板记录（请不要重复添加）
+
+使用Studio 3T连接mongodb，向cms_template添加记录：
+
+```
+｛
+  "_class" : "com.xuecheng.framework.domain.cms.CmsTemplate", 
+  "siteId" : "5a751fab6abb5044e0d19ea1", 
+  "templateName" : "课程详情页面正式模板", 
+  "templateFileId" : "这里填写上边代码返回的模板文件id"
+｝
+```
+
+返回的模板文件id:
+
+```
+5dabcdc2ea7358453ce66103
+```
+
+##### 4.其它模板
+
+除了课程详情主页面需要设计模板所有静态化的页面都要设计模板，如下：
+
+教育机构页面模板、教师信息页面模板、课程统计信息json模板、教育机构统计信息json模板。
+
+本项目我们实现课程详情主页面模板的制作和测试，其它页面模板的开发参考课程详情页面去实现。
+
+### 课程预览功能开发
+
+#### 1.需求分析
+
+ 课程预览功能将使用cms系统提供的页面预览功能，业务流程如下：
+
+1、用户进入课程管理页面，点击课程预览，请求到课程管理服务
+
+2、课程管理服务远程调用cms添加页面接口向cms添加课程详情页面
+
+3、课程管理服务得到cms返回课程详情页面id，并拼接生成课程预览Url
+
+4、课程管理服务将课程预览Url给前端返回
+
+5、用户在前端页面请求课程预览Url，打开新窗口显示课程详情内容
+
+![1530718431250](file:///E:/%E4%BC%A0%E6%99%BA%E5%B7%A5%E4%BD%9C/%E5%A4%87%E8%AF%BE%E8%B5%84%E6%96%99/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/HTML%E7%89%88%E6%9C%AC%E5%AD%A6%E6%88%90%E8%AE%B2%E4%B9%89/day09-%E8%AF%BE%E7%A8%8B%E9%A2%84%E8%A7%88%20Eureka%20Feign/images/1530718431250.png)
+
+#### 2.页面预览测试
+
+​	CMS已经提供了页面预览功能，课程预览功能要使用CMS页面预览接口实现，下边通过cms页面预览接口测试课程预览的效果。
+
+1、向cms_page表插入一条页面记录或者从cms_page找一个页面进行测试。
+
+注意：页面配置一定要正确，需设置正确的模板id和dataUrl。
+
+如下，是cms_page一条Bootstrap开发框架页面的记录。
+
+```
+{ 
+    "_id" : ObjectId("5dac1e7aea735833a4ca2bc9"), 
+    "_class" : "com.xuecheng.framework.domain.cms.CmsPage", 
+    "siteId" : "5dac1ceaea735833a4ca2bbe", 
+    "pageName" : "4028e581617f945f01617f9dabc40000.html", 
+    "pageAliase" : "Bootstrap开发框架", 
+    "pageWebPath" : "/course/detail/", 
+    "pagePhysicalPath" : "/course/detail/", 
+    "pageType" : 1.0, 
+    "pageCreateTime" : ISODate("2018-02-25T01:37:25.974+0000"), 
+    "templateId" : "5aec5dd70e661808240ab7a6", 
+    "dataUrl" : "http://localhost:31200/course/courseview/4028e581617f945f01617f9dabc40000"
+}
+```
+
+siteId关联的是cms_site表中的课程详情站点的主键
+
+```
+{ 
+    "_id" : ObjectId("5dac1ceaea735833a4ca2bbe"), 
+    "_class" : "com.xuecheng.framework.domain.cms.CmsSite", 
+    "siteName" : "课程详情站点", 
+    "siteDomain" : "http://www.xuecheng.com", 
+    "sitePort" : "80", 
+    "siteWebPath" : "", 
+    "sitePhysicalPath" : "X:\\workspace\\java\\xczx\\static", 
+    "siteCreateTime" : ISODate("2018-02-03T02:34:19.113+0000")
+}
+```
+
+templateId关联的是cms_template表中Bootstrap开发框架课程详情模板的主键
+
+```
+{ 
+    "_id" : ObjectId("5aec5dd70e661808240ab7a6"), 
+    "_class" : "com.xuecheng.framework.domain.cms.CmsTemplate", 
+    "siteId" : "5a751fab6abb5044e0d19ea1", 
+    "templateName" : "Bootstrap开发框架课程详情模板", 
+    "templateParameter" : "courseid", 
+    "templateFileId" : "5dabcdc2ea7358453ce66103"
+}
+```
+
+最终的页面路径=cms_site中的sitePhysicalPath+cms_page的相对路径+cms_page的pageName
+
+
+
+然后将cms服务启动起来访问
+
+```
+http://localhost:31200/course/courseview/4028e581617f945f01617f9dabc40000
+```
+
+但是此时SSI还没有被解析,如果要想SSI被解析有两个条件
+
+1) 必须走nginx 也就是我们必须通过域名访问(因为开启SSI的配置在我们nginx当中)
+
+```
+www.xuecheng.com/course/courseview/4028e581617f945f01617f9dabc40000
+```
+
+2)cms服务返回的数据必须以html的形式进行解析
+
+由于Nginx先请求cms的课程预览功能得到html页面，再解析页面中的ssi标签，这里必须保证cms页面预览返回的页面的Content-Type为text/html;charset=utf-8
+
+在cms页面预览的controller方法中添加：
+
+```
+response.setHeader("Content-type","text/html;charset=utf-8");
+```
+
+#### 3.测试
+
+请求：http://www.xuecheng.com/cms/preview/5dac1e7aea735833a4ca2bc9传入页面Id，测试效果如下:
+
+![1530162120128](file:///E:/%E4%BC%A0%E6%99%BA%E5%B7%A5%E4%BD%9C/%E5%A4%87%E8%AF%BE%E8%B5%84%E6%96%99/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/HTML%E7%89%88%E6%9C%AC%E5%AD%A6%E6%88%90%E8%AE%B2%E4%B9%89/day09-%E8%AF%BE%E7%A8%8B%E9%A2%84%E8%A7%88%20Eureka%20Feign/images/1530162120128.png)
+
+#### 4.CMS添加页面接口
+
+cms服务对外提供添加页面接口，实现：如果不存在页面则添加，否则就更新页面信息。
+
+此接口由课程管理服务在课程预览时调用。
+
+##### 1.Api接口
+
+```
+@ApiOperation("保存页面")
+public CmsPageResult save(CmsPage cmsPage);
+```
+
+##### 2.Controller
+
+```
+    @Override
+    @PostMapping("/save")
+    public CmsPageResult save(@RequestBody CmsPage cmsPage) {
+        return pageService.save(cmsPage);
+    }
+```
+
+##### 3.Service
+
+```
+//添加页面，如果已存在则更新页面
+public CmsPageResult save(CmsPage cmsPage){
+    //校验页面是否存在，根据页面名称、站点Id、页面webpath查询
+    CmsPage cmsPage1 = cmsPageRepository.findByPageNameAndSiteIdAndPageWebPath(cmsPage.getPageName(), cmsPage.getSiteId(), cmsPage.getPageWebPath());
+    if(cmsPage1 !=null){
+        //更新
+        return this.update(cmsPage1.getPageId(),cmsPage);
+    }else{
+        //添加
+        return this.add(cmsPage);
+    }
+}
+```
+
+
+
