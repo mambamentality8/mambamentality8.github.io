@@ -1,0 +1,240 @@
+# 课程发布
+
+### 需求分析
+
+课程发布后将生成正式的课程详情页面，课程发布后用户即可浏览课程详情页面，并开始课程的学习。
+
+课程发布生成课程详情页面的流程与课程预览业务流程相同，如下：
+
+1、用户进入教学管理中心，进入某个课程的管理界面
+
+2、点击课程发布，前端请求到课程管理服务
+
+3、课程管理服务远程调用CMS生成课程发布页面，CMS将课程详情页面发布到服务器
+
+4、课程管理服务修改课程发布状态为 “已发布”，并向前端返回发布成功
+
+5、用户在教学管理中心点击“课程详情页面”链接，查看课程详情页面内容
+
+![1530745728081](file:///E:/%E4%BC%A0%E6%99%BA%E5%B7%A5%E4%BD%9C/%E5%A4%87%E8%AF%BE%E8%B5%84%E6%96%99/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/HTML%E7%89%88%E6%9C%AC%E5%AD%A6%E6%88%90%E8%AE%B2%E4%B9%89/day10-%E8%AF%BE%E7%A8%8B%E5%8F%91%E5%B8%83%20ElasticSearch/images/1530745728081.png)
+
+### CMS一键发布接口
+
+#### 需求分析
+
+根据需求分析内容，需要在cms服务增加页面发布接口供课程管理服务调用，此接口的功能如下：
+
+1、接收课程管理服务发布的页面信息
+
+2、将页面信息添加到 数据库（mongodb）
+
+3、对页面信息进行静态化
+
+4、将页面信息发布到服务器
+
+#### api
+
+1、在model模块com.xuecheng.framework.domain.cms.response包下创建响应结果类型
+
+页面发布成功cms返回页面的url
+
+页面Url= cmsSite.siteDomain+cmsSite.siteWebPath+ cmsPage.pageWebPath + cmsPage.pageName
+
+```
+@Data
+@NoArgsConstructor
+public class CmsPostPageResult extends ResponseResult {
+
+    String pageUrl;
+    public CmsPostPageResult(ResultCode resultCode, String pageUrl) {
+        super(resultCode);
+        this.pageUrl = pageUrl;
+    }
+}
+```
+
+2、在api工程CmsPageControllerApi接口定义页面发布接口
+
+```
+    @ApiOperation("一键发布页面")
+    public CmsPostPageResult postPageQuick(CmsPage cmsPage);
+```
+
+#### Controller
+
+在xc-service-manage-cms当中定义CmsPageController
+
+```
+    @Override
+    @PostMapping("/postPageQuick")
+    public CmsPostPageResult postPageQuick(@RequestBody CmsPage cmsPage) {
+        return pageService.postPageQuick(cmsPage);
+    }
+```
+
+#### Service
+
+1、添加页面，如果已存在则更新页面
+
+```
+    //一键发布页面
+    public CmsPostPageResult postPageQuick(CmsPage cmsPage) {
+
+        //将页面信息存储到cms_page 集合中
+        CmsPageResult save = this.save(cmsPage);
+        if(!save.isSuccess()){
+            ExceptionCast.cast(CommonCode.FAIL);
+        }
+        //得到页面的id
+        CmsPage cmsPageSave = save.getCmsPage();
+        String pageId = cmsPageSave.getPageId();
+
+        //执行页面发布（先静态化、保存GridFS，向MQ发送消息）
+        ResponseResult post = this.post(pageId);
+        if(!post.isSuccess()){
+            ExceptionCast.cast(CommonCode.FAIL);
+        }
+        //拼接页面Url= cmsSite.siteDomain+cmsSite.siteWebPath+ cmsPage.pageWebPath + cmsPage.pageName
+        //取出站点id
+        String siteId = cmsPageSave.getSiteId();
+        CmsSite cmsSite = this.findCmsSiteById(siteId);
+        //页面url
+        String pageUrl =cmsSite.getSiteDomain() + cmsSite.getSiteWebPath() + cmsPageSave.getPageWebPath() + cmsPageSave.getPageName();
+        return new CmsPostPageResult(CommonCode.SUCCESS,pageUrl);
+    }
+
+    //根据站点id查询站点信息
+    public CmsSite findCmsSiteById(String siteId){
+        Optional<CmsSite> optional = cmsSiteRepository.findById(siteId);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;
+    }
+```
+
+#### Dao
+
+1、站点dao
+
+接口中需要获取站点的信息（站点域名、站点访问路径等）
+
+```
+public interface CmsSiteRepository extends MongoRepository<CmsSite,String> {
+}
+```
+
+### 课程发布接口
+
+#### Api
+
+此Api接口由课程管理提供，由课程管理前端调用此Api接口，实现课程发布。
+
+在api工程下课程CourseControllerApi定义接口：
+
+```
+    @ApiOperation("发布课程")
+    public CoursePublishResult publish(@PathVariable String id);
+```
+
+#### Controller
+
+在xc-service-manage-course模块下
+
+```
+    @Override
+    @PostMapping("/publish/{id}")
+    public CoursePublishResult publish(@PathVariable("id")String id) {
+        return courseService.publish(id);
+    }
+```
+
+#### Service
+
+1、配置课程发布页面参数
+
+在application.yml中配置
+
+```
+course-publish:
+  siteId: 5dac1ceaea735833a4ca2bbe
+  templateId: 5aec5dd70e661808240ab7a6
+  previewUrl: http://www.xuecheng.com/cms/preview/
+  pageWebPath: /course/detail/
+  pagePhysicalPath: /course/detail/
+  dataUrlPre: http://localhost:31200/course/courseview/
+```
+
+siteId：站点id
+
+templateId：模板id
+
+dataurlPre：数据url的前缀
+
+pageWebPath: 页面的web访问路径
+
+pagePhysicalPath：页面的物理存储路径。
+
+
+
+2、Service方法如下
+
+```
+    //课程发布
+    @Transactional
+    public CoursePublishResult publish(String id) {
+        //查询课程
+        CourseBase courseBaseById = this.findCourseBaseById(id);
+
+        //准备页面信息
+        CmsPage cmsPage = new CmsPage();
+        cmsPage.setSiteId(publish_siteId);//站点id
+        cmsPage.setDataUrl(publish_dataUrlPre+id);//数据模型url
+        cmsPage.setPageName(id+".html");//页面名称
+        cmsPage.setPageAliase(courseBaseById.getName());//页面别名，就是课程名称
+        cmsPage.setPagePhysicalPath(publish_page_physicalpath);//页面物理路径
+        cmsPage.setPageWebPath(publish_page_webpath);//页面webpath
+        cmsPage.setTemplateId(publish_templateId);//页面模板id
+        //调用cms一键发布接口将课程详情页面发布到服务器
+        CmsPostPageResult cmsPostPageResult = cmsPageClient.postPageQuick(cmsPage);
+        if(!cmsPostPageResult.isSuccess()){
+            return new CoursePublishResult(CommonCode.FAIL,null);
+        }
+
+        //保存课程的发布状态为“已发布”
+        CourseBase courseBase = this.saveCoursePubState(id);
+        if(courseBase == null){
+            return new CoursePublishResult(CommonCode.FAIL,null);
+        }
+
+        //保存课程索引信息
+        //...
+
+        //缓存课程的信息
+        //...
+        //得到页面的url
+        String pageUrl = cmsPostPageResult.getPageUrl();
+        return new CoursePublishResult(CommonCode.SUCCESS,pageUrl);
+    }
+
+    //更新课程状态为已发布 202002
+    private CourseBase  saveCoursePubState(String courseId){
+        CourseBase courseBaseById = this.findCourseBaseById(courseId);
+        courseBaseById.setStatus("202002");
+        courseBaseRepository.save(courseBaseById);
+        return courseBaseById;
+    }
+```
+
+#### Feign Client
+
+在xc-service-manage-course模块下创建CMS服务页面发布的Feign Client
+
+```
+    //一键发布页面
+    @PostMapping("/cms/page/postPageQuick")
+    public CmsPostPageResult postPageQuick(@RequestBody CmsPage cmsPage);
+```
+
+
+

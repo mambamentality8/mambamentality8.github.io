@@ -2501,5 +2501,209 @@ public CmsPageResult save(CmsPage cmsPage){
 }
 ```
 
+### 课程预览服务端
 
+#### 1.Api
+
+此Api是课程管理前端请求服务端进行课程预览的Api
+
+请求：课程Id
+
+响应：课程预览Url
+
+1、定义响应类型
+
+在model模块com.xuecheng.framework.domain.course.response包下 定义类CoursePublishResult
+
+```
+import com.xuecheng.framework.model.response.ResponseResult;
+import com.xuecheng.framework.model.response.ResultCode;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@ToString
+@NoArgsConstructor
+public class CoursePublishResult extends ResponseResult {
+    String previewUrl;
+    public CoursePublishResult(ResultCode resultCode, String previewUrl) {
+        super(resultCode);
+        this.previewUrl = previewUrl;
+    }
+}
+```
+
+2、接口定义如下
+
+在API模块  com.xuecheng.api.course包下CourseControllerApi
+
+```
+    @ApiOperation("预览课程")
+    public CoursePublishResult preview(String id);
+```
+
+#### 2.Feign Client
+
+在课程管理工程创建CMS服务的Feign Client，通过此Client远程请求cms添加页面。
+在xc-service-manage-course模块中com.xuecheng.manage_course.client
+
+```
+    //添加页面，用于课程预览
+    @PostMapping("/cms/page/save")
+    public CmsPageResult saveCmsPage(@RequestBody CmsPage cmsPage);
+```
+
+#### 3.Service
+
+1、配置添加页面参数信息
+
+在application.yml中配置：
+
+```
+course-publish:
+  siteId: 5dac1ceaea735833a4ca2bbe
+  templateId: 5aec5dd70e661808240ab7a6
+  previewUrl: http://www.xuecheng.com/cms/preview/
+  pageWebPath: /course/detail/
+  pagePhysicalPath: /course/detail/
+  dataUrlPre: http://localhost:31200/course/courseview/
+```
+
+2、代码如下：
+
+```
+    @Autowired
+    CmsPageClient cmsPageClient;
+
+    @Value("${course-publish.dataUrlPre}")
+    private String publish_dataUrlPre;
+    @Value("${course-publish.pagePhysicalPath}")
+    private String publish_page_physicalpath;
+    @Value("${course-publish.pageWebPath}")
+    private String publish_page_webpath;
+    @Value("${course-publish.siteId}")
+    private String publish_siteId;
+    @Value("${course-publish.templateId}")
+    private String publish_templateId;
+    @Value("${course-publish.previewUrl}")
+    private String previewUrl;
+
+	    //根据id查询课程基本信息
+    public CourseBase findCourseBaseById(String courseId){
+        Optional<CourseBase> baseOptional = courseBaseRepository.findById(courseId);
+        if(baseOptional.isPresent()){
+            CourseBase courseBase = baseOptional.get();
+            return courseBase;
+        }
+        ExceptionCast.cast(CourseCode.COURSE_DENIED_DELETE);
+        return null;
+    }
+    //课程预览
+    public CoursePublishResult preview(String id) {
+        //查询课程
+        CourseBase courseBaseById = this.findCourseBaseById(id);
+        //请求cms添加页面
+        //准备cmsPage信息
+        CmsPage cmsPage = new CmsPage();
+        cmsPage.setSiteId(publish_siteId);//站点id
+        cmsPage.setDataUrl(publish_dataUrlPre+id);//数据模型url
+        cmsPage.setPageName(id+".html");//页面名称
+        cmsPage.setPageAliase(courseBaseById.getName());//页面别名，就是课程名称
+        cmsPage.setPagePhysicalPath(publish_page_physicalpath);//页面物理路径
+        cmsPage.setPageWebPath(publish_page_webpath);//页面webpath
+        cmsPage.setTemplateId(publish_templateId);//页面模板id
+
+        //远程调用cms
+        CmsPageResult cmsPageResult = cmsPageClient.saveCmsPage(cmsPage);
+        if(!cmsPageResult.isSuccess()){
+            return new CoursePublishResult(CommonCode.FAIL,null);
+        }
+
+        CmsPage cmsPage1 = cmsPageResult.getCmsPage();
+        String pageId = cmsPage1.getPageId();
+        //拼装页面预览的url
+        String url = previewUrl+pageId;
+        //返回CoursePublishResult对象（当中包含了页面预览的url）
+        return new CoursePublishResult(CommonCode.SUCCESS,url);
+    }
+```
+
+<font size="5" color=red>注意:CmsPageResult一定要有空参构造</font>
+
+#### Controller
+
+```
+    @Override
+    @PostMapping("/preview/{id}")
+    public CoursePublishResult preview(@PathVariable("id") String id) {
+        return courseService.preview(id);
+
+    }
+```
+
+### 前端开发
+
+
+
+#### api
+
+```
+/*预览课程*/
+export const preview = id => {
+  return http.requestPost(apiUrl+'/course/preview/'+id);
+}
+```
+
+#### 页面
+
+创建 course_pub.vue
+
+```
+<template>
+  <div>
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>课程预览</span>
+      </div>
+      <div class="text item">
+        <el-button type="primary"  @click.native="preview" >课程预览</el-button>
+        <br/><br/>
+        <span v-if="previewurl && previewurl!=''"><a :href="previewurl" target="_blank">点我查看课程预览页面 </a> </span>
+      </div>
+    </el-card>
+  </div>
+</template>
+```
+
+数据对象：
+
+```
+data() {
+  return {
+    dotype:'',
+    courseid:'',
+    course: {"id":"","name":"","status":""},
+    previewurl:''
+  }
+```
+
+方法 ：
+
+```
+//预览
+preview(){
+  courseApi.preview(this.courseid).then((res) => {
+    if(res.success){
+      this.$message.error('预览页面生成成功，请点击下方预览链接');
+      if(res.url){
+        //预览url
+        this.previewurl = res.url
+      }
+    }else{
+      this.$message.error(res.message);
+    }
+  });
+}
+```
 
