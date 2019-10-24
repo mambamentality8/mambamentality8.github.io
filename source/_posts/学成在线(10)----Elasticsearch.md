@@ -1295,7 +1295,7 @@ put http://localhost:9200/xc_course/doc/3
  {
  "name":"spring cloud实战",
  "description":"本课程主要从四个章节进行讲解： 1.微服务架构入门 2.spring cloud 基础入门 3.实战Spring Boot 4.注册中心eureka。",
- "studymodel":"201001"
+ "studymodel":"201001",
  "price":5.6
  }
 ```
@@ -1335,6 +1335,10 @@ put http://localhost:9200/xc_course/doc/3
 格式如下：
 GET /{index}/{type}/{id}
 
+```
+http://localhost:9200/xc_course/doc/3
+```
+
 ##### Java Client
 
 ```
@@ -1342,7 +1346,7 @@ GET /{index}/{type}/{id}
     @Test
     public void testGetDoc() throws IOException {
         //查询请求对象
-        GetRequest getRequest = new GetRequest("xc_course","doc","tzk2-mUBGsEnDOUe482B");
+        GetRequest getRequest = new GetRequest("xc_course","doc","Olji-20BCJ-pMSTvryja");
         GetResponse getResponse = client.get(getRequest);
         //得到文档的内容
         Map<String, Object> sourceAsMap = getResponse.getSourceAsMap();
@@ -1366,7 +1370,7 @@ Post：http://localhost:9200/xc_test/doc/3
  {
  "name":"spring cloud实战",
  "description":"本课程主要从四个章节进行讲解： 1.微服务架构入门 2.spring cloud 基础入门 3.实战Spring Boot 4.注册中心eureka。",
- "studymodel":"201001"
+ "studymodel":"201001",
  "price":5.6
  }
 ```
@@ -1384,4 +1388,70 @@ post: http://localhost:9200/xc_test/doc/3/_update
 ```
 
 ##### Java Client
+
+使用 Client Api更新文档的方法同上边第二种局部更新方法。
+
+可以指定文档的部分字段也可以指定完整的文档内容。
+
+```
+    //更新文档
+    @Test
+    public void updateDoc() throws IOException {
+        UpdateRequest updateRequest = new UpdateRequest("xc_course", "doc", "Olji-20BCJ-pMSTvryja");
+        Map<String, String> map = new HashMap<>();
+        map.put("name", "spring cloud实战_更新文档");
+        updateRequest.doc(map);
+        UpdateResponse update = client.update(updateRequest);
+        RestStatus status = update.status();
+        System.out.println(status);
+    }
+```
+
+#### 删除文档
+
+##### Api
+
+根据id删除，格式如下：
+
+DELETE /{index}/{type}/{id}
+
+搜索匹配删除，将搜索出来的记录删除，格式如下：
+
+POST  /{index}/{type}/_delete_by_query
+
+下边是搜索条件例子：
+
+```
+{
+  "query":{
+      "term":{
+          "studymodel":"201001"
+      }
+  }
+}
+```
+
+上边例子的搜索匹配删除会将studymodel为201001的记录全部删除。
+
+##### Java Client
+
+```
+    //根据id删除文档
+    @Test
+    public void testDelDoc() throws IOException {
+        //删除文档id
+        String id = "Olji-20BCJ-pMSTvryja";
+
+        //删除索引请求对象
+        DeleteRequest deleteRequest = new DeleteRequest("xc_course","doc",id);
+        //响应对象
+        DeleteResponse deleteResponse = client.delete(deleteRequest);
+        //获取响应结果
+        DocWriteResponse.Result result = deleteResponse.getResult();
+        System.out.println(result);
+
+    }
+```
+
+搜索匹配删除还没有具体的api，可以采用先搜索出文档id，根据文档id删除。
 
