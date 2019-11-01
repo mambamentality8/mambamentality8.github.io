@@ -149,7 +149,7 @@ public class CmsPageController implements CmsPageControllerApi {
 http://localhost:31001/swagger-ui.html#!
 ```
 
-![1569483758133](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569483758133.png)
+![1569483758133](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx03/01.png)
 
 ### 3.前端
 
@@ -274,11 +274,11 @@ export const page_list = (page, size, params) => {
 
 在cms_page上创建页面名称、站点Id、页面webpath为唯一索引
 
-![1569491014620](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569491014620.png)
+![1569491014620](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx03/02.png)
 
-![1569491099565](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569491099565.png)
+![1569491099565](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx03/03.png)
 
-![1569491140012](C:\Users\85896\AppData\Roaming\Typora\typora-user-images\1569491140012.png)
+![1569491140012](https://blog-mamba.oss-cn-beijing.aliyuncs.com/java/items/xczx/xczx03/04.png)
 
 ####  2.Service
 
