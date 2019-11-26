@@ -292,7 +292,16 @@ elasticsearch  -  nofile  65536
 
 2、下载head并运行
 
-git clone git://github.com/mobz/elasticsearch-head.git cd elasticsearch-head npm install npm run start open HTTP：//本地主机：9100 /
+git clone git://github.com/mobz/elasticsearch-head.git 
+
+cd elasticsearch-head 
+
+```
+npm install 
+npm run start 
+```
+
+open HTTP：//本地主机：9100 /
 
 
 
