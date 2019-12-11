@@ -10,9 +10,7 @@ image:
 ---
 
 <p class="description"></p>
-
 <meta name="referrer" content="no-referrer" />
-
 <img src="http://blog-mamba.oss-cn-beijing.aliyuncs.com/springboot/title.png">
 
 <!-- more -->
@@ -75,7 +73,7 @@ function AES(){
     var pwd = "a12456"  
     var key = CryptoJS.enc.utf8.parse("4F233463B63EA99F");  //key和iv在使用之前要先解析成字节集其实这个解析不解析无所谓,默认就是uft8解析
     var iv  = CryptoJS.enc.utf8.parse("9BD2C547935C46F2"); //ECB模式没有偏移向量
-    var value = CryptoJS.AES.encrypt(pwd,key,{   //DES的话就把AES换成DES  一般AES的秘钥是16个字节或者是32个字节8个字节也可以DES是8个字节3DES是24个字节
+    var value = CryptoJS.AES.encrypt(pwd,key,{   //DES的话就把AES换成DES  一般AES的秘钥是16个字节或者是32个字节8个字节也可以  DES是8个字节3DES是24个字节
         mode:CryptoJS.mode.CBC,  
         padding:CryptoJS.pad.pkcs7,  
         iv:iv  
