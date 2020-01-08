@@ -1,6 +1,7 @@
 @echo off
-@title bat äº¤äº’æ‰§è¡Œgitå‘½ä»¤
+@title bat ½»»¥Ö´ĞĞgitÃüÁî
 D:
 cd E:\github\blog\mambamentality8.github.io\source\_posts
 git add .
-git commit -m %date:~0,4%å¹´%date:~5,2%æœˆ%date:~8,2%æ—¥
+git commit -m %date:~0,4%Äê%date:~5,2%ÔÂ%date:~8,2%ÈÕ
+git push origin hexo:hexo
