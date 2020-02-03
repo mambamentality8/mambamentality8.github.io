@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Mamba</title>
+  
+  <subtitle>if you really want it  ...  GO GO GO  !!!</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://www.houshiwei.com/"/>
+  <updated>2020-02-03T18:23:35.113Z</updated>
+  <id>https://www.houshiwei.com/</id>
+  
+  <author>
+    <name>Mamba</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/xi-tong-an-zhuang.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/xi-tong-an-zhuang.html</id>
+    <published>2020-02-03T18:23:35.113Z</published>
+    <updated>2020-02-03T18:23:35.113Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+            if (!el.dataset.src) { return; }
+       
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou-02.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou-02.html</id>
+    <published>2020-02-03T18:23:35.113Z</published>
+    <updated>2020-02-03T18:23:35.113Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;pre&gt;&lt;code&gt;#&amp;#x76EE;&amp;#x6807;:
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>常用的git操作命令</title>
+    <link href="https://www.houshiwei.com/git/2020/02/03/jian-dan-de-git-cao-zuo-ming-ling.html"/>
+    <id>https://www.houshiwei.com/git/2020/02/03/jian-dan-de-git-cao-zuo-ming-ling.html</id>
+    <published>2020-02-03T18:23:35.113Z</published>
+    <updated>2020-02-03T18:23:35.113Z</updated>
+    
+    <summary type="html">
+    
+      常用的git操作命令
+    
+    </summary>
+    
+    
+      <category term="git" scheme="https://www.houshiwei.com/categories/git/"/>
+    
+    
+      <category term="git" scheme="https://www.houshiwei.com/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/ni-xiang-fen-xi-yi-duan-dian.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/ni-xiang-fen-xi-yi-duan-dian.html</id>
+    <published>2020-02-03T18:23:35.113Z</published>
+    <updated>2020-02-03T18:23:35.113Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;&amp;#x9006;&amp;#x5411;&amp;#x5206;&amp;#x6790;-&amp;#x4E00;-&amp;#x2014;-&amp;#x65AD;&amp;#x70B9;&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/mian-shi-zhi-chang-yong-zhu-jie.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/mian-shi-zhi-chang-yong-zhu-jie.html</id>
+    <published>2020-02-03T18:23:35.113Z</published>
+    <updated>2020-02-03T18:23:35.113Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x9762;&amp;#x8BD5;&amp;#x4E4B;&amp;#x5E38;&amp;#x7528;&amp;#x6CE8;&amp;#x89E3;&quot;&gt;&lt;a href=&quot;#&amp;#x9762;&amp;#x8BD5;&amp;#x4E4B;&amp;#x5E38;&amp;#x7528;&amp;#x6CE8;&amp;#x89E3;&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/hei-ping-guo-an-zhuang.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/hei-ping-guo-an-zhuang.html</id>
+    <published>2020-02-03T18:23:35.113Z</published>
+    <updated>2020-02-03T18:23:35.113Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&amp;#x5FC3;&amp;#x6D41;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-09-oauth2/chang-gou-09-oauth2.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-09-oauth2/chang-gou-09-oauth2.html</id>
+    <published>2020-02-03T18:23:35.077Z</published>
+    <updated>2020-02-03T18:23:35.077Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x7B2C;9&amp;#x7AE0;-&amp;#x7528;&amp;#x6237;&amp;#x8BA4;&amp;#x8BC1;&quot;&gt;&lt;a href=&quot;#&amp;#x7B2C;9&amp;#x7AE0;-&amp;#x7528;&amp;#x6237;&amp;#x8BA4;&amp;#x8BC1;&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-08-xiang-qing-ye-mian/chang-gou-08-xiang-qing-ye-mian.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-08-xiang-qing-ye-mian/chang-gou-08-xiang-qing-ye-mian.html</id>
+    <published>2020-02-03T18:23:35.077Z</published>
+    <updated>2020-02-03T18:23:35.077Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x7B2C;8&amp;#x7AE0;-Thymeleaf&quot;&gt;&lt;a href=&quot;#&amp;#x7B2C;8&amp;#x7AE0;-Thymeleaf&quot; class=&quot;headerlink&quot; title=&quot;&amp;#x7B2C;8&amp;#x7AE0;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-07-shang-pin-sou-suo/chang-gou-07-shang-pin-xiang-qing-ye-mian.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-07-shang-pin-sou-suo/chang-gou-07-shang-pin-xiang-qing-ye-mian.html</id>
+    <published>2020-02-03T18:23:35.049Z</published>
+    <updated>2020-02-03T18:23:35.049Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x7B2C;7&amp;#x7AE0;-&amp;#x5546;&amp;#x54C1;&amp;#x641C;&amp;#x7D22;&quot;&gt;&lt;a href=&quot;#&amp;#x7B2C;7&amp;#x7AE0;-&amp;#x5546;&amp;#x54C1;&amp;#x641C;&amp;#x7D22;&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-06-shu-ju-tong-bu/chang-gou-06-shu-ju-tong-bu.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-06-shu-ju-tong-bu/chang-gou-06-shu-ju-tong-bu.html</id>
+    <published>2020-02-03T18:23:35.029Z</published>
+    <updated>2020-02-03T18:23:35.029Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x7B2C;6&amp;#x7AE0;-&amp;#x6570;&amp;#x636E;&amp;#x540C;&amp;#x6B65;&amp;#x89E3;&amp;#x51B3;&amp;#x65B9;&amp;#x6848;-canal&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-05-shou-ye-gao-ke-yong/chang-gou-05-shou-ye-gao-ke-yong.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-05-shou-ye-gao-ke-yong/chang-gou-05-shou-ye-gao-ke-yong.html</id>
+    <published>2020-02-03T18:23:35.025Z</published>
+    <updated>2020-02-03T18:23:35.025Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x7B2C;5&amp;#x7AE0;-&amp;#x7F51;&amp;#x7AD9;&amp;#x9996;&amp;#x9875;&amp;#x9AD8;&amp;#x53EF;&amp;#x7528;nginx-lua&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-04-shang-pin-guan-li/chang-gou-04-shang-pin-guan-li.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-04-shang-pin-guan-li/chang-gou-04-shang-pin-guan-li.html</id>
+    <published>2020-02-03T18:23:35.017Z</published>
+    <updated>2020-02-03T18:23:35.017Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x7B2C;4&amp;#x7AE0;-&amp;#x5546;&amp;#x54C1;&amp;#x7BA1;&amp;#x7406;&quot;&gt;&lt;a href=&quot;#&amp;#x7B2C;4&amp;#x7AE0;-&amp;#x5546;&amp;#x54C1;&amp;#x7BA1;&amp;#x7406;&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-03-wang-guan-jian-quan-xian-liu/chang-gou-03-wang-guan-jian-quan-xian-liu.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-03-wang-guan-jian-quan-xian-liu/chang-gou-03-wang-guan-jian-quan-xian-liu.html</id>
+    <published>2020-02-03T18:23:35.017Z</published>
+    <updated>2020-02-03T18:23:35.017Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x7B2C;3&amp;#x7AE0;-&amp;#x5FAE;&amp;#x670D;&amp;#x52A1;&amp;#x7F51;&amp;#x5173;&amp;#x9650;&amp;#x6D41;-amp-&amp;#x9274;&amp;#x6743;&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-02-fen-bu-shi-wen-jian-cun-chu/chang-gou-02-fen-bu-shi-wen-jian-cun-chu.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-02-fen-bu-shi-wen-jian-cun-chu/chang-gou-02-fen-bu-shi-wen-jian-cun-chu.html</id>
+    <published>2020-02-03T18:23:35.013Z</published>
+    <updated>2020-02-03T18:23:35.013Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x7B2C;2&amp;#x7AE0;-&amp;#x5206;&amp;#x5E03;&amp;#x5F0F;&amp;#x6587;&amp;#x4EF6;&amp;#x5B58;&amp;#x50A8;&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-01-kuang-jia-da-jian/chang-gou-01-kuang-jia-da-jian.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou/chang-gou-01-kuang-jia-da-jian/chang-gou-01-kuang-jia-da-jian.html</id>
+    <published>2020-02-03T18:23:35.005Z</published>
+    <updated>2020-02-03T18:23:35.005Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x7B2C;1&amp;#x7AE0;-&amp;#x6846;&amp;#x67B6;&amp;#x642D;&amp;#x5EFA;&quot;&gt;&lt;a href=&quot;#&amp;#x7B2C;1&amp;#x7AE0;-&amp;#x6846;&amp;#x67B6;&amp;#x642D;&amp;#x5EFA;&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/xing-dian-jiao-yu-mo-ban.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/xing-dian-jiao-yu-mo-ban.html</id>
+    <published>2020-02-03T18:23:34.993Z</published>
+    <updated>2020-02-03T18:23:34.993Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou-1.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/chang-gou-1.html</id>
+    <published>2020-02-03T18:23:34.993Z</published>
+    <updated>2020-02-03T18:23:34.993Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x6846;&amp;#x67B6;&amp;#x642D;&amp;#x5EFA;&quot;&gt;&lt;a href=&quot;#&amp;#x6846;&amp;#x67B6;&amp;#x642D;&amp;#x5EFA;&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/di-shui-san-qi-bi-ji/1.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/di-shui-san-qi-bi-ji/1.html</id>
+    <published>2020-02-03T18:23:34.993Z</published>
+    <updated>2020-02-03T18:23:34.993Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+            if (!el.dataset.src) { return; }
+       
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/xue-cheng-zai-xian/xue-cheng-zai-xian-15-mei-zi-guan-li-xi-tong-ji-cheng.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/xue-cheng-zai-xian/xue-cheng-zai-xian-15-mei-zi-guan-li-xi-tong-ji-cheng.html</id>
+    <published>2020-02-03T18:23:34.993Z</published>
+    <updated>2020-02-03T18:23:34.993Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;&amp;#x5A92;&amp;#x8D44;&amp;#x7BA1;&amp;#x7406;&amp;#x7CFB;&amp;#x7EDF;&amp;#x96C6;&amp;#x6210;&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.houshiwei.com/uncategorized/2020/02/03/xue-cheng-zai-xian/xue-cheng-zai-xian-16-oauth2.0.html"/>
+    <id>https://www.houshiwei.com/uncategorized/2020/02/03/xue-cheng-zai-xian/xue-cheng-zai-xian-16-oauth2.0.html</id>
+    <published>2020-02-03T18:23:34.993Z</published>
+    <updated>2020-02-03T18:23:34.993Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Spring-Security-Oauth2-JWT&quot;&gt;&lt;a href=&quot;#Spring-Security-Oauth2-JWT&quot; class=&quot;headerlink&quot; title=&quot;Spring Security Oauth2 JWT&quot;&gt;&lt;/a&gt;Spring
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+</feed>
